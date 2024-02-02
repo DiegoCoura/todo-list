@@ -55,6 +55,12 @@ button {
 
 .sidebar-navigation button{
   font-size: 18px;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: justify;
+  display: flex;
+  gap: 15px;
+  background-color: transparent;
 }
 
 .hero {
