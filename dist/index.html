@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo App</title>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="main">
+      <header class="header">
+        <nav class="header-nav">
+          <span class="header-nav__title">Todo App</span>
+          <button class="header-nav__add"><span>+</span></button>
+        </nav>
+      </header>
+      <div class="sidebar">
+        <div class="sidebar-navigation">
+          <h2 class="sidebar-projects__title">Projects</h2>
+          <button class="sidebar-navigation__inbox">All</button>
+          <button class="sidebar-navigation__today">ToDos</button>
+          <button class="sidebar-navigation__week">Checklists</button>
+          <button class="sidebar-navigation__add-project">
+            <span>+ New Project</span>
+          </button>
+        </div>
+      </div>
+      <div class="hero"></div>
+    </div>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
