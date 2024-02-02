@@ -46,7 +46,7 @@ button {
 }
 
 .sidebar {
-  background-color: rgb(179, 179, 179);
+  background-color: rgb(229 229 229);
 }
 
 .sidebar-navigation{
@@ -70,6 +70,10 @@ button {
   display: flex;
   gap: 15px;
   background-color: transparent;
+}
+
+.sidebar-navigation button:hover{
+  background-color: rgb(175, 175, 175);
 }
 
 .hero {
