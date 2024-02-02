@@ -10,11 +10,42 @@
     ></script>
   </head>
   <body>
+    <dialog open class="add-project-dialog">
+      <form id="add-form" method="dialog">
+        <div class="cancel-btn-container">
+          <button class="cancel-btn" type="reset">X</button>
+        </div>
+        <label for="projectType">Type: </label>
+        <select name="projectType" id="projectType" form="add-form">
+          <option value="checklist">Checklist</option>
+          <option value="todo">Todo</option>
+        </select>
+        
+        <label for="projectTitle">Title:</label>
+        <input type="text" name="projectTitle" placeholder="Title" />
+        
+        <section class="form-section hidden">
+
+          <label for="projectDescription">Description:</label>
+          <input type="text" name="projectDescription" placeholder="Description" />
+
+          <label for="dueDate">Due Date:</label>
+          <input type="date" name="dueDate" />
+
+          <label for="projectPriority">Priority: </label>
+          <select name="projectPriority" id="projectPriority" form="add-form">
+            <option value="urgent">Urgent</option>
+            <option value="high">High</option>
+            <option value="high">Standard</option>
+          </select>
+        </section>
+      </form>
+    </dialog>
     <div class="main">
       <header class="header">
         <nav class="header-nav">
           <span class="header-nav__title">Todo App</span>
-          <button class="header-nav__add">
+          <button class="header-nav__add add-btn">
             <i class="fa-solid fa-plus"></i>
           </button>
         </nav>
@@ -31,7 +62,7 @@
           <button class="sidebar-navigation__week">
             <i class="fa-solid fa-list-check"></i> Checklists
           </button>
-          <button class="sidebar-navigation__add-project">
+          <button class="sidebar-navigation__add-project add-btn">
             <i class="fa-solid fa-plus"></i> New Project
           </button>
         </div>
