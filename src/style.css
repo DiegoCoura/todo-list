@@ -24,6 +24,7 @@ button {
   align-items: center;
   justify-content: center;
   background-color: rgb(46, 46, 46);
+  color: #fff
 }
 
 .header-nav {
@@ -31,6 +32,11 @@ button {
   justify-content: space-between;
   width: 90%;
 }
+
+.header-nav__title{
+  font-size: 28px;
+}
+
 .sidebar {
   background-color: rgb(179, 179, 179);
 }
@@ -41,6 +47,14 @@ button {
   gap: 20px;
   padding: 20px;
 
+}
+
+.sidebar-navigation__title{
+  font-size: 26px;
+}
+
+.sidebar-navigation button{
+  font-size: 18px;
 }
 
 .hero {
