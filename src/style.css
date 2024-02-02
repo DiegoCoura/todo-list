@@ -15,6 +15,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 4fr;
   grid-template-rows: 100px 4fr;
+  height: 100vh;
 }
 
 .header {
@@ -32,6 +33,14 @@ button {
 }
 .sidebar {
   background-color: rgb(179, 179, 179);
+}
+
+.sidebar-navigation{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+
 }
 
 .hero {
