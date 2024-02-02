@@ -10,7 +10,7 @@
     ></script>
   </head>
   <body>
-    <dialog open class="add-project-dialog">
+    <dialog class="add-project-dialog">
       <form id="add-form" method="dialog">
         <div class="cancel-btn-container">
           <button class="cancel-btn" type="reset">X</button>
@@ -23,7 +23,7 @@
         
         <label for="projectTitle">Title:</label>
         <input type="text" name="projectTitle" placeholder="Title" />
-        
+
         <section class="form-section hidden">
 
           <label for="projectDescription">Description:</label>
@@ -39,6 +39,7 @@
             <option value="high">Standard</option>
           </select>
         </section>
+        <button type="submit" class="form-submit-button">Add</button>
       </form>
     </dialog>
     <div class="main">
