@@ -17,14 +17,36 @@ function CheckList(title) {
   }
 }
 
+function openDialog() {
+  addProjectDialog.showModal();
+}
+
+function closeDialog() {
+  addProjectDialog.close();
+}
+
+const projects = [];
+
+const addProjectDialog = document.querySelector(".add-project-dialog");
+
+const cancelBtn = document.querySelector(".cancel-btn");
+
+cancelBtn.addEventListener("click", function () {
+  closeDialog();
+});
+
 const addBtns = document.querySelectorAll(".add-btn");
 
-addBtns.forEach((btn) => btn.addEventListener("click", () => console.log(btn)));
+addBtns.forEach((btn) =>
+  btn.addEventListener("click", function () {
+    openDialog();
+  })
+);
 
 const selectSection = document.querySelector(".form-section");
 
 function handleSelectType(selectedOption) {
-    console.log(selectedOption)
+  console.log(selectedOption);
   if (selectedOption === "todo") {
     selectSection.classList.remove("hidden");
     selectSection.classList.add("shown");
