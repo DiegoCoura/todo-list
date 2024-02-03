@@ -3,14 +3,20 @@ import customCreateElement from "./customCreateElement";
 
 const projects = [];
 
-function Todo(type, title, description, dueDate, priority) {
+function Todo(props) {
+  const { type, title, description, dueDate, priority } = props;
+
+  this.type = type;
   this.title = title;
   this.description = description;
   this.dueDate = dueDate;
   this.priority = priority;
 }
 
-function CheckList(type, title) {
+function CheckList(props) {
+  const { type, title } = props;
+
+  this.type = type;
   this.title = title;
   this.listItems = [];
 
@@ -42,13 +48,14 @@ addForm.addEventListener("submit", (e) => {
   }
 
   if (type === "checklist") {
-    const newChecklist = new CheckList(type, title);
+    let fields = { type, title };
+    const newChecklist = new CheckList(fields);
     projects.push(newChecklist);
   } else if (type === "todo") {
-    const newTodo = new Todo(type, title, description, dueDate, priority);
+    let fields = { type, title, description, dueDate, priority };
+    const newTodo = new Todo(fields);
     projects.push(newTodo);
   }
-
   addForm.submit();
 });
 
@@ -75,7 +82,6 @@ function closeDialog() {
 }
 
 function handleSelectType(selectedOption) {
-  console.log(selectedOption);
   if (selectedOption === "todo") {
     selectSection.classList.remove("hidden");
     selectSection.classList.add("shown");
