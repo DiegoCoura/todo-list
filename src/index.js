@@ -1,5 +1,5 @@
 import "./style.css";
-import customCreateElement from "./customCreateElement";
+import { fieldsReset, toggleFormHidden } from "./helpers";
 
 const projects = [];
 
@@ -48,7 +48,6 @@ addForm.addEventListener("submit", (e) => {
   if (type.value === "checklist") {
     fields.push(type, title);
     const newChecklist = new CheckList(type.value, title.value);
-    console.log(newChecklist);
     projects.push(newChecklist);
   } else if (type.value === "todo") {
     fields.push(type, title, description, dueDate, priority);
@@ -64,7 +63,9 @@ addForm.addEventListener("submit", (e) => {
   }
 
   fieldsReset(fields);
+  toggleFormHidden(selectSection, projectType.value);
   addForm.submit();
+  console.log(projects);
 });
 
 cancelBtn.addEventListener("click", function () {
@@ -78,18 +79,8 @@ addBtns.forEach((btn) =>
 );
 
 projectType.addEventListener("change", function () {
-  handleSelectType(projectType.value);
+  toggleFormHidden(selectSection, projectType.value);
 });
-
-function fieldsReset(fieldsArray) {
-  fieldsArray.forEach((field) => {
-    if (field.id === "project-type") {
-      field.value = "checklist";
-    } else {
-      field.value = "";
-    }
-  });
-}
 
 function openDialog() {
   addProjectDialog.showModal();
@@ -97,14 +88,4 @@ function openDialog() {
 
 function closeDialog() {
   addProjectDialog.close();
-}
-
-function handleSelectType(selectedOption) {
-  if (selectedOption === "todo") {
-    selectSection.classList.remove("hidden");
-    selectSection.classList.add("shown");
-  } else if (selectedOption === "checklist") {
-    selectSection.classList.remove("shown");
-    selectSection.classList.add("hidden");
-  }
 }
