@@ -10,30 +10,30 @@
     ></script>
   </head>
   <body>
-    <dialog class="add-project-dialog">
+    <dialog open class="add-project-dialog">
       <form id="add-form" method="dialog">
         <div class="cancel-btn-container">
           <button class="cancel-btn" type="reset">X</button>
         </div>
         <label for="projectType">Type: </label>
-        <select name="projectType" id="projectType" form="add-form">
+        <select name="projectType" id="project-type" form="add-form">
           <option value="checklist">Checklist</option>
           <option value="todo">Todo</option>
         </select>
         
         <label for="projectTitle">Title:</label>
-        <input type="text" name="projectTitle" placeholder="Title" />
+        <input type="text" class="title" name="projectTitle" placeholder="Title" />
 
         <section class="form-section hidden">
 
           <label for="projectDescription">Description:</label>
-          <input type="text" name="projectDescription" placeholder="Description" />
+          <input type="text" class="description" name="projectDescription" placeholder="Description" />
 
           <label for="dueDate">Due Date:</label>
-          <input type="date" name="dueDate" />
+          <input type="date" name="dueDate" class="due-date" />
 
           <label for="projectPriority">Priority: </label>
-          <select name="projectPriority" id="projectPriority" form="add-form">
+          <select name="projectPriority" id="project-priority" form="add-form">
             <option value="urgent">Urgent</option>
             <option value="high">High</option>
             <option value="high">Standard</option>
