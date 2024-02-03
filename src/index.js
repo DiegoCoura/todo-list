@@ -1,6 +1,7 @@
 import "./style.css";
 import { Todo, CheckList } from "./constructors";
 import { fieldsReset, toggleFormHidden } from "./helpers";
+import ChecklistCard from "./Components/ChecklistCard";
 
 const projects = [];
 
@@ -12,6 +13,8 @@ const selectSection = document.querySelector(".form-section");
 const projectType = document.getElementById("project-type");
 
 const addForm = document.getElementById("add-form");
+const heroSection = document.querySelector(".hero");
+
 
 cancelBtn.addEventListener("click", function () {
   closeDialog();
@@ -72,3 +75,8 @@ addForm.addEventListener("submit", (e) => {
   addForm.submit();
   console.log(projects);
 });
+
+heroSection.appendChild(ChecklistCard("primeiro card"));
+
+const addListItemBtn = document.querySelector(".checklist__card-add-btn");
+addListItemBtn.addEventListener("click", (e) => console.log(e.target));
