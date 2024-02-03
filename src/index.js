@@ -3,9 +3,7 @@ import customCreateElement from "./customCreateElement";
 
 const projects = [];
 
-function Todo(props) {
-  const { type, title, description, dueDate, priority } = props;
-
+function Todo(type, title, description, dueDate, priority) {
   this.type = type;
   this.title = title;
   this.description = description;
@@ -13,9 +11,7 @@ function Todo(props) {
   this.priority = priority;
 }
 
-function CheckList(props) {
-  const { type, title } = props;
-
+function CheckList(type, title) {
   this.type = type;
   this.title = title;
   this.listItems = [];
@@ -37,25 +33,37 @@ const addForm = document.getElementById("add-form");
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  let type = document.getElementById("project-type").value;
-  let title = document.querySelector(".title").value;
-  let description = document.querySelector(".description").value;
-  let dueDate = document.querySelector(".due-date").value;
-  let priority = document.getElementById("project-priority").value;
+  let type = document.getElementById("project-type");
+  let title = document.querySelector(".title");
+  let description = document.querySelector(".description");
+  let dueDate = document.querySelector(".due-date");
+  let priority = document.getElementById("project-priority");
 
-  if (title.trim() === "") {
+  if (title.value.trim() === "") {
     return;
   }
 
-  if (type === "checklist") {
-    let fields = { type, title };
-    const newChecklist = new CheckList(fields);
+  const fields = [];
+
+  if (type.value === "checklist") {
+    fields.push(type, title);
+    const newChecklist = new CheckList(type.value, title.value);
+    console.log(newChecklist);
     projects.push(newChecklist);
-  } else if (type === "todo") {
-    let fields = { type, title, description, dueDate, priority };
-    const newTodo = new Todo(fields);
+  } else if (type.value === "todo") {
+    fields.push(type, title, description, dueDate, priority);
+    const newTodo = new Todo(
+      type.value,
+      title.value,
+      description.value,
+      dueDate.value,
+      priority.value
+    );
+
     projects.push(newTodo);
   }
+
+  fieldsReset(fields);
   addForm.submit();
 });
 
@@ -72,6 +80,16 @@ addBtns.forEach((btn) =>
 projectType.addEventListener("change", function () {
   handleSelectType(projectType.value);
 });
+
+function fieldsReset(fieldsArray) {
+  fieldsArray.forEach((field) => {
+    if (field.id === "project-type") {
+      field.value = "checklist";
+    } else {
+      field.value = "";
+    }
+  });
+}
 
 function openDialog() {
   addProjectDialog.showModal();
