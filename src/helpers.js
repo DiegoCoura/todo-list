@@ -16,7 +16,16 @@ export function fieldsReset(fieldsArray) {
       field.value = "standard";
     } else {
       field.value = "";
-    }    
+    }
+  });
+}
+
+export const customCreateElement = (elementTag, props = {}) => {
+  const customElement = document.createElement(elementTag);
+
+  Object.entries(props).forEach(([key, value]) => {
+    customElement[key] = value;
   });
 
-}
+  return customElement;
+};
