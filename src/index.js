@@ -1,25 +1,8 @@
 import "./style.css";
+import { Todo, CheckList } from "./constructors";
 import { fieldsReset, toggleFormHidden } from "./helpers";
 
 const projects = [];
-
-function Todo(type, title, description, dueDate, priority) {
-  this.type = type;
-  this.title = title;
-  this.description = description;
-  this.dueDate = dueDate;
-  this.priority = priority;
-}
-
-function CheckList(type, title) {
-  this.type = type;
-  this.title = title;
-  this.listItems = [];
-
-  function addListItem(item) {
-    this.listItems.push(item);
-  }
-}
 
 const addProjectDialog = document.querySelector(".add-project-dialog");
 
@@ -29,6 +12,28 @@ const selectSection = document.querySelector(".form-section");
 const projectType = document.getElementById("project-type");
 
 const addForm = document.getElementById("add-form");
+
+cancelBtn.addEventListener("click", function () {
+  closeDialog();
+});
+
+addBtns.forEach((btn) =>
+  btn.addEventListener("click", function () {
+    openDialog();
+  })
+);
+
+projectType.addEventListener("change", function () {
+  toggleFormHidden(selectSection, projectType.value);
+});
+
+function openDialog() {
+  addProjectDialog.showModal();
+}
+
+function closeDialog() {
+  addProjectDialog.close();
+}
 
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -67,25 +72,3 @@ addForm.addEventListener("submit", (e) => {
   addForm.submit();
   console.log(projects);
 });
-
-cancelBtn.addEventListener("click", function () {
-  closeDialog();
-});
-
-addBtns.forEach((btn) =>
-  btn.addEventListener("click", function () {
-    openDialog();
-  })
-);
-
-projectType.addEventListener("change", function () {
-  toggleFormHidden(selectSection, projectType.value);
-});
-
-function openDialog() {
-  addProjectDialog.showModal();
-}
-
-function closeDialog() {
-  addProjectDialog.close();
-}
