@@ -14,4 +14,6 @@ export function CheckList(type, title) {
   function addListItem(item) {
     this.listItems.push(item);
   }
+
+  return { addListItem };
 }

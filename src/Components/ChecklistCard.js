@@ -8,13 +8,41 @@ const ChecklistCard = (title) => {
     innerText: `${title}`,
   });
 
-  const list = customCreateElement("ul", { className: "checklist__card-list"});
+  const addListItem = (e) => {
+    const listItemValue = e.target.value;
+    const newListItem = customCreateElement("li", {
+      className: "list-item",
+      innerText: listItemValue,
+    });
 
-  const addItemBtn = customCreateElement("button", { className: "checklist__card-add-btn", innerText: "+"})
+    const deleteItemBtn = customCreateElement("button", {
+      className: "delete-item-btn",
+    });
+    deleteItemBtn.addEventListener("click", function (e) {
+      this.parentNode.remove();
+    });
+
+    newListItem.appendChild(deleteItemBtn);
+
+    list.appendChild(newListItem);
+    e.target.value = "";
+  }
+
+  const list = customCreateElement("ul", { className: "checklist__card-list" });
+
+  const listInput = customCreateElement("input", {
+    type: "text",
+    className: "list-input",
+  });
+
+  listInput.addEventListener("change", function (e) {
+    addListItem(e);
+  });
 
   card.appendChild(cardTitle);
   card.appendChild(list);
-  card.appendChild(addItemBtn);
+  card.appendChild(listInput);
+
   return card;
 };
 

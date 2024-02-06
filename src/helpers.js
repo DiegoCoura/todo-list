@@ -1,4 +1,4 @@
-export function toggleFormHidden(selectSection, selectedOption) {
+export const toggleFormHidden = (selectSection, selectedOption) => {
   if (selectedOption === "todo") {
     selectSection.classList.remove("hidden");
     selectSection.classList.add("shown");
@@ -6,9 +6,9 @@ export function toggleFormHidden(selectSection, selectedOption) {
     selectSection.classList.remove("shown");
     selectSection.classList.add("hidden");
   }
-}
+};
 
-export function fieldsReset(fieldsArray) {
+export const fieldsReset = (fieldsArray) => {
   fieldsArray.forEach((field) => {
     if (field.id === "project-type") {
       field.value = "checklist";
@@ -18,7 +18,7 @@ export function fieldsReset(fieldsArray) {
       field.value = "";
     }
   });
-}
+};
 
 export const customCreateElement = (elementTag, props = {}) => {
   const customElement = document.createElement(elementTag);

@@ -127,10 +127,16 @@ button {
   font-size: 24px;
 }
 
-.checklist__card-add-btn{
+.checklist__card-add-btn {
   position: absolute;
   bottom: 10px;
   right: 10px;
   font-size: 26px;
   background-color: #e3b718;
+}
+
+.delete-item-btn {
+  width: 50px;
+  height: 20px;
+  background-color: red;
 }
