@@ -11,8 +11,7 @@ export function CheckList(type, title) {
   this.title = title;
   this.listItems = [];
 
-  function addListItem(item) {
+  const addListItem = (item) => {
     this.listItems.push(item);
   }
-  
 }

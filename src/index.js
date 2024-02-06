@@ -1,6 +1,11 @@
 import "./style.css";
 import { Todo, CheckList } from "./constructors";
-import { fieldsReset, toggleFormHidden, customCreateElement, removeChildren } from "./helpers";
+import {
+  fieldsReset,
+  toggleFormHidden,
+  customCreateElement,
+  removeChildren,
+} from "./helpers";
 import ChecklistCard from "./Components/ChecklistCard";
 import TodoCard from "./Components/TodoCard";
 
@@ -38,20 +43,24 @@ const closeDialog = () => {
   addProjectDialog.close();
 };
 
-function displayCards() {
-  projects.forEach((project) => {
-    if (project.type === "checklist") {
-      heroSection.appendChild(ChecklistCard(project.title));
-    } else if (project.type === "todo") {
-      heroSection.appendChild(TodoCard());
-    }
-  });
+function displayCards(arrayOfCards) {
+  removeChildren(heroSection);
+
+  if (arrayOfCards) {
+    arrayOfCards.forEach((project) => {
+      if (project.type === "checklist") {
+        heroSection.appendChild(ChecklistCard(project.title));
+      } else if (project.type === "todo") {
+        heroSection.appendChild(TodoCard());
+      }
+    });
+  } else {
+    displayCards(projects);
+  }
 }
 
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
-
-  removeChildren(heroSection);
 
   let type = document.getElementById("project-type");
   let title = document.querySelector(".title");
@@ -90,10 +99,27 @@ addForm.addEventListener("submit", (e) => {
   console.log(projects);
 });
 
-// heroSection.appendChild(ChecklistCard("primeiro card"));
-// heroSection.appendChild(ChecklistCard("segundo card"));
+const filterProjects = (filter) => {
+  const filteredProjects = projects.filter((project) =>
+    filter ? project.type === filter : project
+  );
+  return filteredProjects;
+};
 
-// const addListItemBtn = document.querySelector(".checklist__card-add-btn");
-// addListItemBtn.addEventListener("click", function () {
-//   console.log(this);
-// });
+const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
+getAllProjectsBtn.addEventListener("click", function () {
+  displayCards();
+});
+
+const getCheklistsBtn = document.querySelector(
+  ".sidebar-navigation__checklists"
+);
+
+getCheklistsBtn.addEventListener("click", function () {
+  displayCards(filterProjects("checklist"));
+});
+
+const getTodosBtn = document.querySelector(".sidebar-navigation__todos");
+getTodosBtn.addEventListener("click", function () {
+  displayCards(filterProjects("todo"));
+});
