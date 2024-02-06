@@ -1,7 +1,8 @@
 import "./style.css";
 import { Todo, CheckList } from "./constructors";
-import { fieldsReset, toggleFormHidden, customCreateElement } from "./helpers";
+import { fieldsReset, toggleFormHidden, customCreateElement, removeChildren } from "./helpers";
 import ChecklistCard from "./Components/ChecklistCard";
+import TodoCard from "./Components/TodoCard";
 
 const projects = [];
 
@@ -37,8 +38,20 @@ const closeDialog = () => {
   addProjectDialog.close();
 };
 
+function displayCards() {
+  projects.forEach((project) => {
+    if (project.type === "checklist") {
+      heroSection.appendChild(ChecklistCard(project.title));
+    } else if (project.type === "todo") {
+      heroSection.appendChild(TodoCard());
+    }
+  });
+}
+
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  removeChildren(heroSection);
 
   let type = document.getElementById("project-type");
   let title = document.querySelector(".title");
@@ -55,6 +68,7 @@ addForm.addEventListener("submit", (e) => {
   if (type.value === "checklist") {
     fields.push(type, title);
     const newChecklist = new CheckList(type.value, title.value);
+
     projects.push(newChecklist);
   } else if (type.value === "todo") {
     fields.push(type, title, description, dueDate, priority);
@@ -69,14 +83,15 @@ addForm.addEventListener("submit", (e) => {
     projects.push(newTodo);
   }
 
+  displayCards();
   fieldsReset(fields);
   toggleFormHidden(selectSection, projectType.value);
   addForm.submit();
   console.log(projects);
 });
 
-heroSection.appendChild(ChecklistCard("primeiro card"));
-heroSection.appendChild(ChecklistCard("segundo card"));
+// heroSection.appendChild(ChecklistCard("primeiro card"));
+// heroSection.appendChild(ChecklistCard("segundo card"));
 
 // const addListItemBtn = document.querySelector(".checklist__card-add-btn");
 // addListItemBtn.addEventListener("click", function () {

@@ -29,3 +29,9 @@ export const customCreateElement = (elementTag, props = {}) => {
 
   return customElement;
 };
+
+export const removeChildren = (parent) => {
+  while(parent.firstChild){
+    parent.removeChild(parent.lastChild);
+  }
+} 
