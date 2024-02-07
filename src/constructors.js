@@ -11,4 +11,15 @@ export function CheckList(type, title) {
   this.title = title;
   this.listItems = [];
 
+  this.addListItem = function (item) {
+    this.listItems.push(item);
+  };
+
+  this.removeListItem = function (itemIndex) {
+    let filteredList = this.listItems.filter((item, index) => {
+      index !== itemIndex;
+    });
+    console.log(filteredList);
+    this.listItems = filteredList;
+  };
 }

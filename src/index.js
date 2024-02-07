@@ -155,4 +155,13 @@ getTodosBtn.addEventListener("click", function () {
   displayCards(filterProjects("todo"));
 });
 
+const testChecklist = new CheckList("checklist", "Teste Checklist");
+console.log(testChecklist)
 
+testChecklist.addListItem( { title:"novo item"} )
+console.log(testChecklist)
+testChecklist.addListItem( { title:"novo item1"} )
+console.log(testChecklist)
+testChecklist.addListItem( { title:"novo item2"} )
+
+console.log(testChecklist)
