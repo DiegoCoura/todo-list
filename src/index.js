@@ -46,47 +46,51 @@ const closeDialog = () => {
 function displayCards(arrayOfCards) {
   removeChildren(heroSection);
   if (arrayOfCards) {
-    arrayOfCards.forEach(
-      (project, index, removeListItem = { removeListItem }) => {
-        if (project.type === "checklist") {
-          heroSection.appendChild(
-            ChecklistCard(project.title, project.listItems, index, projects)
-          );
-        } else if (project.type === "todo") {
-          heroSection.appendChild(TodoCard(index));
-        }
+    arrayOfCards.forEach((project, index) => {
+      if (project.type === "checklist") {
+        heroSection.appendChild(
+          ChecklistCard(
+            project.title,
+            project.listItems,
+            index,
+            project.addListItem,
+            project.removeListItem
+          )
+        );
+      } else if (project.type === "todo") {
+        heroSection.appendChild(TodoCard(index));
       }
-    );
+    });
   } else {
     displayCards(projects);
   }
 }
 
-const removeListItem = (index) => {
-  console.log(projects[index]);
-};
+// const removeListItem = (index) => {
+//   console.log(projects[index]);
+// };
 
-const addListItem = (newItem) => {
-  this.listItems.push(newItem);
-};
+// const addListItem = (newItem) => {
+//   this.listItems.push(newItem);
+// };
 
-const addListInputs = () => {
-  const allListInputs = document.querySelectorAll(".list-input");
+// const addListInputs = () => {
+//   const allListInputs = document.querySelectorAll(".list-input");
 
-  console.log(allListInputs);
-  
-  allListInputs.forEach((listInput) => {
-    // const listInput = customCreateElement("input", {
-    //   type: "text",
-    //   className: "list-input",
-    // });
-    console.log(listInput)
-    listInput.addEventListener("change", function (e) {
-      console.log(e.target.parentNode.id);
-      addListItem(e);
-    });
-  });
-};
+//   console.log(allListInputs);
+
+//   allListInputs.forEach((listInput) => {
+//     // const listInput = customCreateElement("input", {
+//     //   type: "text",
+//     //   className: "list-input",
+//     // });
+//     console.log(listInput)
+//     listInput.addEventListener("change", function (e) {
+//       console.log(e.target.parentNode.id);
+//       addListItem(e);
+//     });
+//   });
+// };
 // addListInputs();
 
 addForm.addEventListener("submit", (e) => {
@@ -108,7 +112,7 @@ addForm.addEventListener("submit", (e) => {
     fields.push(type, title);
     const newChecklist = new CheckList(type.value, title.value);
 
-    addListInputs();
+    // addListInputs();
     projects.push(newChecklist);
   } else if (type.value === "todo") {
     fields.push(type, title, description, dueDate, priority);
@@ -156,12 +160,31 @@ getTodosBtn.addEventListener("click", function () {
 });
 
 const testChecklist = new CheckList("checklist", "Teste Checklist");
-console.log(testChecklist)
 
-testChecklist.addListItem( { title:"novo item"} )
-console.log(testChecklist)
-testChecklist.addListItem( { title:"novo item1"} )
-console.log(testChecklist)
-testChecklist.addListItem( { title:"novo item2"} )
+testChecklist.addListItem("oi");
+testChecklist.addListItem("oi2");
+testChecklist.addListItem("oi3");
+testChecklist.addListItem("oi4");
 
-console.log(testChecklist)
+projects.push(testChecklist);
+displayCards();
+
+const deleteListItem = (e, deleteIndex) => {
+  const currentDeleteBtn = e.target;
+  const parentCardIndex = Number(
+    currentDeleteBtn.closest(".checklist__card").id.split("-")[1]
+  );  
+  projects[parentCardIndex].removeListItem(deleteIndex);
+
+  displayCards()
+};
+
+const deleteListItemBtns = document.querySelectorAll("[data-delete-index]");
+
+deleteListItemBtns.forEach((btn) => {
+  btn.addEventListener("click", function (e) {
+    const itemListIndex = Number(this.dataset.deleteIndex);
+    console.log("delete clicked")
+    deleteListItem(e, itemListIndex);
+  });
+});
