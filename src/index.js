@@ -45,19 +45,49 @@ const closeDialog = () => {
 
 function displayCards(arrayOfCards) {
   removeChildren(heroSection);
-
   if (arrayOfCards) {
-    arrayOfCards.forEach((project) => {
-      if (project.type === "checklist") {
-        heroSection.appendChild(ChecklistCard(project.title));
-      } else if (project.type === "todo") {
-        heroSection.appendChild(TodoCard());
+    arrayOfCards.forEach(
+      (project, index, removeListItem = { removeListItem }) => {
+        if (project.type === "checklist") {
+          heroSection.appendChild(
+            ChecklistCard(project.title, project.listItems, index, projects)
+          );
+        } else if (project.type === "todo") {
+          heroSection.appendChild(TodoCard(index));
+        }
       }
-    });
+    );
   } else {
     displayCards(projects);
   }
 }
+
+const removeListItem = (index) => {
+  console.log(projects[index]);
+};
+
+const addListItem = (newItem) => {
+  this.listItems.push(newItem);
+};
+
+const addListInputs = () => {
+  const allListInputs = document.querySelectorAll(".list-input");
+
+  console.log(allListInputs);
+  
+  allListInputs.forEach((listInput) => {
+    // const listInput = customCreateElement("input", {
+    //   type: "text",
+    //   className: "list-input",
+    // });
+    console.log(listInput)
+    listInput.addEventListener("change", function (e) {
+      console.log(e.target.parentNode.id);
+      addListItem(e);
+    });
+  });
+};
+// addListInputs();
 
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -78,6 +108,7 @@ addForm.addEventListener("submit", (e) => {
     fields.push(type, title);
     const newChecklist = new CheckList(type.value, title.value);
 
+    addListInputs();
     projects.push(newChecklist);
   } else if (type.value === "todo") {
     fields.push(type, title, description, dueDate, priority);
@@ -123,3 +154,5 @@ const getTodosBtn = document.querySelector(".sidebar-navigation__todos");
 getTodosBtn.addEventListener("click", function () {
   displayCards(filterProjects("todo"));
 });
+
+
