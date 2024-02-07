@@ -57,22 +57,16 @@ const ChecklistCard = (
   //   e.target.value = "";
   // };
 
-  // const listInput = customCreateElement("input", {
-  //   type: "text",
-  //   className: "list-input",
-  // });
-
-  // listInput.addEventListener("change", function (e) {
-  //   const cardIndex = e.target.parentNode.id.split("-")[1];
-  //   addListItem("teste item")
-  //   // addListItem(e, cardIndex);
-  // });
-  
+  const listInput = customCreateElement("input", {
+    type: "text",
+    className: "list-input",
+  });
+  listInput.setAttribute("data-input-item", `${cardIndex}`) 
 
 
   card.appendChild(cardTitle);
   card.appendChild(list);
-  // card.appendChild(listInput);
+  card.appendChild(listInput);
 
   return card;
 };

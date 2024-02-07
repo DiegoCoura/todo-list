@@ -3,7 +3,6 @@ import { Todo, CheckList } from "./constructors";
 import {
   fieldsReset,
   toggleFormHidden,
-  customCreateElement,
   removeChildren,
 } from "./helpers";
 import ChecklistCard from "./Components/ChecklistCard";
@@ -43,6 +42,45 @@ const closeDialog = () => {
   addProjectDialog.close();
 };
 
+
+const deleteListItem = (e, deleteIndex) => {
+  const currentDeleteBtn = e.target;
+  const parentCardIndex = Number(
+    currentDeleteBtn.closest(".checklist__card").id.split("-")[1]
+  );
+  projects[parentCardIndex].removeListItem(deleteIndex);
+
+  displayCards();
+};
+
+const addNewListItem = (e, cardIndex, itemText) => {
+  projects[cardIndex].addListItem(itemText)
+  console.log(projects[cardIndex].listItems)
+}
+const grabInputs = () => {
+  
+  const deleteListItemBtns = document.querySelectorAll("[data-delete-index]");
+  
+  deleteListItemBtns.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      const itemListIndex = Number(this.dataset.deleteIndex);
+      deleteListItem(e, itemListIndex);
+    });
+  });
+
+  const listInputs = document.querySelectorAll("[data-input-item]");
+  listInputs.forEach((input) => {
+    input.addEventListener("change", function (e) {
+      const inputCardIndex = Number(this.dataset.inputItem);
+      const newItemText = e.target.value;
+
+      projects[inputCardIndex].addListItem(newItemText);
+      console.log(projects[inputCardIndex].listItems)
+      // addNewListItem(e, inputCardIndex, newItemText);
+    })
+  })
+};
+
 function displayCards(arrayOfCards) {
   removeChildren(heroSection);
   if (arrayOfCards) {
@@ -64,34 +102,8 @@ function displayCards(arrayOfCards) {
   } else {
     displayCards(projects);
   }
+  // grabInputs();
 }
-
-// const removeListItem = (index) => {
-//   console.log(projects[index]);
-// };
-
-// const addListItem = (newItem) => {
-//   this.listItems.push(newItem);
-// };
-
-// const addListInputs = () => {
-//   const allListInputs = document.querySelectorAll(".list-input");
-
-//   console.log(allListInputs);
-
-//   allListInputs.forEach((listInput) => {
-//     // const listInput = customCreateElement("input", {
-//     //   type: "text",
-//     //   className: "list-input",
-//     // });
-//     console.log(listInput)
-//     listInput.addEventListener("change", function (e) {
-//       console.log(e.target.parentNode.id);
-//       addListItem(e);
-//     });
-//   });
-// };
-// addListInputs();
 
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -128,10 +140,12 @@ addForm.addEventListener("submit", (e) => {
   }
 
   displayCards();
+  grabInputs();
   fieldsReset(fields);
   toggleFormHidden(selectSection, projectType.value);
   addForm.submit();
   console.log(projects);
+
 });
 
 const filterProjects = (filter) => {
@@ -164,27 +178,8 @@ const testChecklist = new CheckList("checklist", "Teste Checklist");
 testChecklist.addListItem("oi");
 testChecklist.addListItem("oi2");
 testChecklist.addListItem("oi3");
-testChecklist.addListItem("oi4");
 
 projects.push(testChecklist);
 displayCards();
 
-const deleteListItem = (e, deleteIndex) => {
-  const currentDeleteBtn = e.target;
-  const parentCardIndex = Number(
-    currentDeleteBtn.closest(".checklist__card").id.split("-")[1]
-  );  
-  projects[parentCardIndex].removeListItem(deleteIndex);
 
-  displayCards()
-};
-
-const deleteListItemBtns = document.querySelectorAll("[data-delete-index]");
-
-deleteListItemBtns.forEach((btn) => {
-  btn.addEventListener("click", function (e) {
-    const itemListIndex = Number(this.dataset.deleteIndex);
-    console.log("delete clicked")
-    deleteListItem(e, itemListIndex);
-  });
-});
