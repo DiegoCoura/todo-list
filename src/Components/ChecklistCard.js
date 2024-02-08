@@ -10,19 +10,24 @@ const ChecklistCard = (title, listItems, cardIndex) => {
     className: "checklist__card-title",
     innerText: `${title}`,
   });
-  card.appendChild(cardTitle);
+  
 
   const list = customCreateElement("ul", { className: "checklist__card-list" });
 
   listItems.forEach((item, index) => {
     const newListItem = customCreateElement("li", {
       className: "list-item",
-      innerText: item,
+      innerText: item.text,
     });
     const deleteItemBtn = customCreateElement("button", {
       className: "delete-item-btn",
     });
     deleteItemBtn.setAttribute("data-delete-index", `${index}`);
+
+    const newCheckBox = customCreateElement("input", { type:"checkbox", className: "list-item-checkbox" });
+    newCheckBox.setAttribute("data-check-index", `${index}`);
+
+    newListItem.appendChild(newCheckBox);
     newListItem.appendChild(deleteItemBtn);
     list.appendChild(newListItem);
   });
@@ -33,6 +38,7 @@ const ChecklistCard = (title, listItems, cardIndex) => {
   });
   listInput.setAttribute("data-input-item", `${cardIndex}`);
 
+  card.appendChild(cardTitle);
   card.appendChild(list);
   card.appendChild(listInput);
 

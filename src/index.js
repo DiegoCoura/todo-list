@@ -47,9 +47,22 @@ const deleteListItem = (e, deleteIndex) => {
 };
 
 const addNewListItem = (e, cardIndex, itemText) => {
-  projects[cardIndex].addListItem(itemText);
+  const newItem = {
+    checked: false,
+    text: itemText
+  }
+  projects[cardIndex].addListItem(newItem);
+  console.log(projects)
 
   displayCards();
+};
+
+const toggleCheckItem = (e, itemIndex) => {
+  const parentCardIndex = Number(
+    e.target.closest(".checklist__card").id.split("-")[1]
+  );
+
+  console.log(itemIndex);
 };
 
 function grabInputs() {
@@ -59,6 +72,16 @@ function grabInputs() {
     btn.addEventListener("click", function (e) {
       const itemListIndex = Number(this.dataset.deleteIndex);
       deleteListItem(e, itemListIndex);
+    });
+  });
+
+  const listCheckBoxes = document.querySelectorAll("[data-check-index]");
+
+  listCheckBoxes.forEach((checkBox) => {
+    checkBox.addEventListener("change", function (e) {
+      const itemListCheckIndex = Number(this.dataset.checkIndex);
+
+      toggleCheckItem(e, itemListCheckIndex);
     });
   });
 
