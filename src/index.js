@@ -1,10 +1,6 @@
 import "./style.css";
 import { Todo, CheckList } from "./constructors";
-import {
-  fieldsReset,
-  toggleFormHidden,
-  removeChildren,
-} from "./helpers";
+import { fieldsReset, toggleFormHidden, removeChildren } from "./helpers";
 import ChecklistCard from "./Components/ChecklistCard";
 import TodoCard from "./Components/TodoCard";
 
@@ -42,25 +38,23 @@ const closeDialog = () => {
   addProjectDialog.close();
 };
 
-
 const deleteListItem = (e, deleteIndex) => {
-  const currentDeleteBtn = e.target;
   const parentCardIndex = Number(
-    currentDeleteBtn.closest(".checklist__card").id.split("-")[1]
+    e.target.closest(".checklist__card").id.split("-")[1]
   );
   projects[parentCardIndex].removeListItem(deleteIndex);
-
   displayCards();
 };
 
 const addNewListItem = (e, cardIndex, itemText) => {
-  projects[cardIndex].addListItem(itemText)
-  console.log(projects[cardIndex].listItems)
-}
-const grabInputs = () => {
-  
+  projects[cardIndex].addListItem(itemText);
+
+  displayCards();
+};
+
+function grabInputs() {
   const deleteListItemBtns = document.querySelectorAll("[data-delete-index]");
-  
+
   deleteListItemBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
       const itemListIndex = Number(this.dataset.deleteIndex);
@@ -69,17 +63,16 @@ const grabInputs = () => {
   });
 
   const listInputs = document.querySelectorAll("[data-input-item]");
-  listInputs.forEach((input) => {
-    input.addEventListener("change", function (e) {
+
+  listInputs.forEach((item) => {
+    item.addEventListener("change", function (e) {
       const inputCardIndex = Number(this.dataset.inputItem);
       const newItemText = e.target.value;
 
-      projects[inputCardIndex].addListItem(newItemText);
-      console.log(projects[inputCardIndex].listItems)
-      // addNewListItem(e, inputCardIndex, newItemText);
-    })
-  })
-};
+      addNewListItem(e, inputCardIndex, newItemText);
+    });
+  });
+}
 
 function displayCards(arrayOfCards) {
   removeChildren(heroSection);
@@ -87,22 +80,25 @@ function displayCards(arrayOfCards) {
     arrayOfCards.forEach((project, index) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          ChecklistCard(
-            project.title,
-            project.listItems,
-            index,
-            project.addListItem,
-            project.removeListItem
-          )
+          ChecklistCard(project.title, project.listItems, index)
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(index));
       }
     });
   } else {
-    displayCards(projects);
+    projects.forEach((project, index) => {
+      if (project.type === "checklist") {
+        heroSection.appendChild(
+          ChecklistCard(project.title, project.listItems, index)
+        );
+      } else if (project.type === "todo") {
+        heroSection.appendChild(TodoCard(index));
+      }
+    });
   }
-  // grabInputs();
+
+  grabInputs();
 }
 
 addForm.addEventListener("submit", (e) => {
@@ -123,8 +119,6 @@ addForm.addEventListener("submit", (e) => {
   if (type.value === "checklist") {
     fields.push(type, title);
     const newChecklist = new CheckList(type.value, title.value);
-
-    // addListInputs();
     projects.push(newChecklist);
   } else if (type.value === "todo") {
     fields.push(type, title, description, dueDate, priority);
@@ -139,13 +133,11 @@ addForm.addEventListener("submit", (e) => {
     projects.push(newTodo);
   }
 
-  displayCards();
-  grabInputs();
   fieldsReset(fields);
   toggleFormHidden(selectSection, projectType.value);
   addForm.submit();
-  console.log(projects);
 
+  displayCards();
 });
 
 const filterProjects = (filter) => {
@@ -173,13 +165,4 @@ getTodosBtn.addEventListener("click", function () {
   displayCards(filterProjects("todo"));
 });
 
-const testChecklist = new CheckList("checklist", "Teste Checklist");
-
-testChecklist.addListItem("oi");
-testChecklist.addListItem("oi2");
-testChecklist.addListItem("oi3");
-
-projects.push(testChecklist);
-displayCards();
-
-
+// window.addEventListener("load", grabInputs);

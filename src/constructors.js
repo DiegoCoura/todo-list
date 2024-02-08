@@ -18,9 +18,8 @@ export function CheckList(type, title) {
   this.removeListItem = function (itemIndex) {
     let filteredList = this.listItems.filter((item, index) => {
       return index !== itemIndex;
-    });    
-    
+    });
+
     this.listItems = filteredList;
-    
   };
 }
