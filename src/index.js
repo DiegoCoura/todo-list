@@ -48,21 +48,20 @@ const deleteListItem = (e, deleteIndex) => {
 
 const addNewListItem = (e, cardIndex, itemText) => {
   const newItem = {
-    checked: false,
-    text: itemText
-  }
+    isChecked: false,
+    text: itemText,
+  };
   projects[cardIndex].addListItem(newItem);
-  console.log(projects)
 
   displayCards();
 };
 
-const toggleCheckItem = (e, itemIndex) => {
+const toggleCheck = (e, itemIndex) => {
   const parentCardIndex = Number(
     e.target.closest(".checklist__card").id.split("-")[1]
   );
-
-  console.log(itemIndex);
+  const newState = e.target.checked;
+  projects[parentCardIndex].toggleCheckItem(itemIndex, newState);
 };
 
 function grabInputs() {
@@ -81,7 +80,7 @@ function grabInputs() {
     checkBox.addEventListener("change", function (e) {
       const itemListCheckIndex = Number(this.dataset.checkIndex);
 
-      toggleCheckItem(e, itemListCheckIndex);
+      toggleCheck(e, itemListCheckIndex);
     });
   });
 
@@ -187,5 +186,3 @@ const getTodosBtn = document.querySelector(".sidebar-navigation__todos");
 getTodosBtn.addEventListener("click", function () {
   displayCards(filterProjects("todo"));
 });
-
-// window.addEventListener("load", grabInputs);

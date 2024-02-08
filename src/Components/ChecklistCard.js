@@ -10,7 +10,6 @@ const ChecklistCard = (title, listItems, cardIndex) => {
     className: "checklist__card-title",
     innerText: `${title}`,
   });
-  
 
   const list = customCreateElement("ul", { className: "checklist__card-list" });
 
@@ -24,7 +23,13 @@ const ChecklistCard = (title, listItems, cardIndex) => {
     });
     deleteItemBtn.setAttribute("data-delete-index", `${index}`);
 
-    const newCheckBox = customCreateElement("input", { type:"checkbox", className: "list-item-checkbox" });
+    const newCheckBox = customCreateElement("input", {
+      type: "checkbox",
+      value: "is-checked",
+      checked: item.isChecked,
+      className: "list-item-checkbox",
+    });
+
     newCheckBox.setAttribute("data-check-index", `${index}`);
 
     newListItem.appendChild(newCheckBox);

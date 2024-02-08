@@ -22,4 +22,8 @@ export function CheckList(type, title) {
 
     this.listItems = filteredList;
   };
+
+  this.toggleCheckItem = function (index, state){
+    this.listItems[index].isChecked = state
+  }
 }
