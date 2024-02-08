@@ -56,12 +56,24 @@ const addNewListItem = (e, cardIndex, itemText) => {
   displayCards();
 };
 
-const toggleCheck = (e, itemIndex) => {
+const toggleCheckState = (e, itemIndex) => {
   const parentCardIndex = Number(
     e.target.closest(".checklist__card").id.split("-")[1]
   );
   const newState = e.target.checked;
   projects[parentCardIndex].toggleCheckItem(itemIndex, newState);
+
+  const listItemParent = e.target.closest(".list-item");
+
+  toggleCheckStyle(newState, listItemParent);
+};
+
+const toggleCheckStyle = (newState, listItemParent) => {
+  if (newState === true) {
+    listItemParent.classList.add("item-checked");
+  } else {
+    listItemParent.classList.remove("item-checked");
+  }
 };
 
 function grabInputs() {
@@ -80,7 +92,7 @@ function grabInputs() {
     checkBox.addEventListener("change", function (e) {
       const itemListCheckIndex = Number(this.dataset.checkIndex);
 
-      toggleCheck(e, itemListCheckIndex);
+      toggleCheckState(e, itemListCheckIndex);
     });
   });
 

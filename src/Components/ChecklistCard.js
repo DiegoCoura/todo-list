@@ -18,6 +18,7 @@ const ChecklistCard = (title, listItems, cardIndex) => {
       className: "list-item",
       innerText: item.text,
     });
+    
     const deleteItemBtn = customCreateElement("button", {
       className: "delete-item-btn",
     });
@@ -27,7 +28,7 @@ const ChecklistCard = (title, listItems, cardIndex) => {
       type: "checkbox",
       value: "is-checked",
       checked: item.isChecked,
-      className: "list-item-checkbox",
+      className: "list-item-checkbox"
     });
 
     newCheckBox.setAttribute("data-check-index", `${index}`);

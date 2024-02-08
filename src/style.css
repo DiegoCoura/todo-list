@@ -135,6 +135,11 @@ button {
   background-color: #e3b718;
 }
 
+.item-checked {
+  text-decoration: line-through;
+  opacity: 50%;
+}
+
 .delete-item-btn {
   width: 50px;
   height: 20px;
