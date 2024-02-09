@@ -63,7 +63,7 @@ const toggleCheckState = (e, itemIndex) => {
   const newState = e.target.checked;
   projects[parentCardIndex].toggleCheckItem(itemIndex, newState);
 
-  const listItemParent = e.target.closest(".list-item");
+  const listItemParent = e.target.closest(".checkbox-container");
 
   toggleCheckStyle(newState, listItemParent);
 };

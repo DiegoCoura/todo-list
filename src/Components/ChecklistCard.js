@@ -16,13 +16,11 @@ const ChecklistCard = (title, listItems, cardIndex) => {
   listItems.forEach((item, index) => {
     const newListItem = customCreateElement("li", {
       className: "list-item",
-      innerText: item.text,
     });
-    
-    const deleteItemBtn = customCreateElement("button", {
-      className: "delete-item-btn",
-    });
-    deleteItemBtn.setAttribute("data-delete-index", `${index}`);
+
+    const checkTextDiv = customCreateElement("div", {
+      className: "checkbox-container"
+    })
 
     const newCheckBox = customCreateElement("input", {
       type: "checkbox",
@@ -33,7 +31,20 @@ const ChecklistCard = (title, listItems, cardIndex) => {
 
     newCheckBox.setAttribute("data-check-index", `${index}`);
 
-    newListItem.appendChild(newCheckBox);
+
+    const itemText = customCreateElement("p", { className: "list-item-text", innerText: item.text })
+    
+    const deleteItemBtn = customCreateElement("button", {
+      className: "delete-item-btn",
+    });
+    deleteItemBtn.setAttribute("data-delete-index", `${index}`);
+    const trashCanIcon = customCreateElement("i", { className: "fa-solid fa-trash-can"})
+    deleteItemBtn.appendChild(trashCanIcon)
+
+    checkTextDiv.appendChild(newCheckBox);
+    checkTextDiv.appendChild(itemText);
+    
+    newListItem.appendChild(checkTextDiv)
     newListItem.appendChild(deleteItemBtn);
     list.appendChild(newListItem);
   });

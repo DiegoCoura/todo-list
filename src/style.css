@@ -7,6 +7,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+*:focus {
+  outline: none;
+}
+
 button {
   cursor: pointer;
 }
@@ -120,19 +124,45 @@ button {
   border-radius: 8px;
   padding: 10px 15px;
   position: relative;
+  overflow: overlay;
 }
 
 .checklist__card-title {
   text-align: center;
   font-size: 24px;
+  margin-bottom: 10px;
 }
 
-.checklist__card-add-btn {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 26px;
-  background-color: #e3b718;
+.list-item {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.list-item-checkbox {
+  appearance: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #3ba395;
+  cursor: pointer;
+}
+
+.list-item-checkbox:checked {
+  height: 1.5rem;
+  width: 1.5rem;
+  display: block;
+  background: url("https://bscottnz.github.io/todo/img/check.png"), #6dbbb1;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .item-checked {
@@ -141,12 +171,19 @@ button {
 }
 
 .delete-item-btn {
-  width: 50px;
-  height: 20px;
-  background-color: red;
+  background-color: transparent;
+  color: red;
+  font-size: 20px;
 }
 
-.todo__card{
+.list-input {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 15px;
+  padding: 10px;
+}
+
+.todo__card {
   background-color: #ece7b5;
   border-radius: 8px;
   padding: 10px 15px;
