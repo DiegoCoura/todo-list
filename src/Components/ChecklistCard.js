@@ -1,10 +1,11 @@
 import { customCreateElement } from "../helpers";
 
-const ChecklistCard = (title, listItems, cardIndex) => {
+const ChecklistCard = (title, listItems, cardIndex, bgColor) => {
   const card = customCreateElement("div", {
     id: `checklist-${cardIndex}`,
     className: "checklist__card",
   });
+  card.style.backgroundColor = bgColor;
 
   const cardTitle = customCreateElement("h3", {
     className: "checklist__card-title",
@@ -19,32 +20,36 @@ const ChecklistCard = (title, listItems, cardIndex) => {
     });
 
     const checkTextDiv = customCreateElement("div", {
-      className: "checkbox-container"
-    })
+      className: "checkbox-container",
+    });
 
     const newCheckBox = customCreateElement("input", {
       type: "checkbox",
       value: "is-checked",
       checked: item.isChecked,
-      className: "list-item-checkbox"
+      className: "list-item-checkbox",
     });
 
     newCheckBox.setAttribute("data-check-index", `${index}`);
 
+    const itemText = customCreateElement("p", {
+      className: "list-item-text",
+      innerText: item.text,
+    });
 
-    const itemText = customCreateElement("p", { className: "list-item-text", innerText: item.text })
-    
     const deleteItemBtn = customCreateElement("button", {
       className: "delete-item-btn",
     });
     deleteItemBtn.setAttribute("data-delete-index", `${index}`);
-    const trashCanIcon = customCreateElement("i", { className: "fa-solid fa-trash-can"})
-    deleteItemBtn.appendChild(trashCanIcon)
+    const trashCanIcon = customCreateElement("i", {
+      className: "fa-solid fa-trash-can",
+    });
+    deleteItemBtn.appendChild(trashCanIcon);
 
     checkTextDiv.appendChild(newCheckBox);
     checkTextDiv.appendChild(itemText);
-    
-    newListItem.appendChild(checkTextDiv)
+
+    newListItem.appendChild(checkTextDiv);
     newListItem.appendChild(deleteItemBtn);
     list.appendChild(newListItem);
   });
@@ -55,9 +60,35 @@ const ChecklistCard = (title, listItems, cardIndex) => {
   });
   listInput.setAttribute("data-input-item", `${cardIndex}`);
 
+  const colorButton = customCreateElement("button", {
+    className: "toggle-color-btn",
+  });
+  colorButton.style.backgroundColor = bgColor;
+
+  const colorButtonContainer = customCreateElement("div", {
+    className: "toggle-color-container",
+  });
+
+  const colorOptionsContainer = customCreateElement("div", {
+    className: "color-options-container hidden",
+  });
+
+  for (let i = 1; i < 5; i++) {
+    const colorOptionBtn = customCreateElement("button", {
+      id: `color-option-${i}`,
+      className: "color-option-btn",
+    });
+
+    colorOptionsContainer.appendChild(colorOptionBtn);
+  }
+
+  colorButtonContainer.appendChild(colorOptionsContainer);
+  colorButtonContainer.appendChild(colorButton);
+
   card.appendChild(cardTitle);
   card.appendChild(list);
   card.appendChild(listInput);
+  card.appendChild(colorButtonContainer);
 
   return card;
 };

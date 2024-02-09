@@ -76,6 +76,33 @@ const toggleCheckStyle = (newState, listItemParent) => {
   }
 };
 
+const toggleColorOptions = (e) => {
+  const colorOptionsContainer = e.target.previousElementSibling;
+  if (colorOptionsContainer.classList.contains("hidden")) {
+    colorOptionsContainer.classList.remove("hidden");
+  } else {
+    colorOptionsContainer.classList.add("hidden");
+  }
+};
+
+const changeCardColor = (e) => {
+  const cardIndex = e.target.closest(".checklist__card").id.split("-")[1];
+  const parentCard = e.target.closest(".checklist__card");
+  const btnId = e.target.id.split("-")[2];
+  let bgColor;
+  btnId === "1"
+    ? (bgColor = "#F7D15F")
+    : btnId === "2"
+    ? (bgColor = "#FCA397")
+    : btnId === "3"
+    ? (bgColor = "#79D997")
+    : (bgColor = "#D1A8FF");
+
+  parentCard.style.backgroundColor = bgColor;
+  projects[cardIndex].changeBgColor(bgColor);
+  console.log(projects[cardIndex]);
+};
+
 function grabInputs() {
   const deleteListItemBtns = document.querySelectorAll("[data-delete-index]");
 
@@ -106,6 +133,20 @@ function grabInputs() {
       addNewListItem(e, inputCardIndex, newItemText);
     });
   });
+
+  const toggleColorBtnsList = document.querySelectorAll(".toggle-color-btn");
+  toggleColorBtnsList.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      toggleColorOptions(e);
+    });
+  });
+
+  const colorOptionsBtnsList = document.querySelectorAll(".color-option-btn");
+  colorOptionsBtnsList.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      changeCardColor(e);
+    });
+  });
 }
 
 function displayCards(arrayOfCards) {
@@ -114,7 +155,12 @@ function displayCards(arrayOfCards) {
     arrayOfCards.forEach((project, index) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          ChecklistCard(project.title, project.listItems, index)
+          ChecklistCard(
+            project.title,
+            project.listItems,
+            index,
+            project.bgColor
+          )
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(index));
@@ -124,7 +170,12 @@ function displayCards(arrayOfCards) {
     projects.forEach((project, index) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          ChecklistCard(project.title, project.listItems, index)
+          ChecklistCard(
+            project.title,
+            project.listItems,
+            index,
+            project.bgColor
+          )
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(index));

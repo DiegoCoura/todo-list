@@ -9,6 +9,7 @@ export function Todo(type, title, description, dueDate, priority) {
 export function CheckList(type, title) {
   this.type = type;
   this.title = title;
+  this.bgColor = "#F7D15F";
   this.listItems = [];
 
   this.addListItem = function (item) {
@@ -23,7 +24,11 @@ export function CheckList(type, title) {
     this.listItems = filteredList;
   };
 
-  this.toggleCheckItem = function (index, state){
-    this.listItems[index].isChecked = state
-  }
+  this.toggleCheckItem = function (index, state) {
+    this.listItems[index].isChecked = state;
+  };
+  
+  this.changeBgColor = function (color) {
+    this.bgColor = color;
+  };
 }
