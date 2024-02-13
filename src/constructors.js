@@ -1,3 +1,5 @@
+const DEFAULT_BG_COLOR = "#F7D15F";
+
 export function Todo(type, title, description, dueDate, priority) {
   this.type = type;
   this.title = title;
@@ -9,7 +11,7 @@ export function Todo(type, title, description, dueDate, priority) {
 export function CheckList(type, title) {
   this.type = type;
   this.title = title;
-  this.bgColor = "#F7D15F";
+  this.bgColor = DEFAULT_BG_COLOR;
   this.listItems = [];
 
   this.addListItem = function (item) {
