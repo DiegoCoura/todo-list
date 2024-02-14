@@ -3,6 +3,7 @@ import { Todo, CheckList } from "./constructors";
 import { fieldsReset, toggleFormHidden, removeChildren } from "./helpers";
 import ChecklistCard from "./Components/ChecklistCard";
 import TodoCard from "./Components/TodoCard";
+import ProjectListDisplay from "./Components/ProjectListDisplay";
 
 let projects = [];
 let PROJECTS_ID_COUNTER = 0;
@@ -200,6 +201,11 @@ function displayCards() {
   grabInputs();
 }
 
+const updateProjectList = () => {
+  const listTitles = projects.map(({ title }) => ({ title }));
+  ProjectListDisplay(listTitles);
+};
+
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -240,6 +246,7 @@ addForm.addEventListener("submit", (e) => {
     PROJECTS_ID_COUNTER++;
   }
 
+  updateProjectList();
   fieldsReset(fields);
   toggleFormHidden(selectSection, projectType.value);
   addForm.submit();
