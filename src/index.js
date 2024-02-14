@@ -36,6 +36,7 @@ projectType.addEventListener("change", function () {
 
 const openDialog = () => {
   addProjectDialog.showModal();
+  toggleFormHidden(selectSection, projectType.value);
 };
 
 const closeDialog = () => {
@@ -109,7 +110,7 @@ const changeCardColor = (e) => {
 function grabInputs() {
   const deleteCardBtns = document.querySelectorAll(".delete-card-btn");
   deleteCardBtns.forEach((btn) => {
-    btn.addEventListener("click", function (e) {
+    btn.addEventListener("click", function () {
       const parentCardId = Number(this.dataset.deleteCard);
       deleteProject(parentCardId);
     });
