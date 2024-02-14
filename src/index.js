@@ -205,7 +205,7 @@ addForm.addEventListener("submit", (e) => {
 
   let type = document.getElementById("project-type");
   let title = document.querySelector(".title");
-  let description = document.querySelector(".description");
+  let description = document.querySelector(".description-text-area");
   let dueDate = document.querySelector(".due-date");
   let priority = document.getElementById("project-priority");
 
