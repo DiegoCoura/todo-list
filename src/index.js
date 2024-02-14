@@ -48,7 +48,13 @@ const deleteListItem = (e, deleteIndex) => {
   const parentCardId = Number(
     e.target.closest(".checklist__card").id.split("-")[1]
   );
-  projects[parentCardId].removeListItem(deleteIndex);
+
+  projects.forEach((project) => {
+    if (project.id === parentCardId) {
+      project.removeListItem(deleteIndex);
+    }
+  });
+
   displayCards();
 };
 
@@ -57,7 +63,12 @@ const addNewListItem = (e, cardId, itemText) => {
     isChecked: false,
     text: itemText,
   };
-  projects[cardId].addListItem(newItem);
+
+  projects.forEach((project) => {
+    if (project.id === cardId) {
+      project.addListItem(newItem);
+    }
+  });
 
   displayCards();
 };
@@ -67,7 +78,12 @@ const toggleCheckState = (e, itemIndex) => {
     e.target.closest(".checklist__card").id.split("-")[1]
   );
   const newState = e.target.checked;
-  projects[parentCardId].toggleCheckItem(itemIndex, newState);
+
+  projects.forEach((project) => {
+    if (project.id === parentCardId) {
+      project.toggleCheckItem(itemIndex, newState);
+    }
+  });
 
   const listItemParent = e.target.closest(".checkbox-container");
 
@@ -202,7 +218,7 @@ function displayCards() {
 }
 
 const updateProjectList = () => {
-  const listTitles = projects.map(({ title }) => ({ title }));
+  const listTitles = projects.map(({ id, title }) => ({ id, title }));
   ProjectListDisplay(listTitles);
 };
 

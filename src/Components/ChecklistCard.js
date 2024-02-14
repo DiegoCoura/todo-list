@@ -38,6 +38,9 @@ const ChecklistCard = (cardId, title, listItems, bgColor) => {
     const checkTextDiv = customCreateElement("div", {
       className: "checkbox-container",
     });
+    if(item.isChecked){
+      checkTextDiv.classList.add("item-checked")
+    }
 
     const newCheckBox = customCreateElement("input", {
       type: "checkbox",
