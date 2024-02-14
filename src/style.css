@@ -127,10 +127,19 @@ button {
   overflow: overlay;
 }
 
+.checklist__card-header{
+  display: flex;
+  justify-content: space-between;
+}
+
 .checklist__card-title {
   text-align: center;
   font-size: 24px;
-  margin-bottom: 10px;
+}
+
+.delete-card-btn{
+  background-color: transparent;
+  font-size: 20px;
 }
 
 .list-item {
