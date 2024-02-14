@@ -4,11 +4,11 @@ import { fieldsReset, toggleFormHidden, removeChildren } from "./helpers";
 import ChecklistCard from "./Components/ChecklistCard";
 import TodoCard from "./Components/TodoCard";
 
-const projects = [];
+let projects = [];
 let PROJECTS_ID_COUNTER = 0;
 const CURRENT_DISPLAY = {
-  state: ""
-}
+  state: "",
+};
 
 const addProjectDialog = document.querySelector(".add-project-dialog");
 
@@ -107,6 +107,16 @@ const changeCardColor = (e) => {
 };
 
 function grabInputs() {
+  const deleteCardBtns = document.querySelectorAll(".delete-card-btn");
+  deleteCardBtns.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      const parentCardId = Number(
+        e.target.closest(".checklist__card").id.split("-")[1]
+      );
+      deleteProject(parentCardId);
+    });
+  });
+
   const deleteListItemBtns = document.querySelectorAll("[data-delete-index]");
 
   deleteListItemBtns.forEach((btn) => {
@@ -238,6 +248,12 @@ addForm.addEventListener("submit", (e) => {
   displayCards();
 });
 
+const deleteProject = (id) => {
+  const filteredProjects = projects.filter((project) => project.id !== id);
+  projects = filteredProjects;
+  displayCards();
+};
+
 const filterProjects = (filter) => {
   const filteredProjects = projects.filter((project) =>
     filter ? project.type === filter : project
@@ -247,7 +263,7 @@ const filterProjects = (filter) => {
 
 const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
 getAllProjectsBtn.addEventListener("click", function () {
-  CURRENT_DISPLAY.state = ""
+  CURRENT_DISPLAY.state = "";
   displayCards();
 });
 
