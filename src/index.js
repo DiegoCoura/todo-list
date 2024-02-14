@@ -6,6 +6,9 @@ import TodoCard from "./Components/TodoCard";
 
 const projects = [];
 let PROJECTS_ID_COUNTER = 0;
+const CURRENT_DISPLAY = {
+  state: ""
+}
 
 const addProjectDialog = document.querySelector(".add-project-dialog");
 
@@ -149,10 +152,12 @@ function grabInputs() {
   });
 }
 
-function displayCards(arrayOfCards) {
+function displayCards() {
   removeChildren(heroSection);
-  if (arrayOfCards) {
-    arrayOfCards.forEach((project) => {
+  let current_filter = filterProjects(CURRENT_DISPLAY.state);
+
+  if (current_filter) {
+    current_filter.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
           ChecklistCard(
@@ -242,6 +247,7 @@ const filterProjects = (filter) => {
 
 const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
 getAllProjectsBtn.addEventListener("click", function () {
+  CURRENT_DISPLAY.state = ""
   displayCards();
 });
 
@@ -250,10 +256,12 @@ const getCheklistsBtn = document.querySelector(
 );
 
 getCheklistsBtn.addEventListener("click", function () {
-  displayCards(filterProjects("checklist"));
+  CURRENT_DISPLAY.state = "checklist";
+  displayCards();
 });
 
 const getTodosBtn = document.querySelector(".sidebar-navigation__todos");
 getTodosBtn.addEventListener("click", function () {
-  displayCards(filterProjects("todo"));
+  CURRENT_DISPLAY.state = "todo";
+  displayCards();
 });
