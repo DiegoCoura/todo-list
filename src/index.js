@@ -5,6 +5,7 @@ import ChecklistCard from "./Components/ChecklistCard";
 import TodoCard from "./Components/TodoCard";
 
 const projects = [];
+let PROJECTS_ID_COUNTER = 0;
 
 const addProjectDialog = document.querySelector(".add-project-dialog");
 
@@ -39,29 +40,29 @@ const closeDialog = () => {
 };
 
 const deleteListItem = (e, deleteIndex) => {
-  const parentCardIndex = Number(
+  const parentCardId = Number(
     e.target.closest(".checklist__card").id.split("-")[1]
   );
-  projects[parentCardIndex].removeListItem(deleteIndex);
+  projects[parentCardId].removeListItem(deleteIndex);
   displayCards();
 };
 
-const addNewListItem = (e, cardIndex, itemText) => {
+const addNewListItem = (e, cardId, itemText) => {
   const newItem = {
     isChecked: false,
     text: itemText,
   };
-  projects[cardIndex].addListItem(newItem);
+  projects[cardId].addListItem(newItem);
 
   displayCards();
 };
 
 const toggleCheckState = (e, itemIndex) => {
-  const parentCardIndex = Number(
+  const parentCardId = Number(
     e.target.closest(".checklist__card").id.split("-")[1]
   );
   const newState = e.target.checked;
-  projects[parentCardIndex].toggleCheckItem(itemIndex, newState);
+  projects[parentCardId].toggleCheckItem(itemIndex, newState);
 
   const listItemParent = e.target.closest(".checkbox-container");
 
@@ -86,7 +87,7 @@ const toggleColorOptions = (e) => {
 };
 
 const changeCardColor = (e) => {
-  const cardIndex = e.target.closest(".checklist__card").id.split("-")[1];
+  const cardId = e.target.closest(".checklist__card").id.split("-")[1];
   const parentCard = e.target.closest(".checklist__card");
   const btnId = e.target.id.split("-")[2];
   let bgColor;
@@ -99,8 +100,7 @@ const changeCardColor = (e) => {
     : (bgColor = "#D1A8FF");
 
   parentCard.style.backgroundColor = bgColor;
-  projects[cardIndex].changeBgColor(bgColor);
-  console.log(projects[cardIndex]);
+  projects[cardId].changeBgColor(bgColor);
 };
 
 function grabInputs() {
@@ -127,10 +127,10 @@ function grabInputs() {
 
   listInputs.forEach((item) => {
     item.addEventListener("change", function (e) {
-      const inputCardIndex = Number(this.dataset.inputItem);
+      const inputCardId = Number(this.dataset.inputItem);
       const newItemText = e.target.value;
 
-      addNewListItem(e, inputCardIndex, newItemText);
+      addNewListItem(e, inputCardId, newItemText);
     });
   });
 
@@ -152,33 +152,33 @@ function grabInputs() {
 function displayCards(arrayOfCards) {
   removeChildren(heroSection);
   if (arrayOfCards) {
-    arrayOfCards.forEach((project, index) => {
+    arrayOfCards.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
           ChecklistCard(
+            project.id,
             project.title,
             project.listItems,
-            index,
             project.bgColor
           )
         );
       } else if (project.type === "todo") {
-        heroSection.appendChild(TodoCard(index));
+        heroSection.appendChild(TodoCard(project.id));
       }
     });
   } else {
-    projects.forEach((project, index) => {
+    projects.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
           ChecklistCard(
+            project.id,
             project.title,
             project.listItems,
-            index,
             project.bgColor
           )
         );
       } else if (project.type === "todo") {
-        heroSection.appendChild(TodoCard(index));
+        heroSection.appendChild(TodoCard(project.id));
       }
     });
   }
@@ -203,11 +203,18 @@ addForm.addEventListener("submit", (e) => {
 
   if (type.value === "checklist") {
     fields.push(type, title);
-    const newChecklist = new CheckList(type.value, title.value);
+    const newChecklist = new CheckList(
+      PROJECTS_ID_COUNTER,
+      type.value,
+      title.value
+    );
+
     projects.push(newChecklist);
+    PROJECTS_ID_COUNTER++;
   } else if (type.value === "todo") {
     fields.push(type, title, description, dueDate, priority);
     const newTodo = new Todo(
+      PROJECTS_ID_COUNTER,
       type.value,
       title.value,
       description.value,
@@ -216,6 +223,7 @@ addForm.addEventListener("submit", (e) => {
     );
 
     projects.push(newTodo);
+    PROJECTS_ID_COUNTER++;
   }
 
   fieldsReset(fields);

@@ -1,8 +1,8 @@
 import { customCreateElement } from "../helpers";
 
-const ChecklistCard = (title, listItems, cardIndex, bgColor) => {
+const ChecklistCard = (cardId, title, listItems, bgColor) => {
   const card = customCreateElement("div", {
-    id: `checklist-${cardIndex}`,
+    id: `checklist-${cardId}`,
     className: "checklist__card",
   });
   card.style.backgroundColor = bgColor;
@@ -58,7 +58,7 @@ const ChecklistCard = (title, listItems, cardIndex, bgColor) => {
     type: "text",
     className: "list-input",
   });
-  listInput.setAttribute("data-input-item", `${cardIndex}`);
+  listInput.setAttribute("data-input-item", `${cardId}`);
 
   const colorButton = customCreateElement("button", {
     className: "toggle-color-btn",

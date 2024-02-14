@@ -1,6 +1,7 @@
 const DEFAULT_BG_COLOR = "#F7D15F";
 
-export function Todo(type, title, description, dueDate, priority) {
+export function Todo(id, type, title, description, dueDate, priority) {
+  this.id = id;
   this.type = type;
   this.title = title;
   this.description = description;
@@ -8,7 +9,8 @@ export function Todo(type, title, description, dueDate, priority) {
   this.priority = priority;
 }
 
-export function CheckList(type, title) {
+export function CheckList(id, type, title) {
+  this.id = id;
   this.type = type;
   this.title = title;
   this.bgColor = DEFAULT_BG_COLOR;

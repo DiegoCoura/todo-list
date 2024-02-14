@@ -1,8 +1,8 @@
 import { customCreateElement } from "../helpers";
 
-const TodoCard = (index) => {
+const TodoCard = (cardId) => {
   const cardContainer = customCreateElement("div", {
-    id: `todo-${index}`,
+    id: `todo-${cardId}`,
     className: "todo__card",
   });
 
