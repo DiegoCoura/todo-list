@@ -110,9 +110,7 @@ function grabInputs() {
   const deleteCardBtns = document.querySelectorAll(".delete-card-btn");
   deleteCardBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
-      const parentCardId = Number(
-        e.target.closest(".checklist__card").id.split("-")[1]
-      );
+      const parentCardId = Number(this.dataset.deleteCard);
       deleteProject(parentCardId);
     });
   });

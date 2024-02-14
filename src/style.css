@@ -127,7 +127,7 @@ button {
   overflow: overlay;
 }
 
-.checklist__card-header{
+.checklist__card-header, .todo__card-header{
   display: flex;
   justify-content: space-between;
 }

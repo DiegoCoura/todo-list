@@ -19,9 +19,13 @@ const ChecklistCard = (cardId, title, listItems, bgColor) => {
   const deleteCardBtn = customCreateElement("button", {
     className: "delete-card-btn",
   });
+  
+  deleteCardBtn.setAttribute("data-delete-card", `${cardId}`)
+  
   const deleteCardIcon = customCreateElement("i", {
     className: "fa-solid fa-x",
   });
+  
   deleteCardBtn.appendChild(deleteCardIcon);
 
   const list = customCreateElement("ul", { className: "checklist__card-list" });
