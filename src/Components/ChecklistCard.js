@@ -7,10 +7,22 @@ const ChecklistCard = (cardId, title, listItems, bgColor) => {
   });
   card.style.backgroundColor = bgColor;
 
+  const cardHeaderDiv = customCreateElement("div", {
+    className: "checklist__card-header",
+  });
+
   const cardTitle = customCreateElement("h3", {
     className: "checklist__card-title",
     innerText: `${title}`,
   });
+
+  const deleteCardBtn = customCreateElement("button", {
+    className: "delete-card-btn",
+  });
+  const deleteCardIcon = customCreateElement("i", {
+    className: "fa-solid fa-x",
+  });
+  deleteCardBtn.appendChild(deleteCardIcon);
 
   const list = customCreateElement("ul", { className: "checklist__card-list" });
 
@@ -85,7 +97,10 @@ const ChecklistCard = (cardId, title, listItems, bgColor) => {
   colorButtonContainer.appendChild(colorOptionsContainer);
   colorButtonContainer.appendChild(colorButton);
 
-  card.appendChild(cardTitle);
+  cardHeaderDiv.appendChild(cardTitle);
+  cardHeaderDiv.appendChild(deleteCardBtn);
+
+  card.appendChild(cardHeaderDiv);
   card.appendChild(list);
   card.appendChild(listInput);
   card.appendChild(colorButtonContainer);
