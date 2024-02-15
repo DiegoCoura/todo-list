@@ -1,9 +1,9 @@
 import "./style.css";
-import { Todo, CheckList } from "./constructors";
+import { Todo, Project } from "./constructors";
 import { fieldsReset, toggleFormHidden, removeChildren } from "./helpers";
 import TodoCard from "./Components/TodoCard";
 import ProjectListDisplay from "./Components/ProjectListDisplay";
-import Project from "./Components/Project";
+import ProjectTemplate from "./Components/ProjectTemplate";
 
 let projects = [];
 let PROJECTS_ID_COUNTER = 0;
@@ -162,7 +162,7 @@ const displayProject = (cardId) => {
     if (cardId === project.id) {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          Project(project.id, project.title, project.listItems)
+          ProjectTemplate(project.id, project.title, project.listItems)
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(project.id));
@@ -252,7 +252,7 @@ function displayCards() {
     current_filter.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          Project(project.id, project.title, project.listItems)
+          ProjectTemplate(project.id, project.title, project.listItems)
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(project.id));
@@ -262,7 +262,7 @@ function displayCards() {
     projects.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          Project(project.id, project.title, project.listItems)
+          ProjectTemplate(project.id, project.title, project.listItems)
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(project.id));
@@ -290,13 +290,13 @@ addForm.addEventListener("submit", (e) => {
 
   if (type.value === "checklist") {
     fields.push(type, title);
-    const newChecklist = new CheckList(
+    const newProject = new Project(
       PROJECTS_ID_COUNTER,
       type.value,
       title.value
     );
 
-    projects.push(newChecklist);
+    projects.push(newProject);
     PROJECTS_ID_COUNTER++;
   } else if (type.value === "todo") {
     fields.push(type, title, description, dueDate, priority);

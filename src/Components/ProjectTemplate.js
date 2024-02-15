@@ -1,6 +1,6 @@
 import { customCreateElement } from "../helpers";
 
-const Project = (projectId, title, listItems) => {
+const ProjectTemplate = (projectId, title, listItems) => {
   const projectContainer = customCreateElement("div", {
     id: `project-${projectId}`,
     className: "project__container",
@@ -140,4 +140,4 @@ const Project = (projectId, title, listItems) => {
   return projectContainer;
 };
 
-export default Project;
+export default ProjectTemplate;

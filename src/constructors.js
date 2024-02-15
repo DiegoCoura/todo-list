@@ -9,10 +9,13 @@ export function Todo(id, type, title, description, dueDate, priority) {
   this.priority = priority;
 }
 
-export function CheckList(id, type, title) {
+export function Project(id, type, title) {
   this.id = id;
   this.type = type;
   this.title = title;
+  this.description = description;
+  this.dueDate = dueDate;
+  this.priority = priority;
   this.bgColor = DEFAULT_BG_COLOR;
   this.listItems = [];
 
