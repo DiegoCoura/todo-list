@@ -124,7 +124,38 @@ const changeCardColor = (e) => {
   projects[cardId].changeBgColor(bgColor);
 };
 
+const displayProject = (cardId) => {
+  removeChildren(heroSection);
+
+  projects.forEach((project) => {
+    if (cardId === project.id) {
+      if (project.type === "checklist") {
+        heroSection.appendChild(
+          ChecklistCard(
+            project.id,
+            project.title,
+            project.listItems,
+            project.bgColor
+          )
+        );
+      } else if (project.type === "todo") {
+        heroSection.appendChild(TodoCard(project.id));
+      }
+    }
+  });
+  grabInputs();
+};
+
 function grabInputs() {
+  const projectsListBtns = document.querySelectorAll(".projects-list-btn");
+  projectsListBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const parentCardId = Number(this.dataset.projectBtn);
+      displayProject(parentCardId);
+      CURRENT_DISPLAY.state = parentCardId;
+    });
+  });
+
   const deleteCardBtns = document.querySelectorAll(".delete-card-btn");
   deleteCardBtns.forEach((btn) => {
     btn.addEventListener("click", function () {
@@ -278,9 +309,15 @@ const deleteProject = (id) => {
 };
 
 const filterProjects = (filter) => {
-  const filteredProjects = projects.filter((project) =>
-    filter ? project.type === filter : project
-  );
+  let filteredProjects;
+  if (filter === "") return "";
+
+  if (typeof filter === "number") {
+    filteredProjects = projects.filter((project) => project.id == filter);
+  } else if (typeof filter === "string") {
+    filteredProjects = projects.filter((project) => project.type == filter);
+  }
+
   return filteredProjects;
 };
 
