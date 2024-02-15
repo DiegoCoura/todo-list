@@ -38,10 +38,10 @@ button {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
-.shown {
+.form-section {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -260,7 +260,7 @@ button {
 .delete-item-btn {
   background-color: transparent;
   color: rgb(0, 0, 0);
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 .list-input {

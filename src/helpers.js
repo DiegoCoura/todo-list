@@ -1,10 +1,8 @@
 export const toggleFormHidden = (selectSection, selectedOption) => {
   if (selectedOption === "todo") {
     selectSection.classList.remove("hidden");
-    selectSection.classList.add("shown");
   } else if (selectedOption === "checklist") {
     selectSection.classList.remove("shown");
-    selectSection.classList.add("hidden");
   }
 };
 
@@ -31,7 +29,7 @@ export const customCreateElement = (elementTag, props = {}) => {
 };
 
 export const removeChildren = (parent) => {
-  while(parent.firstChild){
+  while (parent.firstChild) {
     parent.removeChild(parent.lastChild);
   }
-} 
+};
