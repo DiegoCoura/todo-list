@@ -105,38 +105,38 @@ const toggleCheckStyle = (newState, listItemParent) => {
   }
 };
 
-const toggleColorOptions = (e) => {
-  const colorOptionsContainer = e.target.previousElementSibling;
-  if (colorOptionsContainer.classList.contains("hidden")) {
-    colorOptionsContainer.classList.remove("hidden");
-  } else {
-    colorOptionsContainer.classList.add("hidden");
-  }
-};
+// const toggleColorOptions = (e) => {
+//   const colorOptionsContainer = e.target.previousElementSibling;
+//   if (colorOptionsContainer.classList.contains("hidden")) {
+//     colorOptionsContainer.classList.remove("hidden");
+//   } else {
+//     colorOptionsContainer.classList.add("hidden");
+//   }
+// };
 
-const changeCardColor = (e) => {
-  const cardId = Number(
-    e.target.closest(".project__container").id.split("-")[1]
-  );
-  const parentCard = e.target.closest(".project__container");
-  const btnId = e.target.id.split("-")[2];
-  let bgColor;
-  btnId === "1"
-    ? (bgColor = "#F7D15F")
-    : btnId === "2"
-    ? (bgColor = "#FCA397")
-    : btnId === "3"
-    ? (bgColor = "#79D997")
-    : (bgColor = "#D1A8FF");
+// const changeCardColor = (e) => {
+//   const cardId = Number(
+//     e.target.closest(".project__container").id.split("-")[1]
+//   );
+//   const parentCard = e.target.closest(".project__container");
+//   const btnId = e.target.id.split("-")[2];
+//   let bgColor;
+//   btnId === "1"
+//     ? (bgColor = "#F7D15F")
+//     : btnId === "2"
+//     ? (bgColor = "#FCA397")
+//     : btnId === "3"
+//     ? (bgColor = "#79D997")
+//     : (bgColor = "#D1A8FF");
 
-  parentCard.style.backgroundColor = bgColor;
+//   parentCard.style.backgroundColor = bgColor;
 
-  projects.forEach((project) => {
-    if (project.id === cardId) {
-      project.changeBgColor(bgColor);
-    }
-  });
-};
+//   projects.forEach((project) => {
+//     if (project.id === cardId) {
+//       project.changeBgColor(bgColor);
+//     }
+//   });
+// };
 
 const updateProjectList = () => {
   const listTitles = projects.map(({ id, title }) => ({ id, title }));
@@ -162,7 +162,7 @@ const displayProject = (cardId) => {
     if (cardId === project.id) {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          Project(project.id, project.title, project.listItems, project.bgColor)
+          Project(project.id, project.title, project.listItems)
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(project.id));
@@ -229,19 +229,19 @@ function grabInputs() {
     });
   });
 
-  const toggleColorBtnsList = document.querySelectorAll(".toggle-color-btn");
-  toggleColorBtnsList.forEach((btn) => {
-    btn.addEventListener("click", function (e) {
-      toggleColorOptions(e);
-    });
-  });
+  // const toggleColorBtnsList = document.querySelectorAll(".toggle-color-btn");
+  // toggleColorBtnsList.forEach((btn) => {
+  //   btn.addEventListener("click", function (e) {
+  //     toggleColorOptions(e);
+  //   });
+  // });
 
-  const colorOptionsBtnsList = document.querySelectorAll(".color-option-btn");
-  colorOptionsBtnsList.forEach((btn) => {
-    btn.addEventListener("click", function (e) {
-      changeCardColor(e);
-    });
-  });
+  // const colorOptionsBtnsList = document.querySelectorAll(".color-option-btn");
+  // colorOptionsBtnsList.forEach((btn) => {
+  //   btn.addEventListener("click", function (e) {
+  //     changeCardColor(e);
+  //   });
+  // });
 }
 
 function displayCards() {
@@ -252,12 +252,7 @@ function displayCards() {
     current_filter.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          Project(
-            project.id,
-            project.title,
-            project.listItems,
-            project.bgColor
-          )
+          Project(project.id, project.title, project.listItems)
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(project.id));
@@ -267,12 +262,7 @@ function displayCards() {
     projects.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          Project(
-            project.id,
-            project.title,
-            project.listItems,
-            project.bgColor
-          )
+          Project(project.id, project.title, project.listItems)
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(project.id));

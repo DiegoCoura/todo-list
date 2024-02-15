@@ -1,11 +1,11 @@
 import { customCreateElement } from "../helpers";
 
-const Project = (projectId, title, listItems, bgColor) => {
+const Project = (projectId, title, listItems) => {
   const projectContainer = customCreateElement("div", {
     id: `project-${projectId}`,
     className: "project__container",
   });
-  projectContainer.style.backgroundColor = bgColor;
+  //   projectContainer.style.backgroundColor = bgColor;
 
   const projectHeaderDiv = customCreateElement("div", {
     className: "project__container-header",
@@ -19,16 +19,18 @@ const Project = (projectId, title, listItems, bgColor) => {
   const deleteProjectBtn = customCreateElement("button", {
     className: "delete-project-btn",
   });
-  
-  deleteProjectBtn.setAttribute("data-delete-project", `${projectId}`)
-  
+
+  deleteProjectBtn.setAttribute("data-delete-project", `${projectId}`);
+
   const deleteProjectIcon = customCreateElement("i", {
     className: "fa-solid fa-x",
   });
-  
+
   deleteProjectBtn.appendChild(deleteProjectIcon);
 
-  const list = customCreateElement("ul", { className: "project__container-list" });
+  const list = customCreateElement("ul", {
+    className: "project__container-list",
+  });
 
   listItems.forEach((item, index) => {
     const newListItem = customCreateElement("li", {
@@ -38,8 +40,8 @@ const Project = (projectId, title, listItems, bgColor) => {
     const checkTextDiv = customCreateElement("div", {
       className: "checkbox-container",
     });
-    if(item.isChecked){
-      checkTextDiv.classList.add("item-checked")
+    if (item.isChecked) {
+      checkTextDiv.classList.add("item-checked");
     }
 
     const newCheckBox = customCreateElement("input", {
@@ -56,10 +58,28 @@ const Project = (projectId, title, listItems, bgColor) => {
       innerText: item.text,
     });
 
+    const optionsDiv = customCreateElement("div", {
+      className: "item-options-container",
+    });
+
+    const editItemBtn = customCreateElement("button", {
+      className: "edit-item-btn",
+    });
+    const editIcon = customCreateElement("i", {
+      className: "fa-regular fa-pen-to-square",
+    });
+    editItemBtn.appendChild(editIcon);
+
+    const dateText = customCreateElement("span", {
+      innerText: "Data",
+    });
+
+
     const deleteItemBtn = customCreateElement("button", {
       className: "delete-item-btn",
     });
     deleteItemBtn.setAttribute("data-delete-index", `${index}`);
+
     const trashCanIcon = customCreateElement("i", {
       className: "fa-solid fa-trash-can",
     });
@@ -68,41 +88,46 @@ const Project = (projectId, title, listItems, bgColor) => {
     checkTextDiv.appendChild(newCheckBox);
     checkTextDiv.appendChild(itemText);
 
+    optionsDiv.appendChild(editItemBtn);
+    optionsDiv.appendChild(dateText);
+    optionsDiv.appendChild(deleteItemBtn);
+
     newListItem.appendChild(checkTextDiv);
-    newListItem.appendChild(deleteItemBtn);
+    newListItem.appendChild(optionsDiv);
     list.appendChild(newListItem);
   });
 
   const listInput = customCreateElement("input", {
     type: "text",
     className: "list-input",
+    placeholder: "New item",
   });
   listInput.setAttribute("data-input-item", `${projectId}`);
 
-  const colorButton = customCreateElement("button", {
-    className: "toggle-color-btn",
-  });
-  colorButton.style.backgroundColor = bgColor;
+  //   const colorButton = customCreateElement("button", {
+  //     className: "toggle-color-btn",
+  //   });
+  //   colorButton.style.backgroundColor = bgColor;
 
-  const colorButtonContainer = customCreateElement("div", {
-    className: "toggle-color-container",
-  });
+  //   const colorButtonContainer = customCreateElement("div", {
+  //     className: "toggle-color-container",
+  //   });
 
-  const colorOptionsContainer = customCreateElement("div", {
-    className: "color-options-container hidden",
-  });
+  //   const colorOptionsContainer = customCreateElement("div", {
+  //     className: "color-options-container hidden",
+  //   });
 
-  for (let i = 1; i < 5; i++) {
-    const colorOptionBtn = customCreateElement("button", {
-      id: `color-option-${i}`,
-      className: "color-option-btn",
-    });
+  //   for (let i = 1; i < 5; i++) {
+  //     const colorOptionBtn = customCreateElement("button", {
+  //       id: `color-option-${i}`,
+  //       className: "color-option-btn",
+  //     });
 
-    colorOptionsContainer.appendChild(colorOptionBtn);
-  }
+  //     colorOptionsContainer.appendChild(colorOptionBtn);
+  //   }
 
-  colorButtonContainer.appendChild(colorOptionsContainer);
-  colorButtonContainer.appendChild(colorButton);
+  //   colorButtonContainer.appendChild(colorOptionsContainer);
+  //   colorButtonContainer.appendChild(colorButton);
 
   projectHeaderDiv.appendChild(projectTitle);
   projectHeaderDiv.appendChild(deleteProjectBtn);
@@ -110,7 +135,7 @@ const Project = (projectId, title, listItems, bgColor) => {
   projectContainer.appendChild(projectHeaderDiv);
   projectContainer.appendChild(list);
   projectContainer.appendChild(listInput);
-  projectContainer.appendChild(colorButtonContainer);
+  //   projectContainer.appendChild(colorButtonContainer);
 
   return projectContainer;
 };

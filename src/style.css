@@ -60,7 +60,7 @@ button {
 .main {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  grid-template-rows: 100px 4fr;
+  grid-template-rows: 86px 4fr;
   height: 100vh;
 }
 
@@ -152,6 +152,7 @@ button {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  gap: 16px;
 }
 
 .project__container {
@@ -176,6 +177,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  font-size: 0.87rem;
 }
 
 .project__container .list-input {
@@ -184,7 +186,6 @@ button {
   margin-top: 15px;
   padding: 10px;
 }
-
 
 .checklist__card {
   /* background-color: #efd665; */
@@ -215,6 +216,8 @@ button {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+  background-color: #eee;
+  padding: 10px 16px;
 }
 
 .checkbox-container {
@@ -247,9 +250,16 @@ button {
   opacity: 50%;
 }
 
+.item-options-container{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.87rem;
+}
+
 .delete-item-btn {
   background-color: transparent;
-  color: red;
+  color: rgb(0, 0, 0);
   font-size: 1.25rem;
 }
 
