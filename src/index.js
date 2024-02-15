@@ -4,6 +4,7 @@ import { fieldsReset, toggleFormHidden, removeChildren } from "./helpers";
 import ChecklistCard from "./Components/ChecklistCard";
 import TodoCard from "./Components/TodoCard";
 import ProjectListDisplay from "./Components/ProjectListDisplay";
+import Project from "./Components/Project";
 
 let projects = [];
 let PROJECTS_ID_COUNTER = 0;
@@ -46,7 +47,7 @@ const closeDialog = () => {
 
 const deleteListItem = (e, deleteIndex) => {
   const parentCardId = Number(
-    e.target.closest(".checklist__card").id.split("-")[1]
+    e.target.closest(".project__container").id.split("-")[1]
   );
 
   projects.forEach((project) => {
@@ -55,7 +56,11 @@ const deleteListItem = (e, deleteIndex) => {
     }
   });
 
-  displayCards();
+  if (typeof CURRENT_DISPLAY.state === "string") {
+    displayCards();
+  } else {
+    displayProject(parentCardId);
+  }
 };
 
 const addNewListItem = (e, cardId, itemText) => {
@@ -69,13 +74,16 @@ const addNewListItem = (e, cardId, itemText) => {
       project.addListItem(newItem);
     }
   });
-
-  displayCards();
+  if (typeof CURRENT_DISPLAY.state === "string") {
+    displayCards();
+  } else {
+    displayProject(cardId);
+  }
 };
 
 const toggleCheckState = (e, itemIndex) => {
   const parentCardId = Number(
-    e.target.closest(".checklist__card").id.split("-")[1]
+    e.target.closest(".project__container").id.split("-")[1]
   );
   const newState = e.target.checked;
 
@@ -124,32 +132,39 @@ const changeCardColor = (e) => {
   projects[cardId].changeBgColor(bgColor);
 };
 
-
 const updateProjectList = () => {
   const listTitles = projects.map(({ id, title }) => ({ id, title }));
   ProjectListDisplay(listTitles);
 };
 
+const changeHeroDisplay = (display) => {
+  if (heroSection.classList.contains(display)) return;
+
+  if (heroSection.classList.contains("grid")) {
+    heroSection.classList.remove("grid");
+    heroSection.classList.add("flex");
+  } else if (heroSection.classList.contains("flex")) {
+    heroSection.classList.remove("flex");
+    heroSection.classList.add("grid");
+  }
+};
+
 const displayProject = (cardId) => {
   removeChildren(heroSection);
+  changeHeroDisplay("flex");
 
   projects.forEach((project) => {
     if (cardId === project.id) {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          ChecklistCard(
-            project.id,
-            project.title,
-            project.listItems,
-            project.bgColor
-          )
+          Project(project.id, project.title, project.listItems, project.bgColor)
         );
       } else if (project.type === "todo") {
         heroSection.appendChild(TodoCard(project.id));
       }
     }
   });
-  updateProjectList()
+  updateProjectList();
   grabInputs();
 };
 
@@ -167,6 +182,14 @@ function grabInputs() {
   deleteCardBtns.forEach((btn) => {
     btn.addEventListener("click", function () {
       const parentCardId = Number(this.dataset.deleteCard);
+      deleteProject(parentCardId);
+    });
+  });
+
+  const deleteProjectBtns = document.querySelectorAll(".delete-project-btn");
+  deleteProjectBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const parentCardId = Number(this.dataset.deleteProject);
       deleteProject(parentCardId);
     });
   });
@@ -219,7 +242,6 @@ function grabInputs() {
 function displayCards() {
   removeChildren(heroSection);
   let current_filter = filterProjects(CURRENT_DISPLAY.state);
-  console.log(current_filter)
 
   if (current_filter) {
     current_filter.forEach((project) => {
@@ -301,13 +323,19 @@ addForm.addEventListener("submit", (e) => {
   toggleFormHidden(selectSection, projectType.value);
   addForm.submit();
 
-  displayCards();
+  if (typeof CURRENT_DISPLAY.state === "string") {
+    displayCards();
+  } else {
+    displayProject(CURRENT_DISPLAY.state);
+  }
 });
 
 const deleteProject = (id) => {
   const filteredProjects = projects.filter((project) => project.id !== id);
   projects = filteredProjects;
   updateProjectList();
+  CURRENT_DISPLAY.state = "";
+  changeHeroDisplay("grid");
   displayCards();
 };
 
@@ -327,6 +355,7 @@ const filterProjects = (filter) => {
 const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
 getAllProjectsBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "";
+  changeHeroDisplay("grid");
   displayCards();
 });
 
@@ -336,11 +365,13 @@ const getCheklistsBtn = document.querySelector(
 
 getCheklistsBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "checklist";
+  changeHeroDisplay("grid");
   displayCards();
 });
 
 const getTodosBtn = document.querySelector(".sidebar-navigation__todos");
 getTodosBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "todo";
+  changeHeroDisplay("grid");
   displayCards();
 });

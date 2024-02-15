@@ -140,13 +140,51 @@ button {
   background-color: transparent;
 }
 
-.hero {
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 250px);
   grid-template-rows: repeat(auto-fit, 350px);
   gap: 20px;
   padding: 20px;
 }
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.project__container {
+  padding: 10px;
+  position: relative;
+}
+
+.project__container-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.delete-project-btn {
+  position: absolute;
+  right: 10px;
+  background-color: transparent;
+  font-size: 1.2rem;
+}
+
+.project__container-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project__container .list-input {
+  width: 95%;
+  border-radius: 8px;
+  margin-top: 15px;
+  padding: 10px;
+}
+
 
 .checklist__card {
   /* background-color: #efd665; */
