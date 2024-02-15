@@ -273,6 +273,7 @@ addForm.addEventListener("submit", (e) => {
 const deleteProject = (id) => {
   const filteredProjects = projects.filter((project) => project.id !== id);
   projects = filteredProjects;
+  updateProjectList();
   displayCards();
 };
 
