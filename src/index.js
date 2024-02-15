@@ -1,7 +1,6 @@
 import "./style.css";
 import { Todo, CheckList } from "./constructors";
 import { fieldsReset, toggleFormHidden, removeChildren } from "./helpers";
-import ChecklistCard from "./Components/ChecklistCard";
 import TodoCard from "./Components/TodoCard";
 import ProjectListDisplay from "./Components/ProjectListDisplay";
 import Project from "./Components/Project";
@@ -158,7 +157,6 @@ const changeHeroDisplay = (display) => {
 
 const displayProject = (cardId) => {
   removeChildren(heroSection);
-  changeHeroDisplay("flex");
 
   projects.forEach((project) => {
     if (cardId === project.id) {
@@ -254,7 +252,7 @@ function displayCards() {
     current_filter.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          ChecklistCard(
+          Project(
             project.id,
             project.title,
             project.listItems,
@@ -269,7 +267,7 @@ function displayCards() {
     projects.forEach((project) => {
       if (project.type === "checklist") {
         heroSection.appendChild(
-          ChecklistCard(
+          Project(
             project.id,
             project.title,
             project.listItems,
@@ -342,7 +340,6 @@ const deleteProject = (id) => {
   projects = filteredProjects;
   updateProjectList();
   CURRENT_DISPLAY.state = "";
-  changeHeroDisplay("grid");
   displayCards();
 };
 
@@ -362,7 +359,7 @@ const filterProjects = (filter) => {
 const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
 getAllProjectsBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "";
-  changeHeroDisplay("grid");
+
   displayCards();
 });
 
@@ -372,13 +369,13 @@ const getCheklistsBtn = document.querySelector(
 
 getCheklistsBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "checklist";
-  changeHeroDisplay("grid");
+
   displayCards();
 });
 
 const getTodosBtn = document.querySelector(".sidebar-navigation__todos");
 getTodosBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "todo";
-  changeHeroDisplay("grid");
+
   displayCards();
 });
