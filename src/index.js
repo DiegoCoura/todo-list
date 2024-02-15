@@ -124,6 +124,12 @@ const changeCardColor = (e) => {
   projects[cardId].changeBgColor(bgColor);
 };
 
+
+const updateProjectList = () => {
+  const listTitles = projects.map(({ id, title }) => ({ id, title }));
+  ProjectListDisplay(listTitles);
+};
+
 const displayProject = (cardId) => {
   removeChildren(heroSection);
 
@@ -143,6 +149,7 @@ const displayProject = (cardId) => {
       }
     }
   });
+  updateProjectList()
   grabInputs();
 };
 
@@ -151,8 +158,8 @@ function grabInputs() {
   projectsListBtns.forEach((btn) => {
     btn.addEventListener("click", function () {
       const parentCardId = Number(this.dataset.projectBtn);
-      displayProject(parentCardId);
       CURRENT_DISPLAY.state = parentCardId;
+      displayProject(parentCardId);
     });
   });
 
@@ -212,6 +219,7 @@ function grabInputs() {
 function displayCards() {
   removeChildren(heroSection);
   let current_filter = filterProjects(CURRENT_DISPLAY.state);
+  console.log(current_filter)
 
   if (current_filter) {
     current_filter.forEach((project) => {
@@ -247,11 +255,6 @@ function displayCards() {
 
   grabInputs();
 }
-
-const updateProjectList = () => {
-  const listTitles = projects.map(({ id, title }) => ({ id, title }));
-  ProjectListDisplay(listTitles);
-};
 
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
