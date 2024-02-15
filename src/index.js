@@ -116,8 +116,10 @@ const toggleColorOptions = (e) => {
 };
 
 const changeCardColor = (e) => {
-  const cardId = e.target.closest(".checklist__card").id.split("-")[1];
-  const parentCard = e.target.closest(".checklist__card");
+  const cardId = Number(
+    e.target.closest(".project__container").id.split("-")[1]
+  );
+  const parentCard = e.target.closest(".project__container");
   const btnId = e.target.id.split("-")[2];
   let bgColor;
   btnId === "1"
@@ -129,7 +131,12 @@ const changeCardColor = (e) => {
     : (bgColor = "#D1A8FF");
 
   parentCard.style.backgroundColor = bgColor;
-  projects[cardId].changeBgColor(bgColor);
+
+  projects.forEach((project) => {
+    if (project.id === cardId) {
+      project.changeBgColor(bgColor);
+    }
+  });
 };
 
 const updateProjectList = () => {
