@@ -1,21 +1,28 @@
 import { customCreateElement, removeChildren } from "../helpers";
 
 const ProjectListDisplay = (titlesList) => {
-  const projectsList = document.querySelector(".projects-list");
-  removeChildren(projectsList);
+  const projectsListContainer = document.querySelector(".projects-list");
+  removeChildren(projectsListContainer);
 
   titlesList.forEach((item) => {
-    const newListItem = customCreateElement("li", { className: "projects-list-item"})
-    
     const projectBtn = customCreateElement("button", {
       className: "projects-list-btn",
+    });
+    projectBtn.setAttribute("data-project-btn", `${item.id}`);
+
+    const projectIcon = customCreateElement("i", {
+      className: "fa-solid fa-list-check",
+    });
+
+    const btnText = customCreateElement("span", {
+      className: "project-btn-text",
       innerText: `${item.title}`,
     });
-    projectBtn.setAttribute("data-project-btn", `${item.id}`)
 
+    projectBtn.appendChild(projectIcon);
+    projectBtn.appendChild(btnText);
 
-    newListItem.appendChild(projectBtn);
-    projectsList.appendChild(newListItem);
+    projectsListContainer.appendChild(projectBtn);
   });
 };
 

@@ -47,7 +47,7 @@ button {
   gap: 10px;
 }
 
-.description-text-area{
+.description-text-area {
   width: 100%;
   height: 150px;
   padding: 12px 12px;
@@ -95,11 +95,12 @@ button {
   background-color: rgb(229 229 229);
 }
 
-.sidebar-navigation {
+.sidebar-navigation,
+.sidebar-navigation__projects {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 20px;
+  padding: 14px 16px;
 }
 
 .sidebar-navigation__title {
@@ -107,7 +108,7 @@ button {
   margin-bottom: 10px;
 }
 
-.sidebar-navigation button {
+.sidebar-navigation button, .sidebar-navigation__add-project {
   font-size: 18px;
   border-radius: 8px;
   padding: 10px;
@@ -117,8 +118,24 @@ button {
   background-color: transparent;
 }
 
-.sidebar-navigation button:hover {
+.sidebar-navigation button:hover,
+.projects-list button:hover, .sidebar-navigation__add-project:hover {
   background-color: rgb(175, 175, 175);
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-list button {
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: justify;
+  display: flex;
+  gap: 15px;
+  background-color: transparent;
 }
 
 .hero {
@@ -137,7 +154,8 @@ button {
   overflow: overlay;
 }
 
-.checklist__card-header, .todo__card-header{
+.checklist__card-header,
+.todo__card-header {
   display: flex;
   justify-content: space-between;
 }
@@ -147,7 +165,7 @@ button {
   font-size: 24px;
 }
 
-.delete-card-btn{
+.delete-card-btn {
   background-color: transparent;
   font-size: 20px;
 }
@@ -210,7 +228,6 @@ button {
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
-
 }
 
 .toggle-color-btn,
