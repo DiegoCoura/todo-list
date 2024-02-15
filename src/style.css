@@ -54,7 +54,7 @@ button {
   padding: 12px 12px;
   border-radius: 4px;
   background-color: #f8f8f8;
-  font-size: 12px;
+  font-size: 0.75rem;
   resize: none;
 }
 
@@ -82,12 +82,12 @@ button {
 }
 
 .header-nav__title {
-  font-size: 28px;
+  font-size: 1.62rem;
 }
 
 .header-nav__add {
   padding: 4px 20px;
-  font-size: 30px;
+  font-size: 1.75rem;
   background: transparent;
   color: #fff;
 }
@@ -105,13 +105,13 @@ button {
 }
 
 .sidebar-navigation__title {
-  font-size: 26px;
+  font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
 .sidebar-navigation button,
 .sidebar-navigation__add-project {
-  font-size: 18px;
+  font-size: 1.12rem;
   border-radius: 8px;
   padding: 10px;
   text-align: justify;
@@ -132,7 +132,7 @@ button {
 }
 
 .projects-list button {
-  font-size: 16px;
+  font-size: 1rem;
   border-radius: 8px;
   padding: 10px;
   text-align: justify;
@@ -165,12 +165,12 @@ button {
 
 .checklist__card-title {
   text-align: center;
-  font-size: 24px;
+  font-size: 1.37rem;
 }
 
 .delete-card-btn {
   background-color: transparent;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 .list-item {
@@ -213,7 +213,7 @@ button {
 .delete-item-btn {
   background-color: transparent;
   color: red;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 .list-input {
