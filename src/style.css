@@ -229,16 +229,16 @@ button {
 
 .list-item-checkbox {
   appearance: none;
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.25rem;
+  width: 1.25rem;
   border-radius: 8px;
   border: 2px solid #3ba395;
   cursor: pointer;
 }
 
 .list-item-checkbox:checked {
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.25rem;
+  width: 1.25rem;
   display: block;
   background: url("https://bscottnz.github.io/todo/img/check.png"), #6dbbb1;
   background-repeat: no-repeat;
