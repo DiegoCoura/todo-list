@@ -353,19 +353,21 @@ getAllProjectsBtn.addEventListener("click", function () {
   displayCards();
 });
 
-const getCheklistsBtn = document.querySelector(
-  ".sidebar-navigation__checklists"
+const getTodayBtn = document.querySelector(".sidebar-navigation__today");
+getTodayBtn.addEventListener("click", function () {
+  CURRENT_DISPLAY.state = "today";
+
+  displayCards();
+});
+
+
+const getThisWeekBtn = document.querySelector(
+  ".sidebar-navigation__this-week"
 );
 
-getCheklistsBtn.addEventListener("click", function () {
-  CURRENT_DISPLAY.state = "checklist";
+getThisWeekBtn.addEventListener("click", function () {
+  CURRENT_DISPLAY.state = "thisWeek";
 
   displayCards();
 });
 
-const getTodosBtn = document.querySelector(".sidebar-navigation__todos");
-getTodosBtn.addEventListener("click", function () {
-  CURRENT_DISPLAY.state = "todo";
-
-  displayCards();
-});
