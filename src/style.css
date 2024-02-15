@@ -5,6 +5,7 @@
   text-decoration: none;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  font-family: "Rubik", sans-serif;
 }
 
 *:focus {
@@ -108,7 +109,8 @@ button {
   margin-bottom: 10px;
 }
 
-.sidebar-navigation button, .sidebar-navigation__add-project {
+.sidebar-navigation button,
+.sidebar-navigation__add-project {
   font-size: 18px;
   border-radius: 8px;
   padding: 10px;
@@ -119,7 +121,8 @@ button {
 }
 
 .sidebar-navigation button:hover,
-.projects-list button:hover, .sidebar-navigation__add-project:hover {
+.projects-list button:hover,
+.sidebar-navigation__add-project:hover {
   background-color: rgb(175, 175, 175);
 }
 
