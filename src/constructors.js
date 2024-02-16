@@ -15,6 +15,10 @@ export function Project(id, title) {
     this.listItems.push(newItem);
   };
 
+  this.editListItem = function(item){
+    
+  }
+
   this.removeListItem = function (itemIndex) {
     let filteredList = this.listItems.filter((_, index) => {
       return index !== itemIndex;
