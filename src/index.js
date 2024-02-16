@@ -1,6 +1,6 @@
 import "./style.css";
 import { Project } from "./constructors";
-import { fieldsReset, removeChildren } from "./helpers";
+import { fieldsReset, removeChildren, toggleHidden } from "./helpers";
 import ProjectListDisplay from "./Components/ProjectListDisplay";
 import ProjectTemplate from "./Components/ProjectTemplate";
 
@@ -12,29 +12,24 @@ const CURRENT_DISPLAY = {
 
 const addProjectDialog = document.querySelector(".add-project-dialog");
 
-const cancelBtn = document.querySelector(".cancel-btn");
-const addBtns = document.querySelectorAll(".add-btn");
+const projectFormCancelBtn = document.querySelector(".cancel-btn");
+const projectFormAddBtns = document.querySelectorAll(".add-btn");
 
-const addForm = document.getElementById("add-form");
+const projectAddForm = document.getElementById("add-form");
 const heroSection = document.querySelector(".hero");
 
-cancelBtn.addEventListener("click", function () {
-  closeDialog();
-});
+const addItemDialog = document.querySelector(".add-item-dialog");
+const addListItemForm = document.getElementById("add-item-form");
 
-addBtns.forEach((btn) =>
+projectFormAddBtns.forEach((btn) =>
   btn.addEventListener("click", function () {
-    openDialog();
+    addProjectDialog.showModal();
   })
 );
 
-const openDialog = () => {
-  addProjectDialog.showModal();
-};
-
-const closeDialog = () => {
+projectFormCancelBtn.addEventListener("click", function () {
   addProjectDialog.close();
-};
+});
 
 const deleteListItem = (e, deleteIndex) => {
   const parentCardId = Number(
@@ -54,12 +49,18 @@ const deleteListItem = (e, deleteIndex) => {
   }
 };
 
-const addNewListItem = (e, cardId, itemTitle, itemDescription, itemPriority) => {
+const addNewListItem = (
+  e,
+  cardId,
+  itemTitle,
+  itemDescription,
+  itemPriority
+) => {
   const newItem = {
     isChecked: false,
     title: itemTitle,
     description: itemDescription,
-    priority: itemPriority
+    priority: itemPriority,
   };
 
   projects.forEach((project) => {
@@ -99,38 +100,6 @@ const toggleCheckStyle = (newState, listItemParent) => {
   }
 };
 
-// const toggleColorOptions = (e) => {
-//   const colorOptionsContainer = e.target.previousElementSibling;
-//   if (colorOptionsContainer.classList.contains("hidden")) {
-//     colorOptionsContainer.classList.remove("hidden");
-//   } else {
-//     colorOptionsContainer.classList.add("hidden");
-//   }
-// };
-
-// const changeCardColor = (e) => {
-//   const cardId = Number(
-//     e.target.closest(".project__container").id.split("-")[1]
-//   );
-//   const parentCard = e.target.closest(".project__container");
-//   const btnId = e.target.id.split("-")[2];
-//   let bgColor;
-//   btnId === "1"
-//     ? (bgColor = "#F7D15F")
-//     : btnId === "2"
-//     ? (bgColor = "#FCA397")
-//     : btnId === "3"
-//     ? (bgColor = "#79D997")
-//     : (bgColor = "#D1A8FF");
-
-//   parentCard.style.backgroundColor = bgColor;
-
-//   projects.forEach((project) => {
-//     if (project.id === cardId) {
-//       project.changeBgColor(bgColor);
-//     }
-//   });
-// };
 
 const updateProjectList = () => {
   const listTitles = projects.map(({ id, title }) => ({ id, title }));
@@ -170,7 +139,25 @@ const displayProject = (cardId) => {
   grabInputs();
 };
 
+const editListItem = (projectId, itemIndex) => {};
+
+const toggleEditMenu = (e) => {
+  const menuContainer = e.target.closest(".list-item").nextSibling;
+  toggleHidden(menuContainer);
+};
+
 function grabInputs() {
+  const editItemBtns = document.querySelectorAll("[data-edit-index]");
+  editItemBtns.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      const projectId = Number(
+        e.target.closest(".project__container").id.split("-")[1]
+      );
+      const editItemIndex = Number(this.dataset.editIndex);
+      toggleEditMenu(e, projectId);
+    });
+  });
+
   const projectsListBtns = document.querySelectorAll(".projects-list-btn");
   projectsListBtns.forEach((btn) => {
     btn.addEventListener("click", function () {
@@ -226,19 +213,6 @@ function grabInputs() {
     });
   });
 
-  // const toggleColorBtnsList = document.querySelectorAll(".toggle-color-btn");
-  // toggleColorBtnsList.forEach((btn) => {
-  //   btn.addEventListener("click", function (e) {
-  //     toggleColorOptions(e);
-  //   });
-  // });
-
-  // const colorOptionsBtnsList = document.querySelectorAll(".color-option-btn");
-  // colorOptionsBtnsList.forEach((btn) => {
-  //   btn.addEventListener("click", function (e) {
-  //     changeCardColor(e);
-  //   });
-  // });
 }
 
 function displayCards() {
@@ -276,13 +250,10 @@ function displayCards() {
   grabInputs();
 }
 
-addForm.addEventListener("submit", (e) => {
+projectAddForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   let title = document.querySelector(".title");
-  let description = document.querySelector(".description-text-area");
-  let dueDate = document.querySelector(".due-date");
-  let priority = document.getElementById("project-priority");
 
   if (title.value.trim() === "") {
     return;
@@ -290,22 +261,16 @@ addForm.addEventListener("submit", (e) => {
 
   const fields = [];
 
-  fields.push(title, description, dueDate, priority);
-  const newProject = new Project(
-    PROJECTS_ID_COUNTER,
-    title.value,
-    description.value,
-    dueDate.value,
-    priority.value
-  );
+  fields.push(title);
+  const newProject = new Project(PROJECTS_ID_COUNTER, title.value);
 
   projects.push(newProject);
   PROJECTS_ID_COUNTER++;
 
   updateProjectList();
   fieldsReset(fields);
-  console.log(projects)
-  addForm.submit();
+  console.log(projects);
+  projectAddForm.submit();
 
   if (typeof CURRENT_DISPLAY.state === "string") {
     displayCards();
@@ -329,7 +294,7 @@ const filterProjects = (filter) => {
   if (typeof filter === "number") {
     filteredProjects = projects.filter((project) => project.id == filter);
   } else if (typeof filter === "string") {
-    return projects
+    return projects;
   }
 
   return filteredProjects;
