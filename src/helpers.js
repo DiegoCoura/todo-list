@@ -8,13 +8,7 @@ export const toggleFormHidden = (selectSection, selectedOption) => {
 
 export const fieldsReset = (fieldsArray) => {
   fieldsArray.forEach((field) => {
-    if (field.id === "project-type") {
-      field.value = "checklist";
-    } else if (field.id === "project-priority") {
-      field.value = "standard";
-    } else {
-      field.value = "";
-    }
+    field.value = "";
   });
 };
 
