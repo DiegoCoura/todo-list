@@ -178,6 +178,8 @@ button {
   flex-direction: column;
   gap: 10px;
   font-size: 0.87rem;
+  background-color: #eee;
+  margin-bottom: 5px;
 }
 
 .project__container .list-input {
@@ -211,11 +213,10 @@ button {
   font-size: 1.25rem;
 }
 
-.list-item {
+.list-item-container {
   list-style-type: none;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
   background-color: #eee;
   padding: 10px 16px;
 }
@@ -250,7 +251,7 @@ button {
   opacity: 50%;
 }
 
-.item-options-container{
+.item-options-container {
   display: flex;
   align-items: center;
   gap: 1rem;
