@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
     <title>Todo App</title>
     <script
       src="https://kit.fontawesome.com/99de766d92.js"
@@ -18,11 +21,6 @@
         <div class="cancel-btn-container">
           <button class="cancel-btn" type="reset">X</button>
         </div>
-        <label for="project-type">Type: </label>
-        <select name="project-type" id="project-type" form="add-form">
-          <option value="checklist" selected>Checklist</option>
-          <option value="todo">Todo</option>
-        </select>
 
         <label for="project-title">Title:</label>
         <input
@@ -33,7 +31,7 @@
           placeholder="Title"
         />
 
-        <section class="form-section hidden">
+        <section class="form-section">
           <label for="project-description">Description:</label>
           <textarea
             class="description-text-area"
