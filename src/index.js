@@ -54,10 +54,12 @@ const deleteListItem = (e, deleteIndex) => {
   }
 };
 
-const addNewListItem = (e, cardId, itemText) => {
+const addNewListItem = (e, cardId, itemTitle, itemDescription, itemPriority) => {
   const newItem = {
     isChecked: false,
-    text: itemText,
+    title: itemTitle,
+    description: itemDescription,
+    priority: itemPriority
   };
 
   projects.forEach((project) => {
