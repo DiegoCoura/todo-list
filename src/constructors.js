@@ -1,16 +1,18 @@
-const DEFAULT_BG_COLOR = "#F7D15F";
 
-export function Project(id, title, description, dueDate, priority) {
+export function Project(id, title) {
   this.id = id;
   this.title = title;
-  this.description = description;
-  this.dueDate = dueDate;
-  this.priority = priority;
-  this.bgColor = DEFAULT_BG_COLOR;
   this.listItems = [];
 
   this.addListItem = function (item) {
-    this.listItems.push(item);
+    let newItem = {
+      isChecked: false,
+      title: item.title,
+      description: item.description,
+      priority: item.priority,
+    }    
+    
+    this.listItems.push(newItem);
   };
 
   this.removeListItem = function (itemIndex) {
@@ -23,9 +25,5 @@ export function Project(id, title, description, dueDate, priority) {
 
   this.toggleCheckItem = function (index, state) {
     this.listItems[index].isChecked = state;
-  };
-  
-  this.changeBgColor = function (color) {
-    this.bgColor = color;
   };
 }
