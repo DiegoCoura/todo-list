@@ -29,28 +29,45 @@
           name="project-title"
           id="project-title"
           placeholder="Title"
-        />
+        />        
+        <button type="submit" class="form-submit-button">Add</button>
+      </form>
+    </dialog>
 
-        <section class="form-section">
-          <label for="project-description">Description:</label>
+    <dialog class="add-item-dialog">
+      <form id="add-item" method="dialog">
+        <div class="cancel-btn-container">
+          <button class="cancel-btn" type="reset">X</button>
+        </div>
+
+        <label for="item-title">Title:</label>
+        <input
+          type="text"
+          class="item-title-input"
+          name="item-title"
+          id="item-title"
+          placeholder="Title"
+        />
+        
+          <label for="item-description">Description:</label>
           <textarea
             class="description-text-area"
-            name="project-description"
-            id="project-description"
+            name="item-description"
+            id="item-description"
             placeholder="Description"
           ></textarea>
 
           <label for="due-date">Due Date:</label>
           <input id="due-date" type="date" name="due-date" class="due-date" />
 
-          <label for="project-priority">Priority: </label>
-          <select name="project-priority" id="project-priority" form="add-form">
+          <label for="item-priority">Priority: </label>
+          <select name="item-priority" id="item-priority" form="add-form">
             <option value="urgent">Urgent</option>
             <option value="high">High</option>
             <option value="standard" selected>Standard</option>
           </select>
-        </section>
-        <button type="submit" class="form-submit-button">Add</button>
+       
+        <button type="submit" class="form-submit-item-button">Add</button>
       </form>
     </dialog>
     <div class="main">
