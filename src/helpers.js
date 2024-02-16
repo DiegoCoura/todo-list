@@ -1,9 +1,5 @@
-export const toggleFormHidden = (selectSection, selectedOption) => {
-  if (selectedOption === "todo") {
-    selectSection.classList.remove("hidden");
-  } else if (selectedOption === "checklist") {
-    selectSection.classList.remove("shown");
-  }
+export const toggleHidden = (element) => {
+  element.classList.toggle("hidden");
 };
 
 export const fieldsReset = (fieldsArray) => {
