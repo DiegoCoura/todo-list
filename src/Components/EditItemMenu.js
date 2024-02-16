@@ -1,24 +1,22 @@
 import { customCreateElement } from "../helpers";
 
-export const EditItemForm = (itemIndex) => {
-  const editForm = customCreateElement("form", {
-    id: "edit-item-form",
-    className: "edit-item-form",
+export const EditItemMenu = (itemIndex) => {
+  const editMenu = customCreateElement("div", {
+    id: "edit-item-menu",
+    className: "edit-item-menu",
   });
-  editForm.setAttribute("data-edit-item", `${itemIndex}`)
+  editMenu.setAttribute("data-edit-item", `${itemIndex}`);
 
   const title = customCreateElement("input", {
     type: "text",
     className: "edit-title-input",
     name: "item-title",
-    id: "item-title",
     placeholder: "Title",
   });
 
   const description = customCreateElement("textarea", {
     className: "description-text-area",
     name: "item-description",
-    id: "item-description",
     placeholder: "Description",
   });
 
@@ -40,9 +38,8 @@ export const EditItemForm = (itemIndex) => {
 
   const prioritySelect = customCreateElement("select", {
     name: "item-priority",
-    id: "item-priority"
+    id: "item-priority",
   });
-  console.log(prioritySelect)
 
   const urgentOption = customCreateElement("option");
   urgentOption.value = "urgent";
@@ -60,18 +57,12 @@ export const EditItemForm = (itemIndex) => {
   prioritySelect.add(highOption, null);
   prioritySelect.add(standardOption, null);
 
-  const buttonAdd = customCreateElement("button", {
-    type: "submit",
-    className: "edit-item-submit",
-  });
+  editMenu.appendChild(title);
+  editMenu.appendChild(description);
+  editMenu.appendChild(dueDateLabel);
+  editMenu.appendChild(dueDateInput);
+  editMenu.appendChild(priorityLabel);
+  editMenu.appendChild(prioritySelect);
 
-  editForm.appendChild(title);
-  editForm.appendChild(description);
-  editForm.appendChild(dueDateLabel);
-  editForm.appendChild(dueDateInput);
-  editForm.appendChild(priorityLabel);
-  editForm.appendChild(prioritySelect);
-  editForm.appendChild(buttonAdd);
-
-  return editForm;
+  return editMenu;
 };

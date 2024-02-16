@@ -1,4 +1,3 @@
-
 export function Project(id, title) {
   this.id = id;
   this.title = title;
@@ -9,15 +8,21 @@ export function Project(id, title) {
       isChecked: false,
       title: item.title,
       description: item.description,
+      dueDate: item.dueDate,
       priority: item.priority,
-    }    
-    
+    };
+
     this.listItems.push(newItem);
   };
 
-  this.editListItem = function(item){
-    
-  }
+  this.editListItem = function (itemIndex, itemValue, itemKey) {
+    this.listItems.forEach((listItem, index) => {
+      if(index === itemIndex){
+        listItem[itemKey] = itemValue
+      }
+    });
+
+  };
 
   this.removeListItem = function (itemIndex) {
     let filteredList = this.listItems.filter((_, index) => {

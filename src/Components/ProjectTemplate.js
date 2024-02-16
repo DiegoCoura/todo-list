@@ -1,5 +1,5 @@
 import { customCreateElement } from "../helpers";
-import { EditItemForm } from "./EditItemForm";
+import { EditItemMenu } from "./EditItemMenu";
 
 const ProjectTemplate = (projectId, title, listItems) => {
   const projectContainer = customCreateElement("div", {
@@ -58,8 +58,8 @@ const ProjectTemplate = (projectId, title, listItems) => {
 
     newCheckBox.setAttribute("data-check-index", `${index}`);
 
-    const itemText = customCreateElement("p", {
-      className: "list-item-text",
+    const itemTitle = customCreateElement("p", {
+      className: "list-item-title",
       innerText: item.title,
     });
 
@@ -92,7 +92,7 @@ const ProjectTemplate = (projectId, title, listItems) => {
     deleteItemBtn.appendChild(trashCanIcon);
 
     checkTextDiv.appendChild(newCheckBox);
-    checkTextDiv.appendChild(itemText);
+    checkTextDiv.appendChild(itemTitle);
 
     optionsDiv.appendChild(editItemBtn);
     optionsDiv.appendChild(dateText);
@@ -107,7 +107,7 @@ const ProjectTemplate = (projectId, title, listItems) => {
       className: "edit-item-menu-container",
     });
 
-    const editForm = EditItemForm(index);
+    const editForm = EditItemMenu(index);
     editItemContainer.appendChild(editForm);
 
     list.appendChild(newListItem);
@@ -121,38 +121,13 @@ const ProjectTemplate = (projectId, title, listItems) => {
   });
   listInput.setAttribute("data-input-item", `${projectId}`);
 
-  //   const colorButton = customCreateElement("button", {
-  //     className: "toggle-color-btn",
-  //   });
-  //   colorButton.style.backgroundColor = bgColor;
-
-  //   const colorButtonContainer = customCreateElement("div", {
-  //     className: "toggle-color-container",
-  //   });
-
-  //   const colorOptionsContainer = customCreateElement("div", {
-  //     className: "color-options-container hidden",
-  //   });
-
-  //   for (let i = 1; i < 5; i++) {
-  //     const colorOptionBtn = customCreateElement("button", {
-  //       id: `color-option-${i}`,
-  //       className: "color-option-btn",
-  //     });
-
-  //     colorOptionsContainer.appendChild(colorOptionBtn);
-  //   }
-
-  //   colorButtonContainer.appendChild(colorOptionsContainer);
-  //   colorButtonContainer.appendChild(colorButton);
-
   projectHeaderDiv.appendChild(projectTitle);
   projectHeaderDiv.appendChild(deleteProjectBtn);
 
   projectContainer.appendChild(projectHeaderDiv);
   projectContainer.appendChild(list);
   projectContainer.appendChild(listInput);
-  //   projectContainer.appendChild(colorButtonContainer);
+
 
   return projectContainer;
 };

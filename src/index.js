@@ -19,7 +19,7 @@ const projectAddForm = document.getElementById("add-form");
 const heroSection = document.querySelector(".hero");
 
 const addItemDialog = document.querySelector(".add-item-dialog");
-const addListItemForm = document.getElementById("add-item-form");
+const addListItemMenu = document.getElementById("add-item-menu");
 
 projectFormAddBtns.forEach((btn) =>
   btn.addEventListener("click", function () {
@@ -100,7 +100,6 @@ const toggleCheckStyle = (newState, listItemParent) => {
   }
 };
 
-
 const updateProjectList = () => {
   const listTitles = projects.map(({ id, title }) => ({ id, title }));
   ProjectListDisplay(listTitles);
@@ -139,14 +138,38 @@ const displayProject = (cardId) => {
   grabInputs();
 };
 
-const editListItem = (projectId, itemIndex) => {};
-
 const toggleEditMenu = (e) => {
   const menuContainer = e.target.closest(".list-item").nextSibling;
   toggleHidden(menuContainer);
 };
 
+const editListItem = (projectId, itemIndex, itemValue, itemKey) => {
+  projects.forEach((project) => {
+    if (project.id === projectId) {
+      project.editListItem(itemIndex, itemValue, itemKey);      
+    }
+  });
+  console.log(projects)
+  displayCards();
+};
+
 function grabInputs() {
+  const editTitleItemsList = document.querySelectorAll(".edit-title-input");
+  editTitleItemsList.forEach((input) => {
+    input.addEventListener("change", function (e) {
+      const itemIndex = Number(
+        e.target.closest("[data-edit-item]").dataset.editItem
+      );
+      const projectId = Number(
+        e.target.closest(".project__container").id.split("-")[1]
+      );
+      const itemValue = e.target.value;
+      const itemKey = (e.target.name.split("-")[1]);
+
+      editListItem(projectId, itemIndex, itemValue, itemKey);
+    });
+  });
+
   const editItemBtns = document.querySelectorAll("[data-edit-index]");
   editItemBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
@@ -212,7 +235,6 @@ function grabInputs() {
       addNewListItem(e, inputCardId, newItemText);
     });
   });
-
 }
 
 function displayCards() {
@@ -269,7 +291,7 @@ projectAddForm.addEventListener("submit", (e) => {
 
   updateProjectList();
   fieldsReset(fields);
-  console.log(projects);
+
   projectAddForm.submit();
 
   if (typeof CURRENT_DISPLAY.state === "string") {
