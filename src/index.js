@@ -1,7 +1,6 @@
 import "./style.css";
-import { Todo, Project } from "./constructors";
-import { fieldsReset, toggleFormHidden, removeChildren } from "./helpers";
-import TodoCard from "./Components/TodoCard";
+import { Project } from "./constructors";
+import { fieldsReset, removeChildren } from "./helpers";
 import ProjectListDisplay from "./Components/ProjectListDisplay";
 import ProjectTemplate from "./Components/ProjectTemplate";
 
@@ -15,8 +14,6 @@ const addProjectDialog = document.querySelector(".add-project-dialog");
 
 const cancelBtn = document.querySelector(".cancel-btn");
 const addBtns = document.querySelectorAll(".add-btn");
-const selectSection = document.querySelector(".form-section");
-const projectType = document.getElementById("project-type");
 
 const addForm = document.getElementById("add-form");
 const heroSection = document.querySelector(".hero");
@@ -31,13 +28,8 @@ addBtns.forEach((btn) =>
   })
 );
 
-projectType.addEventListener("change", function () {
-  toggleFormHidden(selectSection, projectType.value);
-});
-
 const openDialog = () => {
   addProjectDialog.showModal();
-  toggleFormHidden(selectSection, projectType.value);
 };
 
 const closeDialog = () => {
@@ -160,13 +152,16 @@ const displayProject = (cardId) => {
 
   projects.forEach((project) => {
     if (cardId === project.id) {
-      if (project.type === "checklist") {
-        heroSection.appendChild(
-          ProjectTemplate(project.id, project.title, project.listItems)
-        );
-      } else if (project.type === "todo") {
-        heroSection.appendChild(TodoCard(project.id));
-      }
+      heroSection.appendChild(
+        ProjectTemplate(
+          project.id,
+          project.title,
+          project.listItems,
+          project.description,
+          project.dueDate,
+          project.priority
+        )
+      );
     }
   });
   updateProjectList();
@@ -250,23 +245,29 @@ function displayCards() {
 
   if (current_filter) {
     current_filter.forEach((project) => {
-      if (project.type === "checklist") {
-        heroSection.appendChild(
-          ProjectTemplate(project.id, project.title, project.listItems)
-        );
-      } else if (project.type === "todo") {
-        heroSection.appendChild(TodoCard(project.id));
-      }
+      heroSection.appendChild(
+        ProjectTemplate(
+          project.id,
+          project.title,
+          project.listItems,
+          project.description,
+          project.dueDate,
+          project.priority
+        )
+      );
     });
   } else {
     projects.forEach((project) => {
-      if (project.type === "checklist") {
-        heroSection.appendChild(
-          ProjectTemplate(project.id, project.title, project.listItems)
-        );
-      } else if (project.type === "todo") {
-        heroSection.appendChild(TodoCard(project.id));
-      }
+      heroSection.appendChild(
+        ProjectTemplate(
+          project.id,
+          project.title,
+          project.listItems,
+          project.description,
+          project.dueDate,
+          project.priority
+        )
+      );
     });
   }
 
@@ -276,7 +277,6 @@ function displayCards() {
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  let type = document.getElementById("project-type");
   let title = document.querySelector(".title");
   let description = document.querySelector(".description-text-area");
   let dueDate = document.querySelector(".due-date");
@@ -288,34 +288,21 @@ addForm.addEventListener("submit", (e) => {
 
   const fields = [];
 
-  if (type.value === "checklist") {
-    fields.push(type, title);
-    const newProject = new Project(
-      PROJECTS_ID_COUNTER,
-      type.value,
-      title.value
-    );
+  fields.push(title, description, dueDate, priority);
+  const newProject = new Project(
+    PROJECTS_ID_COUNTER,
+    title.value,
+    description.value,
+    dueDate.value,
+    priority.value
+  );
 
-    projects.push(newProject);
-    PROJECTS_ID_COUNTER++;
-  } else if (type.value === "todo") {
-    fields.push(type, title, description, dueDate, priority);
-    const newTodo = new Todo(
-      PROJECTS_ID_COUNTER,
-      type.value,
-      title.value,
-      description.value,
-      dueDate.value,
-      priority.value
-    );
-
-    projects.push(newTodo);
-    PROJECTS_ID_COUNTER++;
-  }
+  projects.push(newProject);
+  PROJECTS_ID_COUNTER++;
 
   updateProjectList();
   fieldsReset(fields);
-  toggleFormHidden(selectSection, projectType.value);
+  console.log(projects)
   addForm.submit();
 
   if (typeof CURRENT_DISPLAY.state === "string") {
@@ -340,7 +327,7 @@ const filterProjects = (filter) => {
   if (typeof filter === "number") {
     filteredProjects = projects.filter((project) => project.id == filter);
   } else if (typeof filter === "string") {
-    filteredProjects = projects.filter((project) => project.type == filter);
+    return projects
   }
 
   return filteredProjects;
@@ -360,14 +347,10 @@ getTodayBtn.addEventListener("click", function () {
   displayCards();
 });
 
-
-const getThisWeekBtn = document.querySelector(
-  ".sidebar-navigation__this-week"
-);
+const getThisWeekBtn = document.querySelector(".sidebar-navigation__this-week");
 
 getThisWeekBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "thisWeek";
 
   displayCards();
 });
-
