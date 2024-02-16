@@ -1,4 +1,5 @@
 import { customCreateElement } from "../helpers";
+import { EditItemForm } from "./EditItemForm";
 
 const ProjectTemplate = (projectId, title, listItems) => {
   const projectContainer = customCreateElement("div", {
@@ -28,12 +29,16 @@ const ProjectTemplate = (projectId, title, listItems) => {
 
   deleteProjectBtn.appendChild(deleteProjectIcon);
 
-  const list = customCreateElement("ul", {
+  const list = customCreateElement("div", {
     className: "project__container-list",
   });
 
   listItems.forEach((item, index) => {
-    const newListItem = customCreateElement("li", {
+    const listItemContainer = customCreateElement("div", {
+      className: "list-item-container",
+    });
+
+    const newListItem = customCreateElement("div", {
       className: "list-item",
     });
 
@@ -55,7 +60,7 @@ const ProjectTemplate = (projectId, title, listItems) => {
 
     const itemText = customCreateElement("p", {
       className: "list-item-text",
-      innerText: item.text,
+      innerText: item.title,
     });
 
     const optionsDiv = customCreateElement("div", {
@@ -65,6 +70,8 @@ const ProjectTemplate = (projectId, title, listItems) => {
     const editItemBtn = customCreateElement("button", {
       className: "edit-item-btn",
     });
+    editItemBtn.setAttribute("data-edit-index", `${index}`);
+
     const editIcon = customCreateElement("i", {
       className: "fa-regular fa-pen-to-square",
     });
@@ -73,7 +80,6 @@ const ProjectTemplate = (projectId, title, listItems) => {
     const dateText = customCreateElement("span", {
       innerText: "Data",
     });
-
 
     const deleteItemBtn = customCreateElement("button", {
       className: "delete-item-btn",
@@ -92,9 +98,20 @@ const ProjectTemplate = (projectId, title, listItems) => {
     optionsDiv.appendChild(dateText);
     optionsDiv.appendChild(deleteItemBtn);
 
-    newListItem.appendChild(checkTextDiv);
-    newListItem.appendChild(optionsDiv);
+    listItemContainer.appendChild(checkTextDiv);
+    listItemContainer.appendChild(optionsDiv);
+
+    newListItem.appendChild(listItemContainer);
+
+    const editItemContainer = customCreateElement("div", {
+      className: "edit-item-menu-container",
+    });
+
+    const editForm = EditItemForm(index);
+    editItemContainer.appendChild(editForm);
+
     list.appendChild(newListItem);
+    list.appendChild(editItemContainer);
   });
 
   const listInput = customCreateElement("input", {
