@@ -19,7 +19,7 @@ export const EditItemMenu = (itemIndex, item) => {
     className: "description-text-area edit-item-input",
     name: "item-description",
     placeholder: "Description",
-    value: `${item.description}`,
+    value: `${item.description ? item.description : ""}`,
   });
 
   const itemDateLabel = customCreateElement("label", {
@@ -41,7 +41,6 @@ export const EditItemMenu = (itemIndex, item) => {
     priorityPlaceHolder.text = "Priority";
   } else {
     priorityPlaceHolder.text = capitalizeFirstLetter(item.priority);
-    
   }
 
   const standardOption = customCreateElement("option");
