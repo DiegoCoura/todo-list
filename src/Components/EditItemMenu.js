@@ -1,6 +1,6 @@
-import { customCreateElement } from "../helpers";
+import { capitalizeFirstLetter, customCreateElement } from "../helpers";
 
-export const EditItemMenu = (itemIndex) => {
+export const EditItemMenu = (itemIndex, item) => {
   const editMenu = customCreateElement("div", {
     id: "edit-item-menu",
     className: "edit-item-menu",
@@ -9,59 +9,68 @@ export const EditItemMenu = (itemIndex) => {
 
   const title = customCreateElement("input", {
     type: "text",
-    className: "edit-title-input",
+    className: "edit-title-input edit-item-input",
     name: "item-title",
     placeholder: "Title",
+    value: `${item.title}`,
   });
 
   const description = customCreateElement("textarea", {
-    className: "description-text-area",
+    className: "description-text-area edit-item-input",
     name: "item-description",
     placeholder: "Description",
+    value: `${item.description}`,
   });
 
-  const dueDateLabel = customCreateElement("label", {
-    for: "due-date",
+  const itemDateLabel = customCreateElement("label", {
+    for: "item-date",
     innerText: "Due date:",
   });
 
-  const dueDateInput = customCreateElement("input", {
-    id: "due-date",
+  const itemDateInput = customCreateElement("input", {
+    id: "item-date",
     type: "date",
-    name: "due-date",
-    className: "due-date",
+    name: "item-date",
+    className: "item-date edit-item-input",
+    value: `${item.date}`,
   });
 
-  const priorityLabel = customCreateElement("label", {
-    for: "item-priority",
-  });
+  const priorityPlaceHolder = customCreateElement("option");
+  priorityPlaceHolder.value = "";
+  if (!item.priority) {
+    priorityPlaceHolder.text = "Priority";
+  } else {
+    priorityPlaceHolder.text = capitalizeFirstLetter(item.priority);
+    
+  }
 
-  const prioritySelect = customCreateElement("select", {
-    name: "item-priority",
-    id: "item-priority",
-  });
-
-  const urgentOption = customCreateElement("option");
-  urgentOption.value = "urgent";
-  urgentOption.text = "Urgent";
+  const standardOption = customCreateElement("option");
+  standardOption.value = "standard";
+  standardOption.text = "Standard";
 
   const highOption = customCreateElement("option");
   highOption.value = "high";
   highOption.text = "High";
 
-  const standardOption = customCreateElement("option");
-  standardOption.value = "standard";
-  standardOption.text = "standard";
+  const urgentOption = customCreateElement("option");
+  urgentOption.value = "urgent";
+  urgentOption.text = "Urgent";
 
-  prioritySelect.add(urgentOption, null);
-  prioritySelect.add(highOption, null);
-  prioritySelect.add(standardOption, null);
+  const prioritySelect = customCreateElement("select", {
+    name: "item-priority",
+    className: "edit-item-input",
+    value: item.priority,
+  });
+
+  prioritySelect.add(priorityPlaceHolder, prioritySelect.options[0]);
+  prioritySelect.add(standardOption, prioritySelect.options[1]);
+  prioritySelect.add(highOption, prioritySelect.options[2]);
+  prioritySelect.add(urgentOption, prioritySelect.options[3]);
 
   editMenu.appendChild(title);
   editMenu.appendChild(description);
-  editMenu.appendChild(dueDateLabel);
-  editMenu.appendChild(dueDateInput);
-  editMenu.appendChild(priorityLabel);
+  editMenu.appendChild(itemDateLabel);
+  editMenu.appendChild(itemDateInput);
   editMenu.appendChild(prioritySelect);
 
   return editMenu;

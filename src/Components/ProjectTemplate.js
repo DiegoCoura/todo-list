@@ -78,7 +78,7 @@ const ProjectTemplate = (projectId, title, listItems) => {
     editItemBtn.appendChild(editIcon);
 
     const dateText = customCreateElement("span", {
-      innerText: "Data",
+      innerText: item.date,
     });
 
     const deleteItemBtn = customCreateElement("button", {
@@ -107,8 +107,8 @@ const ProjectTemplate = (projectId, title, listItems) => {
       className: "edit-item-menu-container",
     });
 
-    const editForm = EditItemMenu(index);
-    editItemContainer.appendChild(editForm);
+    const editMenu = EditItemMenu(index, item);
+    editItemContainer.appendChild(editMenu);
 
     list.appendChild(newListItem);
     list.appendChild(editItemContainer);
@@ -127,7 +127,6 @@ const ProjectTemplate = (projectId, title, listItems) => {
   projectContainer.appendChild(projectHeaderDiv);
   projectContainer.appendChild(list);
   projectContainer.appendChild(listInput);
-
 
   return projectContainer;
 };
