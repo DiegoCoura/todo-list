@@ -8,7 +8,7 @@ export function Project(id, title) {
       isChecked: false,
       title: item.title,
       description: item.description,
-      dueDate: item.dueDate,
+      date: item.date,
       priority: item.priority,
     };
 
