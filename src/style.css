@@ -182,6 +182,18 @@ button {
   margin-bottom: 5px;
 }
 
+.priority-standard {
+  border-left: 6px solid green;
+}
+
+.priority-high {
+  border-left: 6px solid orange;
+}
+
+.priority-urgent {
+  border-left: 6px solid red;
+}
+
 .project__container .list-input {
   width: 95%;
   border-radius: 8px;
