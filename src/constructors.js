@@ -9,7 +9,7 @@ export function Project(id, title) {
       title: item.title,
       description: item.description,
       date: item.date,
-      priority: item.priority,
+      priority: "standard",
     };
 
     this.listItems.push(newItem);
