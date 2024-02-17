@@ -128,10 +128,17 @@ const toggleEditMenu = (e) => {
   toggleHidden(menuContainer);
 };
 
-const editListItem = (projectId, itemIndex, itemValue, itemKey) => {
+const editListItem = (
+  e,
+  projectId,
+  itemIndex,
+  itemValue,
+  itemKey,
+  currentItemEl
+) => {
   projects.forEach((project) => {
     if (project.id === projectId) {
-      project.editListItem(itemIndex, itemValue, itemKey);
+      project.editListItem(itemIndex, itemKey, itemValue);
     }
   });
   displayCards();
@@ -147,10 +154,15 @@ function grabInputs() {
       const projectId = Number(
         e.target.closest(".project__container").id.split("-")[1]
       );
+
+      const parentEl = e.target.closest(".project__container");
+
+      const currentItemEl = parentEl.querySelector(".edit-item-menu-container");
+
       const itemValue = e.target.value;
       const itemKey = e.target.name.split("-")[1];
 
-      editListItem(projectId, itemIndex, itemValue, itemKey);
+      editListItem(e, projectId, itemIndex, itemValue, itemKey, currentItemEl);
     });
   });
 
@@ -161,7 +173,8 @@ function grabInputs() {
         e.target.closest(".project__container").id.split("-")[1]
       );
       const editItemIndex = Number(this.dataset.editIndex);
-      toggleEditMenu(e, projectId);
+
+      toggleEditMenu(e, projectId, editItemIndex);
     });
   });
 
