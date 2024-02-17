@@ -15,13 +15,12 @@ export function Project(id, title) {
     this.listItems.push(newItem);
   };
 
-  this.editListItem = function (itemIndex, itemValue, itemKey) {
+  this.editListItem = function (itemIndex, itemKey, itemValue) {
     this.listItems.forEach((listItem, index) => {
-      if(index === itemIndex){
-        listItem[itemKey] = itemValue
+      if (index === itemIndex) {
+        listItem[itemKey] = itemValue;
       }
     });
-
   };
 
   this.removeListItem = function (itemIndex) {
