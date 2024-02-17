@@ -39,7 +39,7 @@ const ProjectTemplate = (projectId, title, listItems) => {
     });
 
     const newListItem = customCreateElement("div", {
-      className: "list-item",
+      className: `list-item priority-${item.priority}`,
     });
 
     const checkTextDiv = customCreateElement("div", {
