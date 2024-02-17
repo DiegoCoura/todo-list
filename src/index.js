@@ -18,9 +18,6 @@ const projectFormAddBtns = document.querySelectorAll(".add-btn");
 const projectAddForm = document.getElementById("add-form");
 const heroSection = document.querySelector(".hero");
 
-const addItemDialog = document.querySelector(".add-item-dialog");
-const addListItemMenu = document.getElementById("add-item-menu");
-
 projectFormAddBtns.forEach((btn) =>
   btn.addEventListener("click", function () {
     addProjectDialog.showModal();
@@ -105,18 +102,6 @@ const updateProjectList = () => {
   ProjectListDisplay(listTitles);
 };
 
-const changeHeroDisplay = (display) => {
-  if (heroSection.classList.contains(display)) return;
-
-  if (heroSection.classList.contains("grid")) {
-    heroSection.classList.remove("grid");
-    heroSection.classList.add("flex");
-  } else if (heroSection.classList.contains("flex")) {
-    heroSection.classList.remove("flex");
-    heroSection.classList.add("grid");
-  }
-};
-
 const displayProject = (cardId) => {
   removeChildren(heroSection);
 
@@ -128,7 +113,7 @@ const displayProject = (cardId) => {
           project.title,
           project.listItems,
           project.description,
-          project.dueDate,
+          project.date,
           project.priority
         )
       );
@@ -146,16 +131,15 @@ const toggleEditMenu = (e) => {
 const editListItem = (projectId, itemIndex, itemValue, itemKey) => {
   projects.forEach((project) => {
     if (project.id === projectId) {
-      project.editListItem(itemIndex, itemValue, itemKey);      
+      project.editListItem(itemIndex, itemValue, itemKey);
     }
   });
-  console.log(projects)
   displayCards();
 };
 
 function grabInputs() {
-  const editTitleItemsList = document.querySelectorAll(".edit-title-input");
-  editTitleItemsList.forEach((input) => {
+  const editItemsList = document.querySelectorAll(".edit-item-input");
+  editItemsList.forEach((input) => {
     input.addEventListener("change", function (e) {
       const itemIndex = Number(
         e.target.closest("[data-edit-item]").dataset.editItem
@@ -164,7 +148,7 @@ function grabInputs() {
         e.target.closest(".project__container").id.split("-")[1]
       );
       const itemValue = e.target.value;
-      const itemKey = (e.target.name.split("-")[1]);
+      const itemKey = e.target.name.split("-")[1];
 
       editListItem(projectId, itemIndex, itemValue, itemKey);
     });
@@ -249,7 +233,7 @@ function displayCards() {
           project.title,
           project.listItems,
           project.description,
-          project.dueDate,
+          project.date,
           project.priority
         )
       );
@@ -262,7 +246,7 @@ function displayCards() {
           project.title,
           project.listItems,
           project.description,
-          project.dueDate,
+          project.date,
           project.priority
         )
       );
