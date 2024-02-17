@@ -78,7 +78,7 @@ const ProjectTemplate = (projectId, title, listItems) => {
     editItemBtn.appendChild(editIcon);
 
     const dateText = customCreateElement("span", {
-      innerText: item.date,
+      innerText: `${item.date ? item.date : "Due Date"}`,
     });
 
     const deleteItemBtn = customCreateElement("button", {
@@ -104,7 +104,7 @@ const ProjectTemplate = (projectId, title, listItems) => {
     newListItem.appendChild(listItemContainer);
 
     const editItemContainer = customCreateElement("div", {
-      className: "edit-item-menu-container",
+      className: "edit-item-menu-container hidden",
     });
 
     const editMenu = EditItemMenu(index, item);
