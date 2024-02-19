@@ -13,7 +13,6 @@ const ProjectTemplate = (
     id: `project-${projectId}`,
     className: "project__container",
   });
-  //   projectContainer.style.backgroundColor = bgColor;
 
   const projectHeaderDiv = customCreateElement("div", {
     className: "project__container-header",
