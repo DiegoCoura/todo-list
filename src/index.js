@@ -116,26 +116,28 @@ const displayProject = (cardId) => {
   grabInputs();
 };
 
-const toggleEditMenu = (e) => {
-  const menuContainer = e.target.closest(".list-item").nextSibling;
-  toggleHidden(menuContainer);
+const toggleEditMenu = (e, projectId, editItemIndex) => {
+  const parentEl = e.target.closest(".project__container-list");
+  const menuContainer = parentEl.querySelectorAll(".edit-item-menu-container")[
+    editItemIndex
+  ];
+
+  if (menuContainer.classList.contains("hidden")) {
+    toggleHidden(menuContainer);
+  } else {
+    toggleHidden(menuContainer);
+    displayCards();
+  }
 };
 
-const editListItem = (
-  e,
-  projectId,
-  itemIndex,
-  itemValue,
-  itemKey,
-  currentItemEl
-) => {
+const editListItem = (e, projectId, itemIndex, itemValue, itemKey) => {
   projects.forEach((project) => {
     if (project.id === projectId) {
       project.editListItem(itemIndex, itemKey, itemValue);
     }
   });
 
-  displayCards(projectId, itemIndex);
+  // displayCards(projectId, itemIndex);
 };
 
 function grabInputs() {
@@ -153,10 +155,14 @@ function grabInputs() {
 
       const currentItemEl = parentEl.querySelector(".edit-item-menu-container");
 
+      const currentElement = e.target;
+
       const itemValue = e.target.value;
+
+      currentElement.value = itemValue;
       const itemKey = e.target.name.split("-")[1];
 
-      editListItem(e, projectId, itemIndex, itemValue, itemKey, currentItemEl);
+      editListItem(e, projectId, itemIndex, itemValue, itemKey);
     });
   });
 
