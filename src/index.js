@@ -108,14 +108,7 @@ const displayProject = (cardId) => {
   projects.forEach((project) => {
     if (cardId === project.id) {
       heroSection.appendChild(
-        ProjectTemplate(
-          project.id,
-          project.title,
-          project.listItems,
-          project.description,
-          project.date,
-          project.priority
-        )
+        ProjectTemplate(project.id, project.title, project.listItems)
       );
     }
   });
@@ -141,7 +134,8 @@ const editListItem = (
       project.editListItem(itemIndex, itemKey, itemValue);
     }
   });
-  displayCards();
+
+  displayCards(projectId, itemIndex);
 };
 
 function grabInputs() {
@@ -234,7 +228,7 @@ function grabInputs() {
   });
 }
 
-function displayCards() {
+function displayCards(currentProjectId, currentItemIndex) {
   removeChildren(heroSection);
   let current_filter = filterProjects(CURRENT_DISPLAY.state);
 
@@ -245,9 +239,8 @@ function displayCards() {
           project.id,
           project.title,
           project.listItems,
-          project.description,
-          project.date,
-          project.priority
+          currentProjectId,
+          currentItemIndex
         )
       );
     });
@@ -258,9 +251,8 @@ function displayCards() {
           project.id,
           project.title,
           project.listItems,
-          project.description,
-          project.date,
-          project.priority
+          currentProjectId,
+          currentItemIndex
         )
       );
     });

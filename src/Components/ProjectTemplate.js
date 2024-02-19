@@ -1,7 +1,14 @@
 import { customCreateElement } from "../helpers";
 import { EditItemMenu } from "./EditItemMenu";
 
-const ProjectTemplate = (projectId, title, listItems) => {
+const ProjectTemplate = (
+  projectId,
+  title,
+  listItems,
+  currentProjectId,
+  currentItemIndex
+) => {
+
   const projectContainer = customCreateElement("div", {
     id: `project-${projectId}`,
     className: "project__container",
@@ -104,7 +111,11 @@ const ProjectTemplate = (projectId, title, listItems) => {
     newListItem.appendChild(listItemContainer);
 
     const editItemContainer = customCreateElement("div", {
-      className: "edit-item-menu-container hidden",
+      className: `edit-item-menu-container ${
+        currentProjectId === projectId && currentItemIndex === index
+          ? ""
+          : "hidden"
+      }`,
     });
 
     const editMenu = EditItemMenu(index, item);
