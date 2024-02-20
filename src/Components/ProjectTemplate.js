@@ -64,10 +64,12 @@ const ProjectTemplate = (
 
     newCheckBox.setAttribute("data-check-index", `${index}`);
 
-    const itemTitle = customCreateElement("p", {
-      className: "list-item-title",
+    const itemTitle = customCreateElement("div", {
+      className: "list-item-title edit-item-input",
       innerText: item.title,
+      contentEditable: true
     });
+    itemTitle.setAttribute("data-title-index", `${index}`);
 
     const optionsDiv = customCreateElement("div", {
       className: "item-options-container",
