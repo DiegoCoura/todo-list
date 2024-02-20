@@ -2,10 +2,6 @@ export const toggleHidden = (element) => {
   element.classList.toggle("hidden");
 };
 
-export const removeHidden = (element) => {
-  element.classList.remove("hidden");
-}
-
 export const fieldsReset = (fieldsArray) => {
   fieldsArray.forEach((field) => {
     field.value = "";
