@@ -1,6 +1,12 @@
 import "./style.css";
 import { Project } from "./constructors";
-import { fieldsReset, removeChildren, toggleClass, toggleHidden } from "./helpers";
+import {
+  fieldsReset,
+  removeChildren,
+  removeClass,
+  toggleClass,
+  toggleHidden,
+} from "./helpers";
 import ProjectListDisplay from "./Components/ProjectListDisplay";
 import ProjectTemplate from "./Components/ProjectTemplate";
 
@@ -10,16 +16,26 @@ const CURRENT_DISPLAY = {
   state: "",
 };
 
+window.addEventListener("resize", function () {
+  if (window.innerWidth > 576) {
+    const sidebar = document.querySelector(".sidebar");
+    const mainContainer = document.querySelector(".main");
+
+    removeClass(sidebar, "hidden")
+    removeClass(mainContainer, "grid-small")
+  }
+});
+
 const collapseMenuBtn = document.querySelector(".collapse-btn");
-collapseMenuBtn.addEventListener("click", function (){
+collapseMenuBtn.addEventListener("click", function () {
   const sidebar = document.querySelector(".sidebar");
 
   const mainContainer = document.querySelector(".main");
 
-  toggleClass(mainContainer, "grid-small")
+  toggleClass(mainContainer, "grid-small");
 
-  toggleHidden(sidebar)
-})
+  toggleHidden(sidebar);
+});
 
 const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
 getAllProjectsBtn.addEventListener("click", function () {
@@ -79,7 +95,12 @@ const deleteListItem = (e, deleteIndex) => {
   }
 };
 
-const addNewListItem = (projectId, itemTitle, itemDescription, itemPriority) => {
+const addNewListItem = (
+  projectId,
+  itemTitle,
+  itemDescription,
+  itemPriority
+) => {
   const newItem = {
     isChecked: false,
     title: itemTitle,

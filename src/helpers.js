@@ -6,6 +6,12 @@ export const toggleClass = (element, className) => {
   element.classList.toggle(className)
 };
 
+export const removeClass = (element, className) => {
+  if (element.classList.contains(className)){
+    element.classList.remove(className);
+  }
+}
+
 export const fieldsReset = (fieldsArray) => {
   fieldsArray.forEach((field) => {
     field.value = "";
