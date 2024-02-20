@@ -22,14 +22,13 @@
           <button class="cancel-btn" type="reset">X</button>
         </div>
 
-        <label for="project-title">Title:</label>
         <input
           type="text"
           class="title"
           name="project-title"
           id="project-title"
           placeholder="Title"
-        />        
+        />
         <button type="submit" class="form-submit-button">Add</button>
       </form>
     </dialog>
@@ -48,25 +47,25 @@
           id="item-title"
           placeholder="Title"
         />
-        
-          <label for="item-description">Description:</label>
-          <textarea
-            class="description-text-area"
-            name="item-description"
-            id="item-description"
-            placeholder="Description"
-          ></textarea>
 
-          <label for="due-date">Due Date:</label>
-          <input id="due-date" type="date" name="due-date" class="due-date" />
+        <label for="item-description">Description:</label>
+        <textarea
+          class="description-text-area"
+          name="item-description"
+          id="item-description"
+          placeholder="Description"
+        ></textarea>
 
-          <label for="item-priority">Priority: </label>
-          <select name="item-priority" id="item-priority" form="add-form">
-            <option value="urgent">Urgent</option>
-            <option value="high">High</option>
-            <option value="standard" selected>Standard</option>
-          </select>
-       
+        <label for="due-date">Due Date:</label>
+        <input id="due-date" type="date" name="due-date" class="due-date" />
+
+        <label for="item-priority">Priority: </label>
+        <select name="item-priority" id="item-priority" form="add-form">
+          <option value="urgent">Urgent</option>
+          <option value="high">High</option>
+          <option value="standard" selected>Standard</option>
+        </select>
+
         <button type="submit" class="form-submit-item-button">Add</button>
       </form>
     </dialog>

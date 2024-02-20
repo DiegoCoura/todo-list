@@ -10,6 +10,16 @@
   }
 }
 
+@keyframes showUp {
+  from {
+    opacity: 25%;
+  }
+
+  to {
+    opacity: 100%;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -37,6 +47,13 @@ button {
   transform: translate(-50%, -50%);
   text-align: center;
   box-shadow: 10px 9px 9px 0px #616060;
+  animation: showUp;
+  animation-duration: 0.4s;
+}
+
+.add-project-dialog::backdrop {
+  background-color: #00000036;
+  backdrop-filter: blur(1px);
 }
 
 #add-form {
@@ -49,14 +66,46 @@ button {
   background-color: #b4b4b4;
 }
 
-.hidden {
-  display: none !important;
+#add-form .title {
+  font-size: 1rem;
+  border-radius: 8px;
+  padding: 10px 9px;
+  text-align: center;
 }
 
-.form-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.cancel-btn-container {
+  align-self: flex-end;
+}
+
+.cancel-btn {
+  background-color: transparent;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: 0.3s ease-in-out;
+}
+
+.cancel-btn:hover{
+  transform: scale(1.2);
+  
+}
+
+.form-submit-button {
+  background-color: #d8d8d8;
+  border-radius: 8px;
+  padding: 10px 38px;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: 0.3s ease-in-out;
+}
+
+.form-submit-button:hover{
+  background-color: #f5f5f5;
+  transform: scale(1.05);
+  box-shadow: 2px 2px 3px #373737;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .description-text-area {
