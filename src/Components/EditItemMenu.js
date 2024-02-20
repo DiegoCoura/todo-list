@@ -22,6 +22,10 @@ export const EditItemMenu = (itemIndex, item) => {
     value: `${item.description ? item.description : ""}`,
   });
 
+  const setDateDiv = customCreateElement("div", {
+    className: "set-date-container",
+  });
+
   const itemDateLabel = customCreateElement("label", {
     for: "item-date",
     innerText: "Due date:",
@@ -33,6 +37,14 @@ export const EditItemMenu = (itemIndex, item) => {
     name: "item-date",
     className: "item-date edit-item-input",
     value: `${item.date}`,
+  });
+
+  setDateDiv.appendChild(itemDateLabel);
+  setDateDiv.appendChild(itemDateInput);
+
+  const priorityLabel = customCreateElement("label", {
+    for: "item-priority",
+    innerText: "Priority:",
   });
 
   const priorityPlaceHolder = customCreateElement("option");
@@ -61,16 +73,22 @@ export const EditItemMenu = (itemIndex, item) => {
     value: item.priority,
   });
 
+  const setPriorityDiv = customCreateElement("div", {
+    className: "set-priority-container",
+  });
+
   prioritySelect.add(priorityPlaceHolder, prioritySelect.options[0]);
   prioritySelect.add(standardOption, prioritySelect.options[1]);
   prioritySelect.add(highOption, prioritySelect.options[2]);
   prioritySelect.add(urgentOption, prioritySelect.options[3]);
 
+  setPriorityDiv.appendChild(priorityLabel);
+  setPriorityDiv.appendChild(prioritySelect);
+
   editMenu.appendChild(title);
   editMenu.appendChild(description);
-  editMenu.appendChild(itemDateLabel);
-  editMenu.appendChild(itemDateInput);
-  editMenu.appendChild(prioritySelect);
+  editMenu.appendChild(setDateDiv);
+  editMenu.appendChild(setPriorityDiv);
 
   return editMenu;
 };
