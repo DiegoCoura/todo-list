@@ -2,6 +2,10 @@ export const toggleHidden = (element) => {
   element.classList.toggle("hidden");
 };
 
+export const toggleClass = (element, className) => {
+  element.classList.toggle(className)
+};
+
 export const fieldsReset = (fieldsArray) => {
   fieldsArray.forEach((field) => {
     field.value = "";
