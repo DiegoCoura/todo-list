@@ -1,6 +1,6 @@
 import "./style.css";
 import { Project } from "./constructors";
-import { fieldsReset, removeChildren, toggleHidden } from "./helpers";
+import { fieldsReset, removeChildren, toggleClass, toggleHidden } from "./helpers";
 import ProjectListDisplay from "./Components/ProjectListDisplay";
 import ProjectTemplate from "./Components/ProjectTemplate";
 
@@ -9,6 +9,17 @@ let PROJECTS_ID_COUNTER = 0;
 const CURRENT_DISPLAY = {
   state: "",
 };
+
+const collapseMenuBtn = document.querySelector(".collapse-btn");
+collapseMenuBtn.addEventListener("click", function (){
+  const sidebar = document.querySelector(".sidebar");
+
+  const mainContainer = document.querySelector(".main");
+
+  toggleClass(mainContainer, "grid-small")
+
+  toggleHidden(sidebar)
+})
 
 const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
 getAllProjectsBtn.addEventListener("click", function () {
