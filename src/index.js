@@ -10,6 +10,28 @@ const CURRENT_DISPLAY = {
   state: "",
 };
 
+const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
+getAllProjectsBtn.addEventListener("click", function () {
+  CURRENT_DISPLAY.state = "";
+
+  displayCards();
+});
+
+const getTodayBtn = document.querySelector(".sidebar-navigation__today");
+getTodayBtn.addEventListener("click", function () {
+  CURRENT_DISPLAY.state = "today";
+
+  displayCards();
+});
+
+const getThisWeekBtn = document.querySelector(".sidebar-navigation__this-week");
+
+getThisWeekBtn.addEventListener("click", function () {
+  CURRENT_DISPLAY.state = "thisWeek";
+
+  displayCards();
+});
+
 const addProjectDialog = document.querySelector(".add-project-dialog");
 
 const projectFormCancelBtn = document.querySelector(".cancel-btn");
@@ -46,13 +68,7 @@ const deleteListItem = (e, deleteIndex) => {
   }
 };
 
-const addNewListItem = (
-  e,
-  cardId,
-  itemTitle,
-  itemDescription,
-  itemPriority
-) => {
+const addNewListItem = (cardId, itemTitle, itemDescription, itemPriority) => {
   const newItem = {
     isChecked: false,
     title: itemTitle,
@@ -97,7 +113,7 @@ const toggleCheckStyle = (newState, listItemParent) => {
   }
 };
 
-const updateProjectList = () => {
+const updateProjectSideList = () => {
   const listTitles = projects.map(({ id, title }) => ({ id, title }));
   ProjectListDisplay(listTitles);
 };
@@ -112,11 +128,11 @@ const displayProject = (cardId) => {
       );
     }
   });
-  updateProjectList();
+  updateProjectSideList();
   grabInputs();
 };
 
-const toggleEditMenu = (e, projectId, editItemIndex) => {
+const toggleEditMenu = (e, editItemIndex) => {
   const parentEl = e.target.closest(".project__container-list");
   const menuContainer = parentEl.querySelectorAll(".edit-item-menu-container")[
     editItemIndex
@@ -130,7 +146,7 @@ const toggleEditMenu = (e, projectId, editItemIndex) => {
   }
 };
 
-const editListItem = (e, projectId, itemIndex, itemValue, itemKey) => {
+const editListItem = (projectId, itemIndex, itemValue, itemKey) => {
   projects.forEach((project) => {
     if (project.id === projectId) {
       project.editListItem(itemIndex, itemKey, itemValue);
@@ -153,7 +169,7 @@ function grabInputs() {
 
         const itemKey = "title";
 
-        editListItem(e, projectId, itemIndex, itemValue, itemKey);
+        editListItem(projectId, itemIndex, itemValue, itemKey);
       });
     } else {
       input.addEventListener("change", function (e) {
@@ -164,12 +180,6 @@ function grabInputs() {
           e.target.closest(".project__container").id.split("-")[1]
         );
 
-        const parentEl = e.target.closest(".project__container");
-
-        const currentItemEl = parentEl.querySelector(
-          ".edit-item-menu-container"
-        );
-
         const currentElement = e.target;
 
         const itemValue = e.target.value;
@@ -177,7 +187,7 @@ function grabInputs() {
         currentElement.value = itemValue;
         const itemKey = e.target.name.split("-")[1];
 
-        editListItem(e, projectId, itemIndex, itemValue, itemKey);
+        editListItem(projectId, itemIndex, itemValue, itemKey);
       });
     }
   });
@@ -185,12 +195,9 @@ function grabInputs() {
   const editItemBtns = document.querySelectorAll("[data-edit-index]");
   editItemBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
-      const projectId = Number(
-        e.target.closest(".project__container").id.split("-")[1]
-      );
       const editItemIndex = Number(this.dataset.editIndex);
 
-      toggleEditMenu(e, projectId, editItemIndex);
+      toggleEditMenu(e, editItemIndex);
     });
   });
 
@@ -200,14 +207,6 @@ function grabInputs() {
       const parentCardId = Number(this.dataset.projectBtn);
       CURRENT_DISPLAY.state = parentCardId;
       displayProject(parentCardId);
-    });
-  });
-
-  const deleteCardBtns = document.querySelectorAll(".delete-card-btn");
-  deleteCardBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const parentCardId = Number(this.dataset.deleteCard);
-      deleteProject(parentCardId);
     });
   });
 
@@ -245,7 +244,7 @@ function grabInputs() {
       const inputCardId = Number(this.dataset.inputItem);
       const newItemText = e.target.value;
 
-      addNewListItem(e, inputCardId, newItemText);
+      addNewListItem(inputCardId, newItemText);
     });
   });
 }
@@ -298,9 +297,12 @@ projectAddForm.addEventListener("submit", (e) => {
   const newProject = new Project(PROJECTS_ID_COUNTER, title.value);
 
   projects.push(newProject);
+
+  CURRENT_DISPLAY.state = PROJECTS_ID_COUNTER;
+
   PROJECTS_ID_COUNTER++;
 
-  updateProjectList();
+  updateProjectSideList();
   fieldsReset(fields);
 
   projectAddForm.submit();
@@ -315,7 +317,7 @@ projectAddForm.addEventListener("submit", (e) => {
 const deleteProject = (id) => {
   const filteredProjects = projects.filter((project) => project.id !== id);
   projects = filteredProjects;
-  updateProjectList();
+  updateProjectSideList();
   CURRENT_DISPLAY.state = "";
   displayCards();
 };
@@ -332,25 +334,3 @@ const filterProjects = (filter) => {
 
   return filteredProjects;
 };
-
-const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
-getAllProjectsBtn.addEventListener("click", function () {
-  CURRENT_DISPLAY.state = "";
-
-  displayCards();
-});
-
-const getTodayBtn = document.querySelector(".sidebar-navigation__today");
-getTodayBtn.addEventListener("click", function () {
-  CURRENT_DISPLAY.state = "today";
-
-  displayCards();
-});
-
-const getThisWeekBtn = document.querySelector(".sidebar-navigation__this-week");
-
-getThisWeekBtn.addEventListener("click", function () {
-  CURRENT_DISPLAY.state = "thisWeek";
-
-  displayCards();
-});
