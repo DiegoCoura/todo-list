@@ -228,7 +228,6 @@ button {
 }
 
 .checklist__card {
-  /* background-color: #efd665; */
   border-radius: 8px;
   padding: 10px 15px;
   position: relative;
@@ -307,61 +306,4 @@ button {
   border-radius: 8px;
   margin-top: 15px;
   padding: 10px;
-}
-
-.toggle-color-container {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-}
-
-.toggle-color-btn,
-.color-option-btn {
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-}
-
-.toggle-color-btn {
-  border: 2px solid #37678b;
-}
-
-.color-options-container {
-  display: flex;
-  background-color: #fff;
-  padding: 5px;
-  display: flex;
-  gap: 2px;
-  border-radius: 8px;
-}
-
-.color-options-container.hidden {
-  background-color: #fff;
-  padding: 5px;
-  width: fit-content;
-  display: none;
-}
-
-#color-option-1 {
-  background-color: #f7d15f;
-}
-#color-option-2 {
-  background-color: #fca397;
-}
-#color-option-3 {
-  background-color: #79d997;
-}
-#color-option-4 {
-  background-color: #d1a8ff;
-}
-
-.todo__card {
-  background-color: #ece7b5;
-  border-radius: 8px;
-  padding: 10px 15px;
-  position: relative;
 }
