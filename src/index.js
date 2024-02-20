@@ -68,7 +68,7 @@ const deleteListItem = (e, deleteIndex) => {
   }
 };
 
-const addNewListItem = (cardId, itemTitle, itemDescription, itemPriority) => {
+const addNewListItem = (projectId, itemTitle, itemDescription, itemPriority) => {
   const newItem = {
     isChecked: false,
     title: itemTitle,
@@ -77,14 +77,14 @@ const addNewListItem = (cardId, itemTitle, itemDescription, itemPriority) => {
   };
 
   projects.forEach((project) => {
-    if (project.id === cardId) {
+    if (project.id === projectId) {
       project.addListItem(newItem);
     }
   });
   if (typeof CURRENT_DISPLAY.state === "string") {
     displayCards();
   } else {
-    displayProject(cardId);
+    displayProject(projectId);
   }
 };
 
@@ -118,11 +118,11 @@ const updateProjectSideList = () => {
   ProjectListDisplay(listTitles);
 };
 
-const displayProject = (cardId) => {
+const displayProject = (projectId) => {
   removeChildren(heroSection);
 
   projects.forEach((project) => {
-    if (cardId === project.id) {
+    if (projectId === project.id) {
       heroSection.appendChild(
         ProjectTemplate(project.id, project.title, project.listItems)
       );
