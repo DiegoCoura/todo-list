@@ -7,14 +7,6 @@ export const EditItemMenu = (itemIndex, item) => {
   });
   editMenu.setAttribute("data-edit-item", `${itemIndex}`);
 
-  const title = customCreateElement("input", {
-    type: "text",
-    className: "edit-title-input edit-item-input",
-    name: "item-title",
-    placeholder: "Title",
-    value: `${item.title}`,
-  });
-
   const description = customCreateElement("textarea", {
     className: "description-text-area edit-item-input",
     name: "item-description",
@@ -85,7 +77,6 @@ export const EditItemMenu = (itemIndex, item) => {
   setPriorityDiv.appendChild(priorityLabel);
   setPriorityDiv.appendChild(prioritySelect);
 
-  editMenu.appendChild(title);
   editMenu.appendChild(description);
   editMenu.appendChild(setDateDiv);
   editMenu.appendChild(setPriorityDiv);
