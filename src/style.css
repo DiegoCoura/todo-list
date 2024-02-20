@@ -1,3 +1,15 @@
+@keyframes slideIn {
+  from {
+    margin-top: -25%;
+    opacity: 20%;
+  }
+
+  to {
+    margin-top: 0%;
+    opacity: 100%;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -176,10 +188,18 @@ button {
 .project__container-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   font-size: 0.87rem;
   background-color: #eee;
   margin-bottom: 5px;
+}
+
+.edit-item-menu-container {
+  overflow: hidden;
+}
+
+.edit-item-menu {
+  animation-name: slideIn;
+  animation-duration: 1s;
 }
 
 .priority-standard {
@@ -230,7 +250,7 @@ button {
   display: flex;
   justify-content: space-between;
   background-color: #eee;
-  padding: 10px 16px;
+  padding: 16px;
 }
 
 .checkbox-container {

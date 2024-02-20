@@ -136,8 +136,6 @@ const editListItem = (e, projectId, itemIndex, itemValue, itemKey) => {
       project.editListItem(itemIndex, itemKey, itemValue);
     }
   });
-
-  // displayCards(projectId, itemIndex);
 };
 
 function grabInputs() {
