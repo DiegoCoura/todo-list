@@ -148,6 +148,10 @@ button {
   font-size: 1.62rem;
 }
 
+.collapse-btn{
+  display: none;
+}
+
 .header-nav__add-container {
   display: flex;
   flex-direction: column;
@@ -205,6 +209,7 @@ button {
   padding: 10px;
   text-align: justify;
   display: flex;
+  align-items: center;
   gap: 15px;
   background-color: transparent;
 }
@@ -227,6 +232,7 @@ button {
   text-align: justify;
   display: flex;
   gap: 15px;
+  align-items: center;
   background-color: transparent;
 }
 
@@ -238,7 +244,7 @@ button {
   padding: 20px;
 }
 
-.flex {
+.hero {
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -384,4 +390,57 @@ button {
   border-radius: 8px;
   margin-top: 15px;
   padding: 10px;
+}
+
+@media screen and (max-width: 576px) {
+  .main {
+    grid-template-rows: 70px 4fr;
+  }
+
+  .header-nav__title {
+    display: none;
+  }
+
+  .collapse-btn {
+    display: block;
+    font-size: 1.4rem;
+    background-color: inherit;
+    color: #fff;
+    border: 2px solid #252525;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .grid-small {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-navigation,
+  .sidebar-navigation__projects {
+    gap: 4px;
+    padding: 10px;
+  }
+
+  .sidebar-navigation button,
+  .sidebar-navigation__add-project {
+    font-size: 0.87rem;
+    gap: 8px;
+  }
+
+  .sidebar-navigation__title {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  .projects-list button {
+    font-size: 0.87rem;
+  }
+
+  .hero {
+    padding: 12px;
+  }
+
+  .project__container-title {
+    font-size: 1rem;
+  }
 }
