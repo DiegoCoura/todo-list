@@ -73,6 +73,10 @@ button {
   text-align: center;
 }
 
+#add-form .title:focus::placeholder{
+  color: transparent;
+}
+
 .cancel-btn-container {
   align-self: flex-end;
 }
