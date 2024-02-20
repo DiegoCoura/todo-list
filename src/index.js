@@ -141,27 +141,45 @@ const editListItem = (e, projectId, itemIndex, itemValue, itemKey) => {
 function grabInputs() {
   const editItemsList = document.querySelectorAll(".edit-item-input");
   editItemsList.forEach((input) => {
-    input.addEventListener("change", function (e) {
-      const itemIndex = Number(
-        e.target.closest("[data-edit-item]").dataset.editItem
-      );
-      const projectId = Number(
-        e.target.closest(".project__container").id.split("-")[1]
-      );
+    if (input.classList.contains("list-item-title")) {
+      input.addEventListener("input", function (e) {
+        const projectId = Number(
+          e.target.closest(".project__container").id.split("-")[1]
+        );
 
-      const parentEl = e.target.closest(".project__container");
+        const itemIndex = Number(e.target.dataset.titleIndex);
 
-      const currentItemEl = parentEl.querySelector(".edit-item-menu-container");
+        const itemValue = input.textContent;
 
-      const currentElement = e.target;
+        const itemKey = "title";
 
-      const itemValue = e.target.value;
+        editListItem(e, projectId, itemIndex, itemValue, itemKey);
+      });
+    } else {
+      input.addEventListener("change", function (e) {
+        const itemIndex = Number(
+          e.target.closest("[data-edit-item]").dataset.editItem
+        );
+        const projectId = Number(
+          e.target.closest(".project__container").id.split("-")[1]
+        );
 
-      currentElement.value = itemValue;
-      const itemKey = e.target.name.split("-")[1];
+        const parentEl = e.target.closest(".project__container");
 
-      editListItem(e, projectId, itemIndex, itemValue, itemKey);
-    });
+        const currentItemEl = parentEl.querySelector(
+          ".edit-item-menu-container"
+        );
+
+        const currentElement = e.target;
+
+        const itemValue = e.target.value;
+
+        currentElement.value = itemValue;
+        const itemKey = e.target.name.split("-")[1];
+
+        editListItem(e, projectId, itemIndex, itemValue, itemKey);
+      });
+    }
   });
 
   const editItemBtns = document.querySelectorAll("[data-edit-index]");
