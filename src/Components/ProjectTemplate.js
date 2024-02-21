@@ -8,7 +8,6 @@ const ProjectTemplate = (
   currentProjectId,
   currentItemIndex
 ) => {
-
   const projectContainer = customCreateElement("div", {
     id: `project-${projectId}`,
     className: "project__container",
@@ -41,11 +40,15 @@ const ProjectTemplate = (
 
   listItems.forEach((item, index) => {
     const listItemContainer = customCreateElement("div", {
-      className: "list-item-container",
+      className: `list-item-container ${projectId}-${index}`,
     });
 
     const newListItem = customCreateElement("div", {
       className: `list-item priority-${item.priority}`,
+    });
+
+    const listItemNavigation = customCreateElement("div", {
+      className: "list-item-navigation",
     });
 
     const checkTextDiv = customCreateElement("div", {
@@ -67,7 +70,7 @@ const ProjectTemplate = (
     const itemTitle = customCreateElement("div", {
       className: "list-item-title edit-item-input",
       innerText: item.title,
-      contentEditable: true
+      contentEditable: true,
     });
     itemTitle.setAttribute("data-title-index", `${index}`);
 
@@ -106,10 +109,10 @@ const ProjectTemplate = (
     optionsDiv.appendChild(dateText);
     optionsDiv.appendChild(deleteItemBtn);
 
-    listItemContainer.appendChild(checkTextDiv);
-    listItemContainer.appendChild(optionsDiv);
+    listItemNavigation.appendChild(checkTextDiv);
+    listItemNavigation.appendChild(optionsDiv);
 
-    newListItem.appendChild(listItemContainer);
+    newListItem.appendChild(listItemNavigation);
 
     const editItemContainer = customCreateElement("div", {
       className: `edit-item-menu-container ${
@@ -122,8 +125,10 @@ const ProjectTemplate = (
     const editMenu = EditItemMenu(index, item);
     editItemContainer.appendChild(editMenu);
 
-    list.appendChild(newListItem);
-    list.appendChild(editItemContainer);
+    listItemContainer.appendChild(newListItem);
+    listItemContainer.appendChild(editItemContainer);
+
+    list.appendChild(listItemContainer);
   });
 
   const listInput = customCreateElement("input", {

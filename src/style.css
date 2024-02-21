@@ -335,7 +335,7 @@ button {
   font-size: 1.25rem;
 }
 
-.list-item-container {
+.list-item-navigation {
   list-style-type: none;
   display: flex;
   justify-content: space-between;
