@@ -1,7 +1,12 @@
-export function Project(id, title) {
+export function Project(id, title, listItems) {
   this.id = id;
   this.title = title;
-  this.listItems = [];
+
+  if (listItems) {
+    this.listItems = listItems;
+  } else {
+    this.listItems = [];
+  }
 
   this.addListItem = function (item) {
     let newItem = {

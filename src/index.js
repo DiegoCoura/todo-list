@@ -16,13 +16,107 @@ const CURRENT_DISPLAY = {
   state: "",
 };
 
+const addProjectDialog = document.querySelector(".add-project-dialog");
+
+const projectFormCancelBtn = document.querySelector(".cancel-btn");
+const projectFormAddBtns = document.querySelectorAll(".add-btn");
+
+const projectAddForm = document.getElementById("add-form");
+const heroSection = document.querySelector(".hero");
+
+projectFormAddBtns.forEach((btn) =>
+  btn.addEventListener("click", function () {
+    addProjectDialog.showModal();
+  })
+);
+
+projectFormCancelBtn.addEventListener("click", function () {
+  addProjectDialog.close();
+});
+
+const filterProjects = (filter) => {
+  let filteredProjects;
+  if (filter === "") return "";
+
+  if (typeof filter === "number") {
+    filteredProjects = projects.filter((project) => project.id == filter);
+  } else if (typeof filter === "string") {
+    return projects;
+  }
+
+  return filteredProjects;
+};
+
+function displayCards(currentProjectId, currentItemIndex) {
+  removeChildren(heroSection);
+  let current_filter = filterProjects(CURRENT_DISPLAY.state);
+
+  if (current_filter) {
+    current_filter.forEach((project) => {
+      heroSection.appendChild(
+        ProjectTemplate(
+          project.id,
+          project.title,
+          project.listItems,
+          currentProjectId,
+          currentItemIndex
+        )
+      );
+    });
+  } else {
+    projects.forEach((project) => {
+      heroSection.appendChild(
+        ProjectTemplate(
+          project.id,
+          project.title,
+          project.listItems,
+          currentProjectId,
+          currentItemIndex
+        )
+      );
+    });
+  }
+
+  grabInputs();
+}
+
+const updateProjectSideList = () => {
+  const listTitles = projects.map(({ id, title }) => ({ id, title }));
+  ProjectListDisplay(listTitles);
+};
+
+if (!localStorage.getItem("projects")) {
+  localStorage.setItem("projects", JSON.stringify(projects));
+} else {
+  const projectsJson = JSON.parse(localStorage.getItem("projects"));
+  projectsJson.forEach((project) => {
+    const newProject = new Project(project.id, project.title, project.listItems)
+    console.log(project.listItems);
+    projects.push(newProject);
+  })
+  console.log(projects)
+
+  if (projects.length !== 0) {
+    const projectsIds = projects.map(({ id }) => id);
+
+    PROJECTS_ID_COUNTER = Math.max(...projectsIds) + 1;
+  }
+
+  updateProjectSideList();
+  displayCards();
+}
+
+const updateLocalStorage = () => {
+  localStorage.setItem("projects", JSON.stringify(projects));
+};
+
 window.addEventListener("resize", function () {
   if (window.innerWidth > 576) {
     const sidebar = document.querySelector(".sidebar");
     const mainContainer = document.querySelector(".main");
 
-    removeClass(sidebar, "hidden")
-    removeClass(mainContainer, "grid-small")
+    removeClass(sidebar, "hidden");
+    removeClass(mainContainer, "grid-small");
   }
 });
 
@@ -59,34 +153,20 @@ getThisWeekBtn.addEventListener("click", function () {
   displayCards();
 });
 
-const addProjectDialog = document.querySelector(".add-project-dialog");
-
-const projectFormCancelBtn = document.querySelector(".cancel-btn");
-const projectFormAddBtns = document.querySelectorAll(".add-btn");
-
-const projectAddForm = document.getElementById("add-form");
-const heroSection = document.querySelector(".hero");
-
-projectFormAddBtns.forEach((btn) =>
-  btn.addEventListener("click", function () {
-    addProjectDialog.showModal();
-  })
-);
-
-projectFormCancelBtn.addEventListener("click", function () {
-  addProjectDialog.close();
-});
-
 const deleteListItem = (e, deleteIndex) => {
   const parentCardId = Number(
     e.target.closest(".project__container").id.split("-")[1]
   );
+  console.log(parentCardId)
 
   projects.forEach((project) => {
     if (project.id === parentCardId) {
+      console.log(project.listItems)
       project.removeListItem(deleteIndex);
     }
   });
+
+  updateLocalStorage();
 
   if (typeof CURRENT_DISPLAY.state === "string") {
     displayCards();
@@ -113,6 +193,9 @@ const addNewListItem = (
       project.addListItem(newItem);
     }
   });
+
+  updateLocalStorage();
+
   if (typeof CURRENT_DISPLAY.state === "string") {
     displayCards();
   } else {
@@ -143,11 +226,6 @@ const toggleCheckStyle = (newState, listItemParent) => {
   } else {
     listItemParent.classList.remove("item-checked");
   }
-};
-
-const updateProjectSideList = () => {
-  const listTitles = projects.map(({ id, title }) => ({ id, title }));
-  ProjectListDisplay(listTitles);
 };
 
 const displayProject = (projectId) => {
@@ -184,6 +262,7 @@ const editListItem = (projectId, itemIndex, itemValue, itemKey) => {
       project.editListItem(itemIndex, itemKey, itemValue);
     }
   });
+  updateLocalStorage();
 };
 
 function grabInputs() {
@@ -255,6 +334,7 @@ function grabInputs() {
   deleteListItemBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
       const itemListIndex = Number(this.dataset.deleteIndex);
+      console.log(itemListIndex)
       deleteListItem(e, itemListIndex);
     });
   });
@@ -281,39 +361,6 @@ function grabInputs() {
   });
 }
 
-function displayCards(currentProjectId, currentItemIndex) {
-  removeChildren(heroSection);
-  let current_filter = filterProjects(CURRENT_DISPLAY.state);
-
-  if (current_filter) {
-    current_filter.forEach((project) => {
-      heroSection.appendChild(
-        ProjectTemplate(
-          project.id,
-          project.title,
-          project.listItems,
-          currentProjectId,
-          currentItemIndex
-        )
-      );
-    });
-  } else {
-    projects.forEach((project) => {
-      heroSection.appendChild(
-        ProjectTemplate(
-          project.id,
-          project.title,
-          project.listItems,
-          currentProjectId,
-          currentItemIndex
-        )
-      );
-    });
-  }
-
-  grabInputs();
-}
-
 projectAddForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -329,6 +376,8 @@ projectAddForm.addEventListener("submit", (e) => {
   const newProject = new Project(PROJECTS_ID_COUNTER, title.value);
 
   projects.push(newProject);
+  updateLocalStorage();
+  console.log(JSON.stringify(projects))
 
   CURRENT_DISPLAY.state = PROJECTS_ID_COUNTER;
 
@@ -351,18 +400,9 @@ const deleteProject = (id) => {
   projects = filteredProjects;
   updateProjectSideList();
   CURRENT_DISPLAY.state = "";
-  displayCards();
-};
-
-const filterProjects = (filter) => {
-  let filteredProjects;
-  if (filter === "") return "";
-
-  if (typeof filter === "number") {
-    filteredProjects = projects.filter((project) => project.id == filter);
-  } else if (typeof filter === "string") {
-    return projects;
+  if(projects.length === 0){
+    PROJECTS_ID_COUNTER = 0
   }
-
-  return filteredProjects;
+  displayCards();
+  updateLocalStorage();
 };
