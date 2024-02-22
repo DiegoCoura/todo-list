@@ -36,6 +36,17 @@ export function Project(id, title, listItems) {
     this.listItems = filteredList;
   };
 
+  this.changeItemPosition = function (draggedItemIndex, currentItemPosition) {
+    console.log(this.listItems);
+    let itemToChange = this.listItems[draggedItemIndex];
+
+    this.removeListItem(draggedItemIndex);
+
+    console.log(itemToChange);
+
+    this.listItems.splice(currentItemPosition, 0, itemToChange);
+  };
+
   this.toggleCheckItem = function (index, state) {
     this.listItems[index].isChecked = state;
   };

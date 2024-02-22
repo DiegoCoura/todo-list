@@ -41,6 +41,7 @@ const ProjectTemplate = (
   listItems.forEach((item, index) => {
     const listItemContainer = customCreateElement("div", {
       className: `list-item-container ${projectId}-${index}`,
+      draggable: true
     });
 
     const newListItem = customCreateElement("div", {

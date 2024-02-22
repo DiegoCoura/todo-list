@@ -90,11 +90,15 @@ if (!localStorage.getItem("projects")) {
 } else {
   const projectsJson = JSON.parse(localStorage.getItem("projects"));
   projectsJson.forEach((project) => {
-    const newProject = new Project(project.id, project.title, project.listItems)
+    const newProject = new Project(
+      project.id,
+      project.title,
+      project.listItems
+    );
     console.log(project.listItems);
     projects.push(newProject);
-  })
-  console.log(projects)
+  });
+  console.log(projects);
 
   if (projects.length !== 0) {
     const projectsIds = projects.map(({ id }) => id);
@@ -157,11 +161,11 @@ const deleteListItem = (e, deleteIndex) => {
   const parentCardId = Number(
     e.target.closest(".project__container").id.split("-")[1]
   );
-  console.log(parentCardId)
+  console.log(parentCardId);
 
   projects.forEach((project) => {
     if (project.id === parentCardId) {
-      console.log(project.listItems)
+      console.log(project.listItems);
       project.removeListItem(deleteIndex);
     }
   });
@@ -173,6 +177,20 @@ const deleteListItem = (e, deleteIndex) => {
   } else {
     displayProject(parentCardId);
   }
+};
+
+const replaceItem = (projectId, draggedItemIndex, currentItemIndex) => {
+  console.log(projectId);
+  console.log(draggedItemIndex);
+  console.log(currentItemIndex);
+
+  projects.forEach((project) => {
+    if (project.id === projectId) {
+      project.changeItemPosition(draggedItemIndex, currentItemIndex);
+      console.log(draggedItemIndex);
+      console.log(currentItemIndex);
+    }
+  });
 };
 
 const addNewListItem = (
@@ -265,7 +283,70 @@ const editListItem = (projectId, itemIndex, itemValue, itemKey) => {
   updateLocalStorage();
 };
 
+let dragged;
+
 function grabInputs() {
+  const itemContainers = document.querySelectorAll(".list-item-container");
+  itemContainers.forEach((item) => {
+
+    let childrenNodes = item.childNodes;
+    childrenNodes.forEach((child) => {
+      child.classList.add("no-drag");
+    });
+
+    item.addEventListener("drag", function (e) {
+      console.log(`dragging ${e.target}`);
+    });
+
+    item.addEventListener("dragstart", function (e) {
+      dragged = e.target;
+      e.target.classList.add("dragging");
+      console.log(dragged)
+    });
+
+    item.addEventListener("dragend", function (e) {
+      e.target.classList.remove("dragging");
+    });
+
+    item.addEventListener(
+      "dragover",
+      function (e) {
+        e.preventDefault();
+      },
+      false
+    );
+
+    item.addEventListener("dragenter", function (e) {
+      console.log(e.target);
+      e.target.classList.add("dragover");
+    });
+
+    item.addEventListener("dragleave", function (e) {
+      console.log(e.target);
+      e.target.classList.remove("dragover");
+    });
+
+    item.addEventListener("drop", function (e) {
+      e.preventDefault();
+      e.target.classList.remove("dragover");
+      const targetProjectId = e.target.classList[1].split("-")[0];
+      const targetItemIndex = e.target.classList[1].split("-")[1];
+
+      const draggedProjectId = dragged.classList[1].split("-")[0];
+      const draggedItemIndex = dragged.classList[1].split("-")[1];
+
+      if (draggedProjectId === targetProjectId) {
+        replaceItem(
+          Number(targetProjectId),
+          Number(draggedItemIndex),
+          Number(targetItemIndex)
+        );
+      }
+      console.log(projects)
+      displayCards();
+    });
+  });
+
   const editItemsList = document.querySelectorAll(".edit-item-input");
   editItemsList.forEach((input) => {
     if (input.classList.contains("list-item-title")) {
@@ -334,7 +415,7 @@ function grabInputs() {
   deleteListItemBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
       const itemListIndex = Number(this.dataset.deleteIndex);
-      console.log(itemListIndex)
+      console.log(itemListIndex);
       deleteListItem(e, itemListIndex);
     });
   });
@@ -377,7 +458,7 @@ projectAddForm.addEventListener("submit", (e) => {
 
   projects.push(newProject);
   updateLocalStorage();
-  console.log(JSON.stringify(projects))
+  console.log(JSON.stringify(projects));
 
   CURRENT_DISPLAY.state = PROJECTS_ID_COUNTER;
 
@@ -400,8 +481,8 @@ const deleteProject = (id) => {
   projects = filteredProjects;
   updateProjectSideList();
   CURRENT_DISPLAY.state = "";
-  if(projects.length === 0){
-    PROJECTS_ID_COUNTER = 0
+  if (projects.length === 0) {
+    PROJECTS_ID_COUNTER = 0;
   }
   displayCards();
   updateLocalStorage();

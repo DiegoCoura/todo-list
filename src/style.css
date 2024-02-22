@@ -393,6 +393,18 @@ button {
   padding: 10px;
 }
 
+.dragging .child-elements{
+  pointer-events: none;
+}
+
+.dragover{
+  opacity: 0.5;
+}
+
+.no-drag {
+  pointer-events: none;
+}
+
 @media screen and (max-width: 576px) {
   .main {
     grid-template-rows: 70px 4fr;
