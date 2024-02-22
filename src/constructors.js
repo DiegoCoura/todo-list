@@ -37,12 +37,9 @@ export function Project(id, title, listItems) {
   };
 
   this.changeItemPosition = function (draggedItemIndex, currentItemPosition) {
-    console.log(this.listItems);
     let itemToChange = this.listItems[draggedItemIndex];
 
     this.removeListItem(draggedItemIndex);
-
-    console.log(itemToChange);
 
     this.listItems.splice(currentItemPosition, 0, itemToChange);
   };

@@ -1,5 +1,6 @@
 import { customCreateElement } from "../helpers";
 import { EditItemMenu } from "./EditItemMenu";
+import DragIcon from "../public/dragIcon.png"
 
 const ProjectTemplate = (
   projectId,
@@ -41,8 +42,19 @@ const ProjectTemplate = (
   listItems.forEach((item, index) => {
     const listItemContainer = customCreateElement("div", {
       className: `list-item-container ${projectId}-${index}`,
-      draggable: true
+      draggable: true,
     });
+
+    const dragIconDiv = customCreateElement("div", {
+      className: `drag-icon-div`,
+    });
+
+    const dragIcon = new Image();
+    dragIcon.classList.add("drag-icon")
+    dragIcon.src = DragIcon;
+    dragIconDiv.appendChild(dragIcon);
+
+    listItemContainer.appendChild(dragIconDiv);
 
     const newListItem = customCreateElement("div", {
       className: `list-item priority-${item.priority}`,
