@@ -5,6 +5,10 @@ const ProjectListDisplay = (titlesList) => {
   removeChildren(projectsListContainer);
 
   titlesList.forEach((item) => {
+    const projectListItemContainer = customCreateElement("div", {
+      className: "project-list-item-container",
+    });
+
     const projectBtn = customCreateElement("button", {
       className: "projects-list-btn",
     });
@@ -22,7 +26,23 @@ const ProjectListDisplay = (titlesList) => {
     projectBtn.appendChild(projectIcon);
     projectBtn.appendChild(btnText);
 
-    projectsListContainer.appendChild(projectBtn);
+    const deleteProjectBtn = customCreateElement("button", {
+      className: "delete-project-btn",
+    });
+
+    deleteProjectBtn.setAttribute("data-delete-project", `${item.id}`);
+
+    const trashCanIcon = customCreateElement("i", {
+      className: "fa-solid fa-trash-can",
+    });
+
+    deleteProjectBtn.appendChild(trashCanIcon);
+
+
+    projectListItemContainer.appendChild(projectBtn);
+    projectListItemContainer.appendChild(deleteProjectBtn);
+
+    projectsListContainer.appendChild(projectListItemContainer);
   });
 };
 

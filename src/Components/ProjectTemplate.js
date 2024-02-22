@@ -1,6 +1,6 @@
 import { customCreateElement } from "../helpers";
 import { EditItemMenu } from "./EditItemMenu";
-import DragIcon from "../public/dragIcon.png"
+import DragIcon from "../public/dragIcon.png";
 
 const ProjectTemplate = (
   projectId,
@@ -23,18 +23,6 @@ const ProjectTemplate = (
     innerText: `${title}`,
   });
 
-  const deleteProjectBtn = customCreateElement("button", {
-    className: "delete-project-btn",
-  });
-
-  deleteProjectBtn.setAttribute("data-delete-project", `${projectId}`);
-
-  const deleteProjectIcon = customCreateElement("i", {
-    className: "fa-solid fa-x",
-  });
-
-  deleteProjectBtn.appendChild(deleteProjectIcon);
-
   const list = customCreateElement("div", {
     className: "project__container-list",
   });
@@ -50,7 +38,7 @@ const ProjectTemplate = (
     });
 
     const dragIcon = new Image();
-    dragIcon.classList.add("drag-icon")
+    dragIcon.classList.add("drag-icon");
     dragIcon.src = DragIcon;
     dragIconDiv.appendChild(dragIcon);
 
@@ -152,7 +140,6 @@ const ProjectTemplate = (
   listInput.setAttribute("data-input-item", `${projectId}`);
 
   projectHeaderDiv.appendChild(projectTitle);
-  projectHeaderDiv.appendChild(deleteProjectBtn);
 
   projectContainer.appendChild(projectHeaderDiv);
   projectContainer.appendChild(list);

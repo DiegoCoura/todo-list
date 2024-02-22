@@ -236,12 +236,14 @@ button {
   background-color: transparent;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 250px);
-  grid-template-rows: repeat(auto-fit, 350px);
-  gap: 20px;
-  padding: 20px;
+.project-list-item-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-project-btn {
+  background-color: transparent;
+  font-size: 1.2rem;
 }
 
 .hero {
@@ -261,13 +263,6 @@ button {
   display: flex;
   justify-content: center;
   margin-bottom: 24px;
-}
-
-.delete-project-btn {
-  position: absolute;
-  right: 10px;
-  background-color: transparent;
-  font-size: 1.2rem;
 }
 
 .project__container-list {
@@ -310,29 +305,6 @@ button {
   border-radius: 8px;
   margin-top: 15px;
   padding: 10px;
-}
-
-.checklist__card {
-  border-radius: 8px;
-  padding: 10px 15px;
-  position: relative;
-  overflow: overlay;
-}
-
-.checklist__card-header,
-.todo__card-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.checklist__card-title {
-  text-align: center;
-  font-size: 1.37rem;
-}
-
-.delete-card-btn {
-  background-color: transparent;
-  font-size: 1.25rem;
 }
 
 .list-item-container {
@@ -419,10 +391,6 @@ button {
   margin-top: 15px;
   padding: 10px;
 }
-
-/* .dragging .child-elements{
-  pointer-events: none;
-} */
 
 .dragging {
   opacity: 0.2;
