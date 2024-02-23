@@ -1,5 +1,6 @@
 import "./style.css";
 import { Project } from "./constructors";
+import { addDays, format, isEqual } from "date-fns";
 import {
   fieldsReset,
   removeChildren,
@@ -9,6 +10,7 @@ import {
 } from "./helpers";
 import ProjectListDisplay from "./Components/ProjectListDisplay";
 import ProjectTemplate from "./Components/ProjectTemplate";
+import DisplayTasks from "./Components/DisplayTasks";
 
 let projects = [];
 let PROJECTS_ID_COUNTER = 0;
@@ -34,6 +36,42 @@ projectFormCancelBtn.addEventListener("click", function () {
   addProjectDialog.close();
 });
 
+const filterTasksByDate = () => {
+  const todayDate = new Date();
+
+  let filteredTasks = [];
+
+  const todayFormattedDate = format(todayDate, "yyyy-MM-dd");
+  console.log(todayFormattedDate);
+
+  const futureDate = format(addDays(todayDate, 7), "yyyy-MM-dd");
+  console.log(futureDate);
+
+  projects.forEach((project) => {
+    project.listItems.forEach((item, index) => {
+      if (item.date) {
+        let localItemDate = new Date(item.date);
+
+        localItemDate.setMinutes(
+          localItemDate.getMinutes() + localItemDate.getTimezoneOffset()
+        );
+
+        if (isEqual(format(localItemDate, "yyyy-MM-dd"), todayFormattedDate)) {
+          let itemCopy = item;
+          itemCopy.projectId = project.id;
+          itemCopy.itemIndex = index;
+          filteredTasks.push(itemCopy);
+        }
+      }
+    });
+  });
+
+  removeChildren(heroSection);
+  heroSection.appendChild(DisplayTasks(filteredTasks));
+  grabInputs()
+  console.log(filteredTasks);
+};
+
 const filterProjects = (filter) => {
   let filteredProjects;
   if (filter === "") return "";
@@ -47,32 +85,20 @@ const filterProjects = (filter) => {
   return filteredProjects;
 };
 
-function displayCards(currentProjectId, currentItemIndex) {
+function displayCards() {
   removeChildren(heroSection);
   let current_filter = filterProjects(CURRENT_DISPLAY.state);
 
   if (current_filter) {
     current_filter.forEach((project) => {
       heroSection.appendChild(
-        ProjectTemplate(
-          project.id,
-          project.title,
-          project.listItems,
-          currentProjectId,
-          currentItemIndex
-        )
+        ProjectTemplate(project.id, project.title, project.listItems)
       );
     });
   } else {
     projects.forEach((project) => {
       heroSection.appendChild(
-        ProjectTemplate(
-          project.id,
-          project.title,
-          project.listItems,
-          currentProjectId,
-          currentItemIndex
-        )
+        ProjectTemplate(project.id, project.title, project.listItems)
       );
     });
   }
@@ -145,7 +171,7 @@ const getTodayBtn = document.querySelector(".sidebar-navigation__today");
 getTodayBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "today";
 
-  displayCards();
+  filterTasksByDate();
 });
 
 const getThisWeekBtn = document.querySelector(".sidebar-navigation__this-week");
@@ -263,7 +289,11 @@ const toggleEditMenu = (e, editItemIndex) => {
     toggleHidden(menuContainer);
   } else {
     toggleHidden(menuContainer);
-    displayCards();
+    if(CURRENT_DISPLAY.state === "today"){
+      filterTasksByDate()
+    } else{
+      displayCards();
+    }
   }
 };
 
@@ -335,6 +365,8 @@ function grabInputs() {
   editItemsList.forEach((input) => {
     if (input.classList.contains("list-item-title")) {
       input.addEventListener("input", function (e) {
+        console.log(e.target)
+
         const projectId = Number(
           e.target.closest(".project__container").id.split("-")[1]
         );
