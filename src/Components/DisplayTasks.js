@@ -9,22 +9,13 @@ const DisplayTasks = (tasks) => {
     className: "project__container-list",
   });
 
-  tasks.forEach((task, index) => {
+  tasks.forEach((task) => {
     const listItemContainer = customCreateElement("div", {
+      id: `item-${task.projectId}-${task.itemIndex}`,
       className: `list-item-container ${task.projectId}-${task.itemIndex}`,
-      draggable: true,
+      draggable: false
+
     });
-
-    const dragIconDiv = customCreateElement("div", {
-      className: `drag-icon-div`,
-    });
-
-    const dragIcon = new Image();
-    dragIcon.classList.add("drag-icon");
-    dragIcon.src = DragIcon;
-    dragIconDiv.appendChild(dragIcon);
-
-    listItemContainer.appendChild(dragIconDiv);
 
     const newListItem = customCreateElement("div", {
       className: `list-item priority-${task.priority}`,
@@ -78,7 +69,7 @@ const DisplayTasks = (tasks) => {
     const deleteItemBtn = customCreateElement("button", {
       className: "delete-item-btn",
     });
-    deleteItemBtn.setAttribute("data-delete-index", `${index}`);
+    deleteItemBtn.setAttribute("data-delete-index", `${task.itemIndex}`);
 
     const trashCanIcon = customCreateElement("i", {
       className: "fa-solid fa-trash-can",
@@ -100,14 +91,6 @@ const DisplayTasks = (tasks) => {
     const editItemContainer = customCreateElement("div", {
         className: `edit-item-menu-container hidden`,
       });
-
-    // const editItemContainer = customCreateElement("div", {
-    //   className: `edit-item-menu-container ${
-    //     currentProjectId === projectId && currentItemIndex === index
-    //       ? ""
-    //       : "hidden"
-    //   }`,
-    // });
 
     const editMenu = EditItemMenu(task.itemIndex, task);
     editItemContainer.appendChild(editMenu);

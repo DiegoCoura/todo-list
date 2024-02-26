@@ -42,10 +42,8 @@ const filterTasksByDate = () => {
   let filteredTasks = [];
 
   const todayFormattedDate = format(todayDate, "yyyy-MM-dd");
-  console.log(todayFormattedDate);
 
   const futureDate = format(addDays(todayDate, 7), "yyyy-MM-dd");
-  console.log(futureDate);
 
   projects.forEach((project) => {
     project.listItems.forEach((item, index) => {
@@ -68,8 +66,7 @@ const filterTasksByDate = () => {
 
   removeChildren(heroSection);
   heroSection.appendChild(DisplayTasks(filteredTasks));
-  grabInputs()
-  console.log(filteredTasks);
+  grabInputs();
 };
 
 const filterProjects = (filter) => {
@@ -183,12 +180,12 @@ getThisWeekBtn.addEventListener("click", function () {
 });
 
 const deleteListItem = (e, deleteIndex) => {
-  const parentCardId = Number(
-    e.target.closest(".project__container").id.split("-")[1]
+  const projectId = Number(
+    e.target.closest(".list-item-container").id.split("-")[1]
   );
 
   projects.forEach((project) => {
-    if (project.id === parentCardId) {
+    if (project.id === projectId) {
       project.removeListItem(deleteIndex);
     }
   });
@@ -196,9 +193,13 @@ const deleteListItem = (e, deleteIndex) => {
   updateLocalStorage();
 
   if (typeof CURRENT_DISPLAY.state === "string") {
-    displayCards();
+    if (CURRENT_DISPLAY.state === "today") {
+      filterTasksByDate();
+    } else {
+      displayCards();
+    }
   } else {
-    displayProject(parentCardId);
+    displayProject(projectId);
   }
 };
 
@@ -242,7 +243,7 @@ const addNewListItem = (
 
 const toggleCheckState = (e, itemIndex) => {
   const parentCardId = Number(
-    e.target.closest(".project__container").id.split("-")[1]
+    e.target.closest(".list-item-container").id.split("-")[1]
   );
   const newState = e.target.checked;
 
@@ -279,19 +280,17 @@ const displayProject = (projectId) => {
   grabInputs();
 };
 
-const toggleEditMenu = (e, editItemIndex) => {
-  const parentEl = e.target.closest(".project__container-list");
-  const menuContainer = parentEl.querySelectorAll(".edit-item-menu-container")[
-    editItemIndex
-  ];
+const toggleEditMenu = (e) => {
+  const parentEl = e.target.closest(".list-item-container");
+  const menuContainer = parentEl.querySelector(".edit-item-menu-container");
 
   if (menuContainer.classList.contains("hidden")) {
     toggleHidden(menuContainer);
   } else {
     toggleHidden(menuContainer);
-    if(CURRENT_DISPLAY.state === "today"){
-      filterTasksByDate()
-    } else{
+    if (CURRENT_DISPLAY.state === "today") {
+      filterTasksByDate();
+    } else {
       displayCards();
     }
   }
@@ -365,10 +364,10 @@ function grabInputs() {
   editItemsList.forEach((input) => {
     if (input.classList.contains("list-item-title")) {
       input.addEventListener("input", function (e) {
-        console.log(e.target)
+        console.log(e.target);
 
         const projectId = Number(
-          e.target.closest(".project__container").id.split("-")[1]
+          e.target.closest(".list-item-container").id.split("-")[1]
         );
 
         const itemIndex = Number(e.target.dataset.titleIndex);
@@ -385,7 +384,7 @@ function grabInputs() {
           e.target.closest("[data-edit-item]").dataset.editItem
         );
         const projectId = Number(
-          e.target.closest(".project__container").id.split("-")[1]
+          e.target.closest(".list-item-container").id.split("-")[1]
         );
 
         const currentElement = e.target;
@@ -403,9 +402,7 @@ function grabInputs() {
   const editItemBtns = document.querySelectorAll("[data-edit-index]");
   editItemBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
-      const editItemIndex = Number(this.dataset.editIndex);
-
-      toggleEditMenu(e, editItemIndex);
+      toggleEditMenu(e);
     });
   });
 
