@@ -1,13 +1,6 @@
 import "./style.css";
 import { Project } from "./constructors";
-import {
-  addDays,
-  compareAsc,
-  format,
-  isAfter,
-  isBefore,
-  isEqual,
-} from "date-fns";
+import { addDays, format, isAfter, isBefore, isEqual } from "date-fns";
 import {
   fieldsReset,
   removeChildren,
@@ -94,41 +87,33 @@ const filterTasksByDate = () => {
       }
     });
   });
-
-  removeChildren(heroSection);
-  heroSection.appendChild(DisplayTasks(filteredTasks));
-  grabInputs();
+  return filteredTasks;
 };
 
-const filterProjects = (filter) => {
-  let filteredProjects;
-  if (filter === "") return "";
-
-  if (typeof filter === "number") {
-    filteredProjects = projects.filter((project) => project.id == filter);
-  } else if (typeof filter === "string") {
-    return projects;
-  }
-
-  return filteredProjects;
-};
-
-function displayCards() {
+function updateDisplay() {
   removeChildren(heroSection);
-  let current_filter = filterProjects(CURRENT_DISPLAY.state);
 
-  if (current_filter) {
-    current_filter.forEach((project) => {
-      heroSection.appendChild(
-        ProjectTemplate(project.id, project.title, project.listItems)
-      );
-    });
-  } else {
+  if (!CURRENT_DISPLAY.state) {
     projects.forEach((project) => {
       heroSection.appendChild(
         ProjectTemplate(project.id, project.title, project.listItems)
       );
     });
+  } else if (typeof CURRENT_DISPLAY.state === "number") {
+    projects.forEach((project) => {
+      if (CURRENT_DISPLAY.state === project.id) {
+        heroSection.appendChild(
+          ProjectTemplate(project.id, project.title, project.listItems)
+        );
+      }
+    });
+  } else if (
+    CURRENT_DISPLAY.state === "today" ||
+    CURRENT_DISPLAY.state === "thisWeek"
+  ) {
+    const tasksByDate = filterTasksByDate();
+    removeChildren(heroSection);
+    heroSection.appendChild(DisplayTasks(tasksByDate));
   }
 
   grabInputs();
@@ -160,7 +145,7 @@ if (!localStorage.getItem("projects")) {
   }
 
   updateProjectSideList();
-  displayCards();
+  updateDisplay();
 }
 
 const updateLocalStorage = () => {
@@ -192,14 +177,14 @@ const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
 getAllProjectsBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "";
 
-  displayCards();
+  updateDisplay();
 });
 
 const getTodayBtn = document.querySelector(".sidebar-navigation__today");
 getTodayBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "today";
 
-  filterTasksByDate();
+  updateDisplay();
 });
 
 const getThisWeekBtn = document.querySelector(".sidebar-navigation__this-week");
@@ -207,7 +192,7 @@ const getThisWeekBtn = document.querySelector(".sidebar-navigation__this-week");
 getThisWeekBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "thisWeek";
 
-  filterTasksByDate();
+  updateDisplay();
 });
 
 const deleteListItem = (e, deleteIndex) => {
@@ -223,18 +208,7 @@ const deleteListItem = (e, deleteIndex) => {
 
   updateLocalStorage();
 
-  if (typeof CURRENT_DISPLAY.state === "string") {
-    if (
-      CURRENT_DISPLAY.state === "today" ||
-      CURRENT_DISPLAY.state === "thisWeek"
-    ) {
-      filterTasksByDate();
-    } else {
-      displayCards();
-    }
-  } else {
-    displayProject(projectId);
-  }
+  updateDisplay();
 };
 
 const replaceItem = (projectId, draggedItemIndex, currentItemIndex) => {
@@ -244,7 +218,7 @@ const replaceItem = (projectId, draggedItemIndex, currentItemIndex) => {
     }
   });
   updateLocalStorage();
-  displayCards();
+  updateDisplay();
 };
 
 const addNewListItem = (
@@ -268,11 +242,7 @@ const addNewListItem = (
 
   updateLocalStorage();
 
-  if (typeof CURRENT_DISPLAY.state === "string") {
-    displayCards();
-  } else {
-    displayProject(projectId);
-  }
+  updateDisplay();
 };
 
 const toggleCheckState = (e, itemIndex) => {
@@ -322,14 +292,8 @@ const toggleEditMenu = (e) => {
     toggleHidden(menuContainer);
   } else {
     toggleHidden(menuContainer);
-    if (
-      CURRENT_DISPLAY.state === "today" ||
-      CURRENT_DISPLAY.state === "thisWeek"
-    ) {
-      filterTasksByDate();
-    } else {
-      displayCards();
-    }
+
+    updateDisplay();
   }
 };
 
@@ -446,7 +410,7 @@ function grabInputs() {
     btn.addEventListener("click", function () {
       const parentCardId = Number(this.dataset.projectBtn);
       CURRENT_DISPLAY.state = parentCardId;
-      displayProject(parentCardId);
+      updateDisplay();
     });
   });
 
@@ -515,11 +479,7 @@ projectAddForm.addEventListener("submit", (e) => {
 
   projectAddForm.submit();
 
-  if (typeof CURRENT_DISPLAY.state === "string") {
-    displayCards();
-  } else {
-    displayProject(CURRENT_DISPLAY.state);
-  }
+  updateDisplay();
 });
 
 const deleteProject = (id) => {
@@ -530,6 +490,6 @@ const deleteProject = (id) => {
   if (projects.length === 0) {
     PROJECTS_ID_COUNTER = 0;
   }
-  displayCards();
+  updateDisplay();
   updateLocalStorage();
 };
