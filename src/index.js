@@ -1,6 +1,13 @@
 import "./style.css";
 import { Project } from "./constructors";
-import { addDays, format, isEqual } from "date-fns";
+import {
+  addDays,
+  compareAsc,
+  format,
+  isAfter,
+  isBefore,
+  isEqual,
+} from "date-fns";
 import {
   fieldsReset,
   removeChildren,
@@ -43,8 +50,6 @@ const filterTasksByDate = () => {
 
   const todayFormattedDate = format(todayDate, "yyyy-MM-dd");
 
-  const futureDate = format(addDays(todayDate, 7), "yyyy-MM-dd");
-
   projects.forEach((project) => {
     project.listItems.forEach((item, index) => {
       if (item.date) {
@@ -54,11 +59,37 @@ const filterTasksByDate = () => {
           localItemDate.getMinutes() + localItemDate.getTimezoneOffset()
         );
 
-        if (isEqual(format(localItemDate, "yyyy-MM-dd"), todayFormattedDate)) {
-          let itemCopy = item;
-          itemCopy.projectId = project.id;
-          itemCopy.itemIndex = index;
-          filteredTasks.push(itemCopy);
+        if (CURRENT_DISPLAY.state === "today") {
+          if (
+            isEqual(format(localItemDate, "yyyy-MM-dd"), todayFormattedDate)
+          ) {
+            let itemCopy = item;
+            itemCopy.projectId = project.id;
+            itemCopy.itemIndex = index;
+            filteredTasks.push(itemCopy);
+          }
+        }
+
+        if (CURRENT_DISPLAY.state === "thisWeek") {
+          const oneWeekLater = format(addDays(todayDate, 7), "yyyy-MM-dd");
+
+          if (
+            isEqual(format(localItemDate, "yyyy-MM-dd"), todayFormattedDate) ||
+            (isAfter(format(localItemDate, "yyyy-MM-dd"), todayFormattedDate) &&
+              isBefore(format(localItemDate, "yyyy-MM-dd"), oneWeekLater))
+          ) {
+            let itemCopy = item;
+            itemCopy.projectId = project.id;
+            itemCopy.itemIndex = index;
+            filteredTasks.push(itemCopy);
+          }
+        }
+        if (CURRENT_DISPLAY.state === "thisWeek") {
+          filteredTasks.sort(function compare(a, b) {
+            let dateA = new Date(a.date);
+            let dateB = new Date(b.date);
+            return dateA - dateB;
+          });
         }
       }
     });
@@ -176,7 +207,7 @@ const getThisWeekBtn = document.querySelector(".sidebar-navigation__this-week");
 getThisWeekBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "thisWeek";
 
-  displayCards();
+  filterTasksByDate();
 });
 
 const deleteListItem = (e, deleteIndex) => {
@@ -193,7 +224,10 @@ const deleteListItem = (e, deleteIndex) => {
   updateLocalStorage();
 
   if (typeof CURRENT_DISPLAY.state === "string") {
-    if (CURRENT_DISPLAY.state === "today") {
+    if (
+      CURRENT_DISPLAY.state === "today" ||
+      CURRENT_DISPLAY.state === "thisWeek"
+    ) {
       filterTasksByDate();
     } else {
       displayCards();
@@ -288,7 +322,10 @@ const toggleEditMenu = (e) => {
     toggleHidden(menuContainer);
   } else {
     toggleHidden(menuContainer);
-    if (CURRENT_DISPLAY.state === "today") {
+    if (
+      CURRENT_DISPLAY.state === "today" ||
+      CURRENT_DISPLAY.state === "thisWeek"
+    ) {
       filterTasksByDate();
     } else {
       displayCards();
@@ -364,8 +401,6 @@ function grabInputs() {
   editItemsList.forEach((input) => {
     if (input.classList.contains("list-item-title")) {
       input.addEventListener("input", function (e) {
-        console.log(e.target);
-
         const projectId = Number(
           e.target.closest(".list-item-container").id.split("-")[1]
         );

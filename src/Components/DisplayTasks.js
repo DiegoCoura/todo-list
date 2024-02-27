@@ -1,10 +1,7 @@
 import { customCreateElement } from "../helpers";
 import { EditItemMenu } from "./EditItemMenu";
-import DragIcon from "../public/dragIcon.png";
-
 
 const DisplayTasks = (tasks) => {
-
   const list = customCreateElement("div", {
     className: "project__container-list",
   });
@@ -13,8 +10,7 @@ const DisplayTasks = (tasks) => {
     const listItemContainer = customCreateElement("div", {
       id: `item-${task.projectId}-${task.itemIndex}`,
       className: `list-item-container ${task.projectId}-${task.itemIndex}`,
-      draggable: false
-
+      draggable: false,
     });
 
     const newListItem = customCreateElement("div", {
@@ -89,8 +85,8 @@ const DisplayTasks = (tasks) => {
     newListItem.appendChild(listItemNavigation);
 
     const editItemContainer = customCreateElement("div", {
-        className: `edit-item-menu-container hidden`,
-      });
+      className: `edit-item-menu-container hidden`,
+    });
 
     const editMenu = EditItemMenu(task.itemIndex, task);
     editItemContainer.appendChild(editMenu);
@@ -100,7 +96,7 @@ const DisplayTasks = (tasks) => {
 
     list.appendChild(listItemContainer);
   });
-  return list
+  return list;
 };
 
 export default DisplayTasks;
