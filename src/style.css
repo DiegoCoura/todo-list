@@ -322,7 +322,6 @@ button {
   left: -21px;
   width: 20px;
   font-size: 1rem;
-  background-color: #fff;
   cursor: grab;
   display: flex;
   align-items: center;
@@ -394,6 +393,7 @@ button {
 
 .dragging {
   opacity: 0.2;
+  background-color: transparent;
 }
 
 .dragover {
