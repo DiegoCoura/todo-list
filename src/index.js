@@ -164,26 +164,23 @@ window.addEventListener("resize", function () {
 
 const collapseMenuBtn = document.querySelector(".collapse-btn");
 collapseMenuBtn.addEventListener("click", function () {
+  
   const sidebar = document.querySelector(".sidebar");
-
   const mainContainer = document.querySelector(".main");
 
   toggleClass(mainContainer, "grid-small");
-
   toggleHidden(sidebar);
 });
 
 const getAllProjectsBtn = document.querySelector(".sidebar-navigation__all");
 getAllProjectsBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "";
-
   updateDisplay();
 });
 
 const getTodayBtn = document.querySelector(".sidebar-navigation__today");
 getTodayBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "today";
-
   updateDisplay();
 });
 
@@ -191,7 +188,6 @@ const getThisWeekBtn = document.querySelector(".sidebar-navigation__this-week");
 
 getThisWeekBtn.addEventListener("click", function () {
   CURRENT_DISPLAY.state = "thisWeek";
-
   updateDisplay();
 });
 
@@ -207,7 +203,6 @@ const deleteListItem = (e, deleteIndex) => {
   });
 
   updateLocalStorage();
-
   updateDisplay();
 };
 
@@ -241,7 +236,6 @@ const addNewListItem = (
   });
 
   updateLocalStorage();
-
   updateDisplay();
 };
 
@@ -268,20 +262,6 @@ const toggleCheckStyle = (newState, listItemParent) => {
   } else {
     listItemParent.classList.remove("item-checked");
   }
-};
-
-const displayProject = (projectId) => {
-  removeChildren(heroSection);
-
-  projects.forEach((project) => {
-    if (projectId === project.id) {
-      heroSection.appendChild(
-        ProjectTemplate(project.id, project.title, project.listItems)
-      );
-    }
-  });
-  updateProjectSideList();
-  grabInputs();
 };
 
 const toggleEditMenu = (e) => {
@@ -490,6 +470,6 @@ const deleteProject = (id) => {
   if (projects.length === 0) {
     PROJECTS_ID_COUNTER = 0;
   }
-  updateDisplay();
   updateLocalStorage();
+  updateDisplay();
 };
