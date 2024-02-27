@@ -71,7 +71,7 @@ const filterTasksByDate = () => {
         }
 
         if (CURRENT_DISPLAY.state === "thisWeek") {
-          const oneWeekLater = format(addDays(todayDate, 7), "yyyy-MM-dd");
+          const oneWeekLater = format(addDays(todayDate, 8), "yyyy-MM-dd");
 
           if (
             isEqual(format(localItemDate, "yyyy-MM-dd"), todayFormattedDate) ||
